@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom"
 
-const Header = () => {
+const Header = ({isLogin, loginHandler}) => {
+
+    
+
     return(
         <div className="header">
             <div className="header__navbar">
@@ -15,7 +18,12 @@ const Header = () => {
                     <NavLink to={'/wishlist'}>wishlist</NavLink> ||
                     <NavLink to={'/user-profile'}>user</NavLink> ||
                     <NavLink to={'/mockbee'}>mockbee</NavLink> ||
-                    <button>login</button>
+
+                    <div>
+                        { isLogin &&  <button onClick={loginHandler}> LOGOUT </button> } 
+                        { !isLogin &&  <button onClick={loginHandler}> LOGIN </button> } 
+                    </div>
+                   
                 </div>
 
             </div>

@@ -1,5 +1,5 @@
-import React from 'react'
 import Mockman from "mockman-js";
+import React from 'react';
 
 
 const MockAPI = () => {
