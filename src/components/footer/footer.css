@@ -1,0 +1,19 @@
+.footer{
+    padding: 2rem 8rem;
+    background: var(--secondary-color);
+}
+
+.footer__top{
+    text-align: center;
+}
+
+.footer__bottom{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 3rem;
+}
+
+.footer--card{
+    text-align: left;
+    list-style: none;
+}
