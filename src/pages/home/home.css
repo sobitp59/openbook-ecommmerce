@@ -21,12 +21,13 @@
 .home__headline{
     font-size: 6rem;
     color: var(--secondary-color);
-    font-weight: 800;
+    font-weight: 900;
     margin-top: 10rem;
     text-align: center;
     padding: 0 5rem;
     text-transform: lowercase;
     text-shadow: 4px 4px rgb(0, 0, 0);
+    font-family: var(--secondary-font);
 }
 
 .home__cta{
