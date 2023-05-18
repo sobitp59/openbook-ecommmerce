@@ -1,0 +1,37 @@
+.products{
+    display: grid;
+    grid-template-columns: 1.2fr 4fr;
+}
+
+.products__filter{
+    border: 2px solid;
+    height: 90vh;
+}
+
+.products__lists{
+    height: 90vh;
+    overflow-y: scroll;
+    border: 2px solid;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.product__card{
+    border: 2px solid;
+    border-radius: 1rem;
+    list-style: none;
+}
+
+.product__info{
+    margin: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.product__title{
+    font-size: 1.2rem;
+    margin: 0.5rem 1rem;
+    text-overflow: ellipsis;
+}
