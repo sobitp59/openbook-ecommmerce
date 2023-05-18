@@ -1,10 +1,13 @@
 import { BiRightArrowAlt } from 'react-icons/bi';
 import BooksCollage from '../../assets/book--home.png';
-import { Footer } from '../../components';
+import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext';
 import './home.css';
 
 
 const Home = () => {
+const productCategories = useProductCategory();
+console.log(productCategories)
+
     return(
         <div className='home'>
             <section className='home__top'>
@@ -17,12 +20,14 @@ const Home = () => {
 
             <section className='home__categories'>
                 <h2 className='home__title'>featured book categories</h2>
-                <section className='home__lists'>
-                    <section className='home__category'>cat1</section>                    
-                    <section className='home__category'>cat2</section>                    
-                    <section className='home__category'>cat3</section>                    
-                    <section className='home__category'>cat4</section>                    
-                </section>
+                <ul className='home__lists'>
+                    { productCategories?.map((category) => {
+                        return <li key={category?._id} className='home__category'>
+                            <h2 className='home__categoryName'>{category?.categoryName}</h2>
+                            <p className='home__categoryDescription'>{category?.description}</p>
+                        </li>
+                    })}                 
+                </ul>
             </section>
         </div>
         

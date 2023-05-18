@@ -54,13 +54,38 @@
 .home__categories{
     display: flex;
     flex-direction: column;
-    border: 2px solid;
-    padding: 5rem 8rem;
+    padding: 5rem 12rem;
 }
 
 .home__lists{
     display: grid;
-    margin-top: 2rem;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border: 2px solid;
+    margin-top: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.home__category{
+    border: 2px solid var(--primary-color);
+    list-style: none;
+    padding: 2rem 1rem;
+    border-radius: 0.8rem;
+    text-transform: lowercase;
+    cursor: pointer;
+}
+
+.home__category:hover, .home__category:active{
+    background: #7c11ff15;
+}
+
+.home__title{
+    font-size: 3rem;
+}
+
+.home__categoryName{
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.home__categoryDescription{
+    font-size: 1.1rem;
 }
