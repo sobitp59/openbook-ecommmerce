@@ -1,4 +1,11 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import "./header.css";
+
+import { AiFillHeart } from 'react-icons/ai';
+import { FaUserCircle } from 'react-icons/fa';
+import { RiShoppingCart2Fill } from 'react-icons/ri';
+import Logo from "../../components/logo-comp/Logo";
+
 
 const Header = ({isLogin, loginHandler}) => {
 
@@ -7,22 +14,24 @@ const Header = ({isLogin, loginHandler}) => {
     return(
         <div className="header">
             <div className="header__navbar">
-                
-                <div className="header__left">
-                    logo-appname
-                </div>
+
+                <Logo />
                 
                 <div className="header__right">
-                    <NavLink to={'/'}>home</NavLink> || 
-                    <NavLink to={'/cart'}>cart</NavLink> || 
-                    <NavLink to={'/wishlist'}>wishlist</NavLink> ||
-                    <NavLink to={'/user-profile'}>user</NavLink> ||
-                    <NavLink to={'/mockbee'}>mockbee</NavLink> ||
-
-                    <div>
-                        { isLogin &&  <button onClick={loginHandler}> LOGOUT </button> } 
-                        { !isLogin &&  <button onClick={loginHandler}> LOGIN </button> } 
-                    </div>
+                    <NavLink className="header__links" to={'/cart'}>
+                        <RiShoppingCart2Fill />
+                        <span className="header__linkname">bag</span>
+                    </NavLink>  
+                    <NavLink className="header__links" to={'/wishlist'}>
+                        <AiFillHeart />
+                        <span className="header__linkname">wishlist</span>
+                    </NavLink> 
+                    <NavLink className="header__links" to={'/user-profile'}>
+                        <FaUserCircle />
+                        <span className="header__linkname">profile</span>
+                    </NavLink>
+                    { isLogin &&  <button onClick={loginHandler}> LOGOUT </button> } 
+                    { !isLogin &&  <button onClick={loginHandler}> LOGIN </button> }
                    
                 </div>
 

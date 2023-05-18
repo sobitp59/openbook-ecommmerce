@@ -1,0 +1,23 @@
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+}
+
+.logo__icon{
+    color: var(--primary-color-dark);
+    border: 1px solid var(--primary-color-dark);
+    padding: 4px;
+    font-size: 2rem;
+    border-radius: 0.6rem;
+    outline: 4px solid var(--primary-color-light);
+}
+
+.logo__name{
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary-color-dark);
+}

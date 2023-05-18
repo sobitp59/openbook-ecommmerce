@@ -1,0 +1,37 @@
+.header__navbar{
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid;
+    padding: 1.5rem 6rem;
+}
+
+
+
+
+
+.header__right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header__links{
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__links:hover, .header__links:active{
+    color: var(--primary-color-dark);
+}
+
+.header__linkname{
+    font-size: 1rem;
+}
+
