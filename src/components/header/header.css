@@ -1,7 +1,6 @@
 .header__navbar{
     display: flex;
     justify-content: space-between;
-    border: 2px solid;
     padding: 1.5rem 6rem;
 }
 

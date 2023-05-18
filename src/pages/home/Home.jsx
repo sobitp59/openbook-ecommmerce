@@ -1,12 +1,16 @@
 import { BiRightArrowAlt } from 'react-icons/bi';
 import BooksCollage from '../../assets/book--home.png';
 import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext';
+import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './home.css';
 
 
 const Home = () => {
 const productCategories = useProductCategory();
-console.log(productCategories)
+const {allProducts} = useProducts()
+
+
+console.log(allProducts)
 
     return(
         <div className='home'>
