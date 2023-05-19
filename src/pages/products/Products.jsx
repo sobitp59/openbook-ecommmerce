@@ -4,6 +4,8 @@ import { useProducts } from '../../contexts/products-context/ProductsContext'
 import { ProductCard } from '../../components'
 import "./products.css"
 
+  
+
 const Products = () => {
   const {allProducts} = useProducts()
 console.log(allProducts)
