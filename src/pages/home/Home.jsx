@@ -1,12 +1,15 @@
 import { BiRightArrowAlt } from 'react-icons/bi';
+import { useNavigate } from 'react-router';
 import BooksCollage from '../../assets/book--home.png';
 import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext';
 import './home.css';
 
 
 const Home = () => {
-const productCategories = useProductCategory();
-console.log(productCategories)
+    const navigate = useNavigate()
+    const productCategories = useProductCategory();
+
+    const navigateToHomeOage = () => navigate('/products') 
 
     return(
         <div className='home'>
@@ -14,7 +17,7 @@ console.log(productCategories)
                 <img className='home__images' src={BooksCollage} alt="image of collection of different books in a collage format" />
                 <section className='home__shop'>
                     <h2 className='home__headline'>Unlock the World of Infinite Stories - Your Book Haven Awaits</h2>
-                    <button className='home__cta'>shop now <BiRightArrowAlt /> </button>
+                    <button onClick={navigateToHomeOage} className='home__cta'>shop now <BiRightArrowAlt /> </button>
                 </section>
             </section>
 
