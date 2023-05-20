@@ -11,7 +11,7 @@
 }
 
 .product-details__image{
-    width: 50%;
+    width: 65%;
     margin: auto;
     border-radius: 10px;
     outline: 2px solid var(--primary-color-light);

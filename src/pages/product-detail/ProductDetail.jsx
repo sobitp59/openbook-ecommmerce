@@ -42,7 +42,7 @@ const ProductDetail = () => {
                     <button className='product-details__cart product-details-button'> <FaShoppingCart /> add to cart</button>
                 </section>
 
-                <hr />
+                {/* <hr /> */}
 
                 <section className='product-details__description'>
                     <h3 className='product-details__headline'>description</h3>

@@ -1,7 +1,9 @@
 .product__image{
     width: 100%;
     height: 350px;
-
+    border-radius: 0.56rem;
+    outline: 2px solid var(--primary-color-light);
+    outline-offset: 0.4rem;
 }
 
 .product__card{
