@@ -1,30 +1,40 @@
 import React from 'react'
+import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext'
 import { useProducts } from '../../contexts/products-context/ProductsContext'
 
-import { ProductCard } from '../../components'
+import { FilterProducts, ProductCard } from '../../components'
 import "./products.css"
 
   
 
 const Products = () => {
   const {allProducts} = useProducts()
-console.log(allProducts)
+  const productCategories = useProductCategory()
 
 
   return (
     <div className='products'>
-      <aside className='products__filter'>
-        <h1>filter</h1>
-      </aside>
+      
+      <FilterProducts />
 
-      <ul className='products__lists'>
-        {allProducts?.map((product) => {
+      <section>
 
-         return <li className='product__card' key={product?._id}>
-              <ProductCard product={product} />
-          </li>
-        })}
-      </ul>
+        <article className='product__categories'>
+            { productCategories?.map((category) => (
+              <button className='product__categoryBtn'>{category?.categoryName}</button>
+            )) }
+        </article>
+
+
+        <ul className='products__lists'>
+          {allProducts?.map((product) => {
+            
+            return <li className='product__card' key={product?._id}>
+                <ProductCard product={product} />
+            </li>
+          })}
+        </ul>
+      </section>
     </div>
   )
 }

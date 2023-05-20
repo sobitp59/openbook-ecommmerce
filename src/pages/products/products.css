@@ -3,18 +3,41 @@
     grid-template-columns: 1.2fr 4fr;
 }
 
-.products__filter{
-    border: 2px solid;
-    height: 90vh;
-}
+
 
 .products__lists{
     height: 90vh;
     overflow-y: scroll;
-    border: 2px solid;
     padding: 4rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
 }
 
+.product__categories{
+    width: 90%;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    
+}
+
+
+.product__categoryBtn{
+    height: 3rem;
+    background: transparent;
+    border: none;
+    background:#6af34f1e;
+    border-radius: 1rem;
+    color:#2bff00e5 ;
+    font-family: var(--primary-font);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: lowercase;
+}
+
+.product__categoryBtn:hover, .product__categoryBtn:active{
+    outline: 4px solid #6af34f13;
+}
