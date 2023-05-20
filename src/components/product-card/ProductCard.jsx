@@ -2,6 +2,7 @@ import React from 'react';
 import './product-card.css';
 
 import { AiOutlineHeart, AiTwotoneStar } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({product}) => {
     const [{star}] = product?.rating;
@@ -9,9 +10,11 @@ const ProductCard = ({product}) => {
   return (
     <div>
             <section className='product__top'>
-              <img className='product__image' src={product?.imageURL} alt="" />
-              <h2 className='product__title'>{product?.title}</h2>
-              <h4  className='product__author'>{product?.author}</h4>
+              <Link to={`/products/${product?._id}`}>
+                <img className='product__image' src={product?.imageURL} alt="" />
+                <h2 className='product__title'>{product?.title}</h2>
+                <h4  className='product__author'>{product?.author}</h4>
+              </Link>
 
               <button className='product__wishlist'> <AiOutlineHeart /> </button>
 

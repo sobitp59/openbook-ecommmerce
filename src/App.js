@@ -5,6 +5,7 @@ import { Footer, Header, MockAPI, PrivateRoute } from "./components";
 import { Cart, Home, Login, Products, User, Wishlist } from './pages';
 
 import { useLocation, useNavigate } from 'react-router-dom';
+import ProductDetail from './pages/product-detail/ProductDetail';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <Route path="/login" element={ <Login /> }/>
       <Route path="/mock" element={ <MockAPI /> }/>
       <Route path="/products" element={ <Products /> }/>
+      <Route path="/products/:productID" element={ <ProductDetail /> }/>
       
       <Route path="/cart" element={
         <PrivateRoute isLogin={isLogin}>
