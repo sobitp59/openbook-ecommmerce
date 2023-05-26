@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './product-card.css';
 
 import { AiOutlineHeart, AiTwotoneStar } from 'react-icons/ai';
@@ -7,10 +7,14 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({product}) => {
     const [{star}] = product?.rating;
 
+    useEffect(() => {
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    }, [])
+
   return (
     <div>
             <section className='product__top'>
-              <Link to={`/products/${product?._id}`}>
+              <Link to={`/products/${product?._id}  `}>
                 <img className='product__image' src={product?.imageURL} alt="" />
                 <h2 className='product__title'>{product?.title}</h2>
                 <h4  className='product__author'>{product?.author}</h4>

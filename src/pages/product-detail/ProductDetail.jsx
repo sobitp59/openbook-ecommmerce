@@ -20,9 +20,14 @@ const ProductDetail = () => {
     const relatedProducts = allProducts.filter(({categoryName, _id}) => categoryName === product?.categoryName && _id !==  product?._id)
     console.log(relatedProducts)
     
+    const goBackHandler = () => {
+        navigate(-1);
+        return window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    }
+
     return (
     <div className='product-details'>
-            <button onClick={() => navigate(-1)} className='product-details__backBtn'>goback</button>
+            <button onClick={goBackHandler} className='product-details__backBtn'>goback</button>
         <div className='product-details__product'>
             <img className='product-details__image' src={product?.imageURL} alt="" />
 

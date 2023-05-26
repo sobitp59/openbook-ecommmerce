@@ -2,73 +2,71 @@ import React from 'react'
 import './filterProduct.css'
 
 import { FaFilter } from 'react-icons/fa'
+import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext'
+import { useProducts } from '../../contexts/products-context/ProductsContext'
 
 const FilterProducts = () => {
+const {filterPriceRangeHandler,productCategoryFilter, filters, filterProductByRating, sortProducts} = useProducts();
+
+const categories = useProductCategory();
+const ratings = [1, 2, 3, 4];
+
   return (
     <aside className='products__filter'>
         
         <section className='products__top'>
-          <h2 className='products__filterTitle'>filter<FaFilter className='products__filterLogo' /></h2>
+          <h2 className='products__filterTitle'>filters<FaFilter className='products__filterLogo' /></h2>
           <button className='products__filterResetBtn'>clear</button>
         </section>
         
+        
+        {/* FILTER PRODUCTS BY PRICE RANGE */}
         <section className='products__filters'>
             <h2>price range</h2>
           <label>
-            <article className='products__priceRange'> <span>&#8377;100</span> <span>&#8377;1000</span> <span>&#8377;2000</span></article>
-            <input className='products__range' type="range" min={100} max={2000} name="" id="" />
+            <article className='products__priceRange'> <span>&#8377;150</span> <strong>&#8377;{(filters?.priceRange)}</strong> <span>&#8377;2500</span></article>
+            <input onChange={(e) => filterPriceRangeHandler(e)} className='products__range' type="range" min={150} max={2500} value={filters?.priceRange}  name="" id="" />
           </label>
         </section>
+
        
+       {/* FILTER PRODUCTS BY CATEGORY */}
         <section className='products__filters'>
-            <h2>category</h2>
-          <label>
-            <input type="checkbox" name="" id="" />
-            Fiction
-          </label>
-          <label>
-            <input type="checkbox" name="" id="" />
-            Non-Fiction
-          </label>
-          <label>
-            <input type="checkbox" name="" id="" />
-            Science-Fiction
-          </label>
-          <label>
-            <input type="checkbox" name="" id="" />
-            Self Help
-          </label>
+            <h2>category</h2>       
+            { categories?.map(({categoryName}) => {
+              return(
+                  <label>
+                    <input onChange={(e) => productCategoryFilter(e, categoryName)} value={categoryName} type="checkbox"  />
+                    {categoryName}
+                  </label>
+              )
+            })}
         </section>
 
 
+      {/* FILTER PRODUCTS BY RATINGS */}
         <section className='products__filters'>
           <h2>rating</h2>
-          <label>
-            <input type="radio" name='rating' />
-            1 star & above
-          </label>
-          <label>
-            <input type="radio" name='rating' />
-            2 star & above
-          </label>
-          <label>
-            <input type="radio" name='rating' />
-            3 star & above
-          </label>
-          <label>
-            <input type="radio" name='rating' />
-            4 star & above
-          </label>
+          { ratings?.map((rating) => {
+            return(
+              <label>
+                <input value={rating} checked={Number(filters?.productRating?.rating) === rating}  type="radio" name='rating' onChange={(e) => filterProductByRating(e)} />
+                {rating} star & above
+              </label>
+            )
+          })}
         </section>
 
+
+      {/* SORT PRODUCTS BY PRICE */}
         <section className='products__filters'>
           <h2>sort by</h2>
           <label>
-            <input type="radio" name='sort' />
+            <input value={'LOW_TO_HIGH'} checked={filters?.sortBy?.LOW_TO_HIGH} onChange={(e) => sortProducts('LOW_TO_HIGH', e)} type="radio" name='sort' />
             price(low to high)
           </label>
           <label>
-            <input type="radio" name='sort' />
+            <input value={'HIGH_TO_LOW'} checked={filters?.sortBy?.HIGH_TO_LOW} onChange={(e) => sortProducts('HIGH_TO_LOW', e)} type="radio" name='sort' />
             price(high to low)
           </label>
         </section>

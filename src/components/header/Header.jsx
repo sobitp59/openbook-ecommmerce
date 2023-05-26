@@ -26,12 +26,13 @@ const Header = ({isLogin, loginHandler}) => {
                         <AiFillHeart />
                         <span className="header__linkname">wishlist</span>
                     </NavLink> 
-                    <NavLink className="header__links" to={'/user-profile'}>
-                        <FaUserCircle />
-                        <span className="header__linkname">profile</span>
-                    </NavLink>
-                    { isLogin &&  <button onClick={loginHandler}> LOGOUT </button> } 
-                    { !isLogin &&  <button onClick={loginHandler}> LOGIN </button> }
+                    
+                    { !isLogin ?  <button onClick={loginHandler}> LOGIN </button> : (
+                        <NavLink className="header__links" to={'/user-profile'}>
+                            <FaUserCircle />
+                            <span className="header__linkname">profile</span>
+                        </NavLink>
+                    ) } 
                    
                 </div>
 

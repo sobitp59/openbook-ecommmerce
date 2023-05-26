@@ -13,14 +13,14 @@ export const products = [
     author: "Andy Weir",
     originalPrice: "2500",
     percentageOff: 20,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Follow the gripping story of astronaut Mark Watney, who is left stranded alone on Mars after his crew mistakenly believes him to be dead. With limited supplies and ingenuity as his only resources, Watney must find a way to survive on the hostile planet and signal for rescue.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/the-martian.jpeg",
     inStock: true,
     trending: true,
     rating: [
       {
-        star: 4.8,
+        star: 3.8,
         totalRatings: 820
       }
     ],
@@ -44,7 +44,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.7,
+        star: 2.7,
         totalRatings: 380
       }
     ],
@@ -68,7 +68,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.9,
+        star: 1,
         totalRatings: 450
       }
     ],
@@ -116,7 +116,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.8,
+        star: 4.3,
         totalRatings: 520
       }
     ],
@@ -140,7 +140,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.9,
+        star: 3.9,
         totalRatings: 650
       }
     ],
@@ -164,7 +164,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.7,
+        star: 2.9,
         totalRatings: 420
       }
     ],
@@ -188,7 +188,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.7,
+        star: 3.5,
         totalRatings: 550
       }
     ],
@@ -205,14 +205,14 @@ export const products = [
     author: "Michael Collins",
     originalPrice: "1800",
     percentageOff: 53,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Embark on an interstellar adventure as a crew of astronauts journeys to a distant planet in search of answers and encounters extraterrestrial beings with mysterious powers.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/carrying-the-fire.jpg",
     inStock: true,
     trending: true,
     rating: [
       {
-        star: 4.7,
+        star: 3.8,
         totalRatings: 620
       }
     ],
@@ -229,14 +229,14 @@ export const products = [
     author: "H.G. Wells",
     originalPrice: "1500",
     percentageOff: 35,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Join the time-traveling adventure of a brilliant inventor as he journeys far into the future, witnessing the wonders and perils of a world shaped by the passage of time.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/the-time-machine.jpg",
     inStock: true,
     trending: true,
     rating: [
       {
-        star: 4.6,
+        star: 4.2,
         totalRatings: 720
       }
     ],
@@ -260,7 +260,7 @@ export const products = [
     trending: false,
     rating: [
       {
-        star: 4.6,
+        star: 1.8,
         totalRatings: 280
       }
     ],
@@ -284,7 +284,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.6,
+        star: 2.3,
         totalRatings: 280
       }
     ],
@@ -308,7 +308,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.8,
+        star: 3.5,
         totalRatings: 390
       }
     ],
@@ -332,7 +332,7 @@ export const products = [
     trending: false,
     rating: [
       {
-        star: 4.8,
+        star: 4.1,
         totalRatings: 390
       }
     ],
@@ -356,7 +356,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.9,
+        star: 4.8,
         totalRatings: 670
       }
     ],
@@ -380,7 +380,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.8,
+        star: 4.4,
         totalRatings: 420
       }
     ],
@@ -404,7 +404,7 @@ export const products = [
     trending: true,
     rating: [
       {
-        star: 4.6,
+        star: 4,
         totalRatings: 370
       }
     ],
@@ -421,14 +421,14 @@ export const products = [
     author: "Mary Robinette Kowal",
     originalPrice: "2000",
     percentageOff: 47,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Embark on an alternate history journey where a catastrophic event accelerates the space race and women become key players in the quest to colonize space, challenging societal norms and prejudices along the way.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/the-calculating-stars.jpeg",
     inStock: true,
     trending: true,
     rating: [
       {
-        star: 4.8,
+        star: 0.9,
         totalRatings: 820
       }
     ],
@@ -445,7 +445,7 @@ export const products = [
     author: "Dan Simmons",
     originalPrice: "2500",
     percentageOff:85,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Embark on an epic journey through a far-future universe where seven pilgrims share their stories, intertwined with ancient mysteries, interstellar politics, and the enigmatic being known as the Shrike.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/hyperion.jpg",
     inStock: true,
@@ -469,7 +469,7 @@ export const products = [
     author: "William Gibson",
     originalPrice: "2200",
     percentageOff: 38,
-    categoryName: "Science Fiction",
+    categoryName: "Science-Fiction",
     description: "Dive into a cyberpunk world where technology and virtual reality blend, as a washed-up computer hacker gets entangled in a dangerous conspiracy that spans the real and digital realms.",
     imageURL: "https://raw.githubusercontent.com/sobitp59/openbook-images/main/images/neuromancer.jpg",
     inStock: true,

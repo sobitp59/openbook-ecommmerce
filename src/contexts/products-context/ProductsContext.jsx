@@ -23,9 +23,55 @@ export const ProductsContextProvider = ({children}) => {
     }, [])
 
 
+    const filterPriceRangeHandler = (e) => {
+        dispatch({
+            type : 'FILTER_RANGE',
+            payload : e.target.value,
+        })
+    }
+
+    
+    const productCategoryFilter = (e, categoryName) => {
+        dispatch({
+            type : 'FILTER_CATEGORY',
+            payload : {
+                categoryName : categoryName,
+                checked : e.target.checked
+            }
+        })
+    }
+
+    const filterProductByRating = (e) => {
+        dispatch({
+            type : 'FILTER_RATING',
+            payload : e.target.value,
+        })
+    }
+
+    const sortProducts = (sortBy, e) => {
+
+        const sortedProducts = state?.allProducts?.sort((a, b) => sortBy === 'LOW_TO_HIGH' ? a?.originalPrice / 100 * a?.percentageOff - b?.originalPrice / 100 * b?.percentageOff : b?.originalPrice / 100 * b?.percentageOff - a?.originalPrice / 100 * a?.percentageOff)
+          
+        dispatch({
+            type : 'SORT_PRODUCTS',
+            payload : {
+                products : sortedProducts,
+                sortBy : sortBy,
+                checked : e.target.checked
+            }
+        })
+    
+    }
+
     const value = {
         allProducts : state.allProducts,
-        isLoading : state.isLoading
+        sortedProducts : state.sortedProducts,
+        isLoading : state.isLoading,
+        filters : state.filters,
+        filterPriceRangeHandler,
+        productCategoryFilter,
+        filterProductByRating,
+        sortProducts
     }
 
 
