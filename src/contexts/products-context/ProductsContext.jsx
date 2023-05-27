@@ -63,15 +63,46 @@ export const ProductsContextProvider = ({children}) => {
     
     }
 
+    const addToCart = (productID) => {
+        const product = [...state?.allProducts].find(({_id}) => _id === productID)
+        dispatch({
+            type : 'ADD_TO_CART',
+            payload : product
+        })
+    }
+    
+    const addToWishlist = (productID) => {
+        const product = [...state?.allProducts].find(({_id}) => _id === productID)
+        dispatch({
+            type : 'ADD_TO_WISHLIST',
+            payload : product
+        })
+    }
+    
+    const removeFromWishlist = (productID) => {
+        const updatedProducts = [...state?.wishlist].filter(({_id}) => _id !== productID)
+        console.log(updatedProducts)
+        dispatch({
+            type : 'REMOVE_FROM_WISHLIST',
+            payload : updatedProducts
+        })
+    }
+
+
     const value = {
         allProducts : state.allProducts,
         sortedProducts : state.sortedProducts,
         isLoading : state.isLoading,
         filters : state.filters,
+        cart : state.cart,
+        wishlist : state.wishlist,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
-        sortProducts
+        sortProducts,
+        addToCart,
+        addToWishlist,
+        removeFromWishlist
     }
 
 

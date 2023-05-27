@@ -17,7 +17,8 @@ export const initialStates = {
             HIGH_TO_LOW : false,
         }
     },
-    
+    cart : [],
+    wishlist : [],
 }
 
 export const reducerFunction = (state, action) => {
@@ -50,6 +51,19 @@ export const reducerFunction = (state, action) => {
 
         case 'SORT_PRODUCTS' : {
             return {...state, allProducts : action.payload.products, filters : {...state.filters, sortBy : action?.payload?.sortBy === 'LOW_TO_HIGH' ? {LOW_TO_HIGH : action?.payload?.checked, HIGH_TO_LOW :  false} : {LOW_TO_HIGH : false, HIGH_TO_LOW : action?.payload?.checked} }}
+        }
+
+        case 'ADD_TO_CART': {
+            return {...state, cart : [...state?.cart, {...action.payload, quantity :  1}]}
+        }
+        
+        case 'ADD_TO_WISHLIST': {
+            return {...state, wishlist : [...state?.wishlist, {...action.payload }]}
+        }
+        
+        case 'REMOVE_FROM_WISHLIST': {
+            console.log(action?.payload)
+            return {...state, wishlist : [...action?.payload]}
         }
         
 

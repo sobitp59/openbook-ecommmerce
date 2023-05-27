@@ -8,9 +8,10 @@ import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './productDetail.css';
 
 const ProductDetail = () => {
-    const {allProducts} = useProducts();
+    const {allProducts, addToCart, addToWishlist, wishlist, removeFromWishlist, cart} = useProducts();
     const {productID} = useParams();
     const navigate = useNavigate();
+
 
 
     const product = allProducts.find((product) => product?._id === productID);
@@ -43,8 +44,17 @@ const ProductDetail = () => {
                 </section>
 
                 <section className='product-details__buttons'>
-                    <button className='product-details__wishlist product-details-button'> <AiOutlineHeart/> add to wishlist</button>
-                    <button className='product-details__cart product-details-button'> <FaShoppingCart /> add to cart</button>
+
+
+                    {  wishlist?.find(({_id}) => _id === product?._id) ?  <button onClick={() => removeFromWishlist(product?._id)} className='product-details__wishlist product-details-button'> <AiOutlineHeart/> added to wishlist </button> : 
+                   <button onClick={() => addToWishlist(product?._id)} className='product-details__wishlist product-details-button'> <AiOutlineHeart/> add to wishlist</button>}
+
+                    
+
+                    {  cart?.find(({_id}) => _id === product?._id) ?  <button onClick={() => navigate('/cart')} className='product-details__cart product-details-button'> <FaShoppingCart /> go to cart</button> : 
+                    <button onClick={() => addToCart(product?._id)} className='product-details__cart product-details-button'> <FaShoppingCart /> add to cart</button>}
+                    
+                    
                 </section>
 
                 {/* <hr /> */}

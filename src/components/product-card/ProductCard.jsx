@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import './product-card.css';
 
-import { AiOutlineHeart, AiTwotoneStar } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { AiFillHeart, AiOutlineHeart, AiTwotoneStar } from 'react-icons/ai';
+import { Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '../../contexts/products-context/ProductsContext';
 
 const ProductCard = ({product}) => {
+    const {addToCart, addToWishlist, removeFromWishlist, wishlist, cart} = useProducts()
+    const navigate = useNavigate()
+    
+    
     const [{star}] = product?.rating;
 
     useEffect(() => {
@@ -20,7 +25,9 @@ const ProductCard = ({product}) => {
                 <h4  className='product__author'>{product?.author}</h4>
               </Link>
 
-              <button className='product__wishlist'> <AiOutlineHeart /> </button>
+              {  wishlist?.find(({_id}) => _id === product?._id) ? <button onClick={() => removeFromWishlist(product?._id)} className='product__wishlist'> <AiFillHeart /> </button> : <button onClick={() => addToWishlist(product?._id)} className='product__wishlist'> <AiOutlineHeart /> </button>}
+
+              
 
             </section>
             
@@ -31,7 +38,9 @@ const ProductCard = ({product}) => {
                 <h4  className='product__rating'>{star}<AiTwotoneStar className='product__star' /> </h4>
 
             </section>
-            <button className='product__button'>add to card</button>
+
+            {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>go to card</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to card</button>}
+            
     </div>
   )
 }

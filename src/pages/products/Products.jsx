@@ -18,11 +18,11 @@ const Products = () => {
                               return  filters?.productRating?.rating ? star >= Number(filters?.productRating?.rating)  : true 
                             })
 
-  const p = filteredProducts.filter((product) => {
-    console.log(filters?.categoryFilter?.map(({category}) => category === product?.categoryName ))
-  })
+  // const p = filteredProducts.filter((product) => {
+  //   console.log(filters?.categoryFilter?.map(({category}) => category === product?.categoryName ))
+  // })
 
-  console.log(p)
+  // console.log(p)
 
 
 
