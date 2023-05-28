@@ -71,11 +71,33 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
     
+    const removeFromCart = (productID) => {
+        const updatedProducts = [...state?.cart].filter(({_id}) => _id !== productID)
+        dispatch({
+            type : 'REMOVE_FROM_CART',
+            payload : updatedProducts
+        })
+    }
+    
     const addToWishlist = (productID) => {
         const product = [...state?.allProducts].find(({_id}) => _id === productID)
         dispatch({
             type : 'ADD_TO_WISHLIST',
             payload : product
+        })
+    }
+   
+    const moveToWishlist = (productID) => {
+        const wishlistItem = [...state?.wishlist].find(({_id}) => _id === productID)
+        const updatedCart = [...state?.cart].filter(({_id}) => _id !== productID)
+        const product = [...state?.cart].find(({_id}) => _id === productID)
+        const updatedWishlist = wishlistItem ? [...state?.wishlist] : [...state?.wishlist, product] 
+        dispatch({
+            type : 'MOVE_TO_WISHLIST',
+            payload : {
+                updatedCart,
+                updatedWishlist
+            }
         })
     }
     
@@ -85,6 +107,34 @@ export const ProductsContextProvider = ({children}) => {
         dispatch({
             type : 'REMOVE_FROM_WISHLIST',
             payload : updatedProducts
+        })
+    }
+    
+    const increaseProductQuantity = (productID) => {
+        const updatedCart = [...state?.cart].map((product) => {
+            if(product?._id === productID){
+                return {...product, quantity : product?.quantity <= product?.maxQuantityPurchase ? product?.quantity + 1 : product?.quantity  }
+            }
+            return product;
+        })
+
+        dispatch({
+            type : 'INCREASE_QUANTITY',
+            payload : updatedCart            
+        })
+    }
+    
+    const decreaseProductQuantity = (productID) => {
+        const updatedCart = [...state?.cart].map((product) => {
+            if(product?._id === productID){
+                return {...product, quantity : product?.quantity - 1  }
+            }
+            return product;
+        })
+
+        dispatch({
+            type : 'DECREASE_QUANTITY',
+            payload : updatedCart            
         })
     }
 
@@ -102,7 +152,11 @@ export const ProductsContextProvider = ({children}) => {
         sortProducts,
         addToCart,
         addToWishlist,
-        removeFromWishlist
+        removeFromWishlist,
+        increaseProductQuantity,
+        decreaseProductQuantity,
+        removeFromCart,
+        moveToWishlist  
     }
 
 

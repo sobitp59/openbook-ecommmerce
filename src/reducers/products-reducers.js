@@ -57,13 +57,28 @@ export const reducerFunction = (state, action) => {
             return {...state, cart : [...state?.cart, {...action.payload, quantity :  1}]}
         }
         
+        case 'REMOVE_FROM_CART': {
+            return {...state, cart : action.payload}
+        }
+        
         case 'ADD_TO_WISHLIST': {
             return {...state, wishlist : [...state?.wishlist, {...action.payload }]}
         }
         
         case 'REMOVE_FROM_WISHLIST': {
-            console.log(action?.payload)
             return {...state, wishlist : [...action?.payload]}
+        }
+        
+        case 'MOVE_TO_WISHLIST': {
+            return {...state, cart : [...action?.payload?.updatedCart], wishlist : [...action?.payload?.updatedWishlist]}
+        }
+        
+        case 'INCREASE_QUANTITY': {
+            return {...state, cart : [...action?.payload]}
+        }
+        
+        case 'DECREASE_QUANTITY': {
+            return {...state, cart : [...action?.payload]}
         }
         
 

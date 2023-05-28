@@ -1,6 +1,25 @@
+import { ProductCard } from "../../components";
+import { useProducts } from "../../contexts/products-context/ProductsContext";
+
 const Wishlist = () => {
+    const {wishlist} = useProducts();
+    console.log(wishlist)
     return(
-        <h1>wishlist</h1>
+        <div className="products">
+            <section>
+                <ul className='products__lists'>
+                    { !wishlist ? (
+                    <li>no products found!!</li>
+                    ) : (
+                    wishlist?.map((product) => {
+                    return <li className='product__card' key={product?._id}>
+                    <ProductCard product={product} />
+                    </li>
+                    })
+                    )}
+                </ul>
+            </section>
+        </div>
     )
 }
 

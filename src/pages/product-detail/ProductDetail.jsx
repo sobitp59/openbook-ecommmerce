@@ -19,7 +19,6 @@ const ProductDetail = () => {
     const  [{star}] = product?.rating;
 
     const relatedProducts = allProducts.filter(({categoryName, _id}) => categoryName === product?.categoryName && _id !==  product?._id)
-    console.log(relatedProducts)
     
     const goBackHandler = () => {
         navigate(-1);
