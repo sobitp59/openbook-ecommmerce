@@ -13,7 +13,7 @@ const Wishlist = () => {
                     ) : (
                     wishlist?.map((product) => {
                     return <li className='product__card' key={product?._id}>
-                    <ProductCard product={product} />
+                    <ProductCard product={product} deleteButton />
                     </li>
                     })
                     )}

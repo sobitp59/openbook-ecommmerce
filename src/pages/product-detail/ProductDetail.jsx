@@ -38,14 +38,14 @@ const ProductDetail = () => {
                 </div>
 
                 <section>
-                    <h3 className='product-details__price'> &#x20B9;{product?.originalPrice / 100 * product?.percentageOff} <span className='product-details__off'>{product?.percentageOff}%OFF</span> </h3>
+                    <h3 className='product-details__price'> &#x20B9;{product?.originalPrice - (product?.originalPrice / 100 * product?.percentageOff)} <span className='product-details__off'>{product?.percentageOff}%OFF</span> </h3>
                     <h3 className='product-details__prices'> <span className='product-details__originalPrice'>&#x20B9;{product?.originalPrice}</span> <span>{star}<AiTwotoneStar className='product-details__star'/></span></h3>
                 </section>
 
                 <section className='product-details__buttons'>
 
 
-                    {  wishlist?.find(({_id}) => _id === product?._id) ?  <button onClick={() => removeFromWishlist(product?._id)} className='product-details__wishlist product-details-button'> <AiOutlineHeart/> added to wishlist </button> : 
+                    {  wishlist?.find(({_id}) => _id === product?._id) ?  <button onClick={() => removeFromWishlist(product?._id)} className='product-details__wishlist product-details-button'> <AiOutlineHeart/> remove from wishlist </button> : 
                    <button onClick={() => addToWishlist(product?._id)} className='product-details__wishlist product-details-button'> <AiOutlineHeart/> add to wishlist</button>}
 
                     

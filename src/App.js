@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import "./App.css";
 import { Footer, Header, MockAPI, PrivateRoute } from "./components";
-import { Cart, Home, Login, Products, User, Wishlist } from './pages';
+import { Cart, Home, Login, Products, SignUp, User, Wishlist } from './pages';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProductDetail from './pages/product-detail/ProductDetail';
@@ -30,6 +30,7 @@ function App() {
     <Routes>
       <Route path="/" element={ <Home /> }/>
       <Route path="/login" element={ <Login /> }/>
+      <Route path="/signup" element={ <SignUp /> }/>
       <Route path="/mock" element={ <MockAPI /> }/>
       <Route path="/products" element={ <Products /> }/>
       <Route path="/products/:productID" element={ <ProductDetail /> }/>

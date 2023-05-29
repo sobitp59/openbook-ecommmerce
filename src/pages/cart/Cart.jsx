@@ -25,7 +25,7 @@ const Cart = () => {
                                     <p>by {product?.author}</p>
 
                                     <section className='product__info'>
-                                        <h4 className='product__payablePrice'> &#x20B9;{product?.originalPrice / 100 * product?.percentageOff}</h4>
+                                        <h4 className='product__payablePrice'> &#x20B9;{product?.originalPrice - product?.originalPrice / 100 * product?.percentageOff}</h4>
                                         <h4 className='product__originalPrice'>&#x20B9;{product?.originalPrice}</h4>
                                         <h4 className='product__off'>{product?.percentageOff}%OFF</h4>
                                     </section>
