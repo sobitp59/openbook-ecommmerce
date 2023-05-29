@@ -5,6 +5,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
 import { RiShoppingCart2Fill } from 'react-icons/ri';
 import Logo from "../../components/logo-comp/Logo";
+import Search from "../search/Search";
 
 
 const Header = ({isLogin, loginHandler}) => {
@@ -16,6 +17,7 @@ const Header = ({isLogin, loginHandler}) => {
             <div className="header__navbar">
 
                 <Logo />
+                <Search />
                 
                 <div className="header__right">
                     <NavLink className="header__links" to={'/cart'}>

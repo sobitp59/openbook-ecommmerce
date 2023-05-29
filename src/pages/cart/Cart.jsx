@@ -1,6 +1,7 @@
 
 import { AiOutlineHeart } from 'react-icons/ai';
 import { RiDeleteBin7Line } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './cart.css';
 
@@ -18,7 +19,9 @@ const Cart = () => {
                         return(
                             <li className='cart__product'>
                                 <section className='cart__image'>
-                                    <img className='cart__productImage' src={product?.imageURL} alt="" />
+                                    <Link to={`/products/${product?._id}`}>
+                                        <img className='cart__productImage' src={product?.imageURL} alt="" />
+                                    </Link>
                                 </section>
                                 <section className='cart__detail'>
                                     <h1>{product?.title}</h1>

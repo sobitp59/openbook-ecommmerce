@@ -1,0 +1,15 @@
+.wishlist{
+    height: 90dvh;
+    width: 90%;
+    margin: auto;
+}
+
+.wishlist__lists{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}

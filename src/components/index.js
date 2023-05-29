@@ -5,7 +5,8 @@ import MockAPI from "./mock-bee/MockAPI";
 import PrivateRoute from "./private-route/PrivateRoute";
 import ProductCard from "./product-card/ProductCard";
 import FilterProducts from './filter/FilterProducts';
+import Search from './search/Search';
 
 
-export { MockAPI, Header, Footer, PrivateRoute, Logo, ProductCard, FilterProducts };
+export { MockAPI, Header, Footer, PrivateRoute, Logo, ProductCard, FilterProducts, Search };
 

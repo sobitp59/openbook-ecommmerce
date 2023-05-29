@@ -19,6 +19,8 @@ export const initialStates = {
     },
     cart : [],
     wishlist : [],
+    searchQuery : '',
+    searchedProducts : []
 }
 
 export const reducerFunction = (state, action) => {
@@ -79,6 +81,14 @@ export const reducerFunction = (state, action) => {
         
         case 'DECREASE_QUANTITY': {
             return {...state, cart : [...action?.payload]}
+        }
+
+        case 'SEARCH_QUERY': {
+            return {...state, searchQuery : action.payload.searchQuery, searchedProducts : [...action.payload.searchedProducts]}
+        }
+        
+        case 'SEARCH_PRODUCT': {
+            return {...state, searchQuery : action.payload.searchQuery, searchedProducts : [...action.payload.searchedProducts]}
         }
         
 

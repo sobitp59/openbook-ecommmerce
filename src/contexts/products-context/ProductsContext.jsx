@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
 
 const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducerFunction, initialStates)
+    const navigate = useNavigate()
 
     const getProducts = async () => {
         dispatch({type : 'LOADING'})
@@ -138,6 +140,30 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
 
+    const searchQueryResults = (e) => {
+        const searchedProducts = [...state?.allProducts].filter(({title, author}) => title?.toLowerCase()?.includes(e.target.value.toLowerCase() || author?.toLowerCase()?.includes(e.target.value.toLowerCase())))
+        
+        console.log(searchedProducts)
+       dispatch({
+        type : 'SEARCH_QUERY',
+        payload : {
+            searchQuery: e?.target?.value,
+            searchedProducts : e?.target?.value ? searchedProducts : []
+        }
+       })
+    }
+
+    const showProductOnClick = (ID) => {
+            navigate(`/products/${ID}`)
+            dispatch({
+                type : 'SEARCH_PRODUCT',
+                payload : {
+                    searchQuery : '',
+                    searchedProducts : []                    
+                }
+            }) 
+    }
+
 
     const value = {
         allProducts : state.allProducts,
@@ -146,6 +172,9 @@ export const ProductsContextProvider = ({children}) => {
         filters : state.filters,
         cart : state.cart,
         wishlist : state.wishlist,
+        searchQuery : state.searchQuery,
+        searchQuery : state.searchQuery,
+        searchedProducts : state.searchedProducts,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
@@ -156,8 +185,13 @@ export const ProductsContextProvider = ({children}) => {
         increaseProductQuantity,
         decreaseProductQuantity,
         removeFromCart,
-        moveToWishlist  
+        moveToWishlist,
+        searchQueryResults,
+        showProductOnClick
     }
+
+
+ 
 
 
     return <ProductsContext.Provider value={value}>
