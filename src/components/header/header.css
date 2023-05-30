@@ -5,10 +5,6 @@
     align-items: center;
 }
 
-
-
-
-
 .header__right{
     display: flex;
     justify-content: center;
@@ -35,3 +31,32 @@
     font-size: 1rem;
 }
 
+.header__logo--length{
+    width: 1.2rem;
+    height: 1.2rem;
+    outline: 2px solid white;
+    background: var(--primary-color);
+    border-radius: 1rem;
+    color: white;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.header__wishnav, .header__cartnav{
+    position: relative;
+}
+
+ .header__wishlist{
+    position: absolute;
+    right: 0.4rem;
+    bottom: 2rem;
+}
+
+.header__cart{
+    position: absolute;
+    right: -0.4rem;
+    bottom: 2rem;
+
+}
