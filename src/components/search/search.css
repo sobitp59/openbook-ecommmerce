@@ -40,7 +40,7 @@
     margin-bottom: 1rem;
 }
 
-.search__product:hover{
+.search__input:hover ,.search__product:hover{
     outline: 3px solid var(--primary-color-light);
     outline-offset: 2px;
 }
@@ -69,4 +69,3 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
