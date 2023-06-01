@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext'
 import { useProducts } from '../../contexts/products-context/ProductsContext'
 
@@ -10,19 +10,14 @@ import "./products.css"
 const Products = () => {
   const {allProducts, filters} = useProducts()
   const productCategories = useProductCategory()
+  const [products, setProducts] = useState([])
 
   const filteredProducts = [...allProducts]
-                            .filter((product) => filters?.priceRange ? product?.originalPrice/100* product?.percentageOff <=  filters?.priceRange  : true)
+                            .filter((product) => filters?.priceRange ? product?.originalPrice - product?.originalPrice/100* product?.percentageOff <=  filters?.priceRange  : true)
                             .filter((product) => {
                               const [{star}] = product?.rating;
                               return  filters?.productRating?.rating ? star >= Number(filters?.productRating?.rating)  : true 
                             })
-
-  // const p = filteredProducts.filter((product) => {
-  //   console.log(filters?.categoryFilter?.map(({category}) => category === product?.categoryName ))
-  // })
-
-  // console.log(p)
 
 
 

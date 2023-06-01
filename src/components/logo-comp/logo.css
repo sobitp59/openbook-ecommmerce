@@ -6,7 +6,9 @@
     font-size: 1.3rem;
     font-weight: bolder;
 }
-
+.logo__link{
+    text-decoration: none;
+}
 .logo__icon{
     color: var(--primary-color-dark);
     border: 1px solid var(--primary-color-dark);

@@ -24,8 +24,8 @@ const ratings = [1, 2, 3, 4];
         <section className='products__filters'>
             <h2>price range</h2>
           <label>
-            <article className='products__priceRange'> <span>&#8377;150</span> <strong>&#8377;{(filters?.priceRange)}</strong> <span>&#8377;2500</span></article>
-            <input onChange={(e) => filterPriceRangeHandler(e)} className='products__range' type="range" min={150} max={2500} value={filters?.priceRange}  name="" id="" />
+            <article className='products__priceRange'> <span>&#8377;0</span> <strong>&#8377;{(filters?.priceRange)}</strong> <span>&#8377;2000</span></article>
+            <input onChange={(e) => filterPriceRangeHandler(e)} className='products__range' type="range" min={0} max={2000} value={filters?.priceRange}  name="" id="" />
           </label>
         </section>
 

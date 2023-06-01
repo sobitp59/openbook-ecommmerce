@@ -76,6 +76,7 @@
     flex-direction: column;
     gap: 0.6rem;
     width: max-content;
+    position: relative;
 }
 
 .cart__details > p, h2{
@@ -128,4 +129,49 @@
 .cart__message{
     color: var(--primary-color-dark);
     font-weight: bold;
+}
+
+
+
+.coupon__list{
+    position: absolute;
+    list-style: none;
+    border: 2px solid var(--primary-color-light);
+    top: 3.5rem;
+    width: 80%;
+    background: white;
+    height: 8rem;
+    overflow-y: scroll;
+    padding: 0.4rem;
+    border-radius: 0.6rem;
+
+}
+
+.cart__couponItem{
+    cursor: pointer;
+    border: 1.5px dashed var(--primary-color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.cart__couponItem:hover, .cart__couponItem:active{
+    border: 1.5px dashed var(--primary-color-dark);
+}
+
+.cart__couponinfo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart__couponRemoveBtn{
+    font-size: 1.3rem;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
 }

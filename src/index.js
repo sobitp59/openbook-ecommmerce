@@ -15,7 +15,7 @@ ReactDOM.render(
     <Router>
       <ProductsContextProvider>
       <ProductCategoryContextProvider>
-       <App />
+            <App /> 
       </ProductCategoryContextProvider>
       </ProductsContextProvider>
     </Router>
