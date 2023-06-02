@@ -36,7 +36,7 @@ const ratings = [1, 2, 3, 4];
             { categories?.map(({categoryName}) => {
               return(
                   <label>
-                    <input onChange={(e) => productCategoryFilter(e, categoryName)} value={categoryName} type="checkbox"  />
+                    <input onChange={productCategoryFilter} value={categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(categoryName)} />
                     {categoryName}
                   </label>
               )

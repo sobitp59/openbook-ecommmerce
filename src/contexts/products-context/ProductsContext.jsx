@@ -33,12 +33,14 @@ export const ProductsContextProvider = ({children}) => {
     }
 
     
-    const productCategoryFilter = (e, categoryName) => {
+    const productCategoryFilter = (e) => {
+        const category = e?.target?.value
+        const checked = e?.target?.checked
+
         dispatch({
             type : 'FILTER_CATEGORY',
             payload : {
-                categoryName : categoryName,
-                checked : e.target.checked
+                category, checked                
             }
         })
     }

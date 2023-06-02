@@ -1,15 +1,51 @@
 
+import { useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { CiCircleRemove } from 'react-icons/ci';
 import { MdDiscount } from 'react-icons/md';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
-import { coupons } from '../../backend/db/coupons';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
-
-import { useState } from 'react';
 import './cart.css';
 
+const coupons = [
+    {
+      _id: 0,
+      couponDescription: "50% off",
+      coupon: 50,
+      couponCode: "SHOP50",
+    },
+    {
+      _id: 1,
+      couponDescription: "45% off",
+      coupon: 45,
+      couponCode: "NEW45",
+    },
+    {
+      _id: 2,
+      couponDescription: "30% off",
+      coupon: 30,
+      couponCode: "SHOP30",
+    },
+    {
+      _id: 3,
+      couponDescription: "80% off",
+      coupon: 80,
+      couponCode: "BIBLIO80",
+    },
+    {
+      _id: 4,
+      couponDescription: "10% off",
+      coupon: 10,
+      couponCode: "JUST10",
+    },
+    {
+      _id: 5,
+      couponDescription: "40% off",
+      coupon: 40,
+      couponCode: "AVID40",
+    },
+  ];
 
 const Cart = () => {
     const {cart, increaseProductQuantity, decreaseProductQuantity, removeFromCart, moveToWishlist} = useProducts();

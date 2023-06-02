@@ -3,12 +3,7 @@ export const initialStates = {
     isLoading : true,
     filters : {
         priceRange : 0,
-        categoryFilter : [
-            {category :  'Science-Fiction', checked : false},
-            {category :  'Fiction', checked : false},
-            {category :  'Non-fiction', checked : false},
-            {category :  'Self-Help', checked : false}
-        ],
+        categoryFilter : [],
         productRating : {
             rating : 0,
         },
@@ -39,12 +34,11 @@ export const reducerFunction = (state, action) => {
         
         //TODO -  category filter
         case 'FILTER_CATEGORY': {
-            const filteredCategories =  [...state?.filters?.categoryFilter].map((category) => {
-                const updatedCategory = category?.category === action?.payload?.categoryName ? {...category,  checked : action?.payload?.checked } : {...category}  
-                return updatedCategory
-            })
-            console.log(filteredCategories)
-            return {...state, filters : {...state.filters, categoryFilter : filteredCategories }}
+            if(action?.payload?.checked){
+                return {...state, filters : {...state.filters, categoryFilter : [...state?.filters?.categoryFilter,  action?.payload?.category] }}
+            }else{
+                return {...state, filters : {...state.filters, categoryFilter : [...state?.filters?.categoryFilter]?.filter((category) => category !== action?.payload?.category) }}
+            }
         }
         
         case 'FILTER_RATING' : {
