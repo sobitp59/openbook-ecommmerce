@@ -6,7 +6,7 @@ import { useProductCategory } from '../../contexts/product-category-context/Prod
 import { useProducts } from '../../contexts/products-context/ProductsContext'
 
 const FilterProducts = () => {
-const {filterPriceRangeHandler,productCategoryFilter, filters, filterProductByRating, sortProducts} = useProducts();
+const {filterPriceRangeHandler,productCategoryFilter,filterClearHandler,  filters, filterProductByRating, sortProducts} = useProducts();
 
 const categories = useProductCategory();
 const ratings = [1, 2, 3, 4];
@@ -15,8 +15,12 @@ const ratings = [1, 2, 3, 4];
     <aside className='products__filter'>
         
         <section className='products__top'>
-          <h2 className='products__filterTitle'>filters<FaFilter className='products__filterLogo' /></h2>
-          <button className='products__filterResetBtn'>clear</button>
+          <div className=''>
+            <h2 className='products__filterTitle'>filters  <FaFilter className='products__filterLogo' /> </h2>
+          </div>
+          <div>
+          <button onClick={filterClearHandler} className='products__filterResetBtn'>clear</button>
+          </div>
         </section>
         
         

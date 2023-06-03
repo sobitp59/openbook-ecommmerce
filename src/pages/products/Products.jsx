@@ -28,13 +28,6 @@ const Products = () => {
 
       <section>
 
-        <article className='product__categories'>
-            { productCategories?.map((category) => (
-              <button className='product__categoryBtn'>{category?.categoryName}</button>
-            )) }
-        </article>
-
-
         <ul className='products__lists'>
           { !filteredProducts ? (
               <li>no products found!!</li>

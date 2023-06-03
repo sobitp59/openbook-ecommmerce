@@ -1,10 +1,22 @@
+import { useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/authentication/AuthContext";
 import './login.css';
 
 
 const Login = () => {
+    const {registered} = useAuth()
+    
+    useEffect(() => {
+        if(registered){
+            return toast.success('thankyou for registering! please login to continue.')
+        }
+    } , [registered]);
+
     return(
         <div className="login">
+            <Toaster />
             <h1>sign in</h1>
             <form className="login__form">
                 <label className="form__label" htmlFor="">

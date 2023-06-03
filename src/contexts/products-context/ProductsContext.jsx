@@ -145,7 +145,6 @@ export const ProductsContextProvider = ({children}) => {
     const searchQueryResults = (e) => {
         const searchedProducts = [...state?.allProducts].filter(({title, author}) => title?.toLowerCase()?.includes(e.target.value.toLowerCase() || author?.toLowerCase()?.includes(e.target.value.toLowerCase())))
         
-        console.log(searchedProducts)
        dispatch({
         type : 'SEARCH_QUERY',
         payload : {
@@ -164,6 +163,11 @@ export const ProductsContextProvider = ({children}) => {
                     searchedProducts : []                    
                 }
             }) 
+    }
+
+
+    const filterClearHandler = () => {
+        dispatch({type : 'CLEAR_FILTER'})
     }
 
 
@@ -189,7 +193,8 @@ export const ProductsContextProvider = ({children}) => {
         removeFromCart,
         moveToWishlist,
         searchQueryResults,
-        showProductOnClick
+        showProductOnClick,
+        filterClearHandler
     }
 
 

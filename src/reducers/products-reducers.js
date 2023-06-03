@@ -85,6 +85,19 @@ export const reducerFunction = (state, action) => {
             return {...state, searchQuery : action.payload.searchQuery, searchedProducts : [...action.payload.searchedProducts]}
         }
         
+        case 'CLEAR_FILTER' : {
+            return {...state,  filters : {
+                priceRange : 0,
+                categoryFilter : [],
+                productRating : {
+                    rating : 0,
+                },
+                sortBy : {
+                    LOW_TO_HIGH : false,
+                    HIGH_TO_LOW : false,
+                }
+            }, }
+        }
 
         default:
             return state;

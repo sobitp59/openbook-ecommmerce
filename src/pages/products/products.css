@@ -16,7 +16,7 @@
 
 .product__categories{
     width: 90%;
-    margin: 2rem auto;
+    margin: auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
