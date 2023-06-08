@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { initialState, userAuthReducer } from "../../reducers/authReducer";
 
 const AuthContext = createContext();
@@ -19,13 +19,27 @@ export const AuthContextProvider = ({children}) => {
         dispatch({
             type : 'SET_EMAIL',
             payload : e.target.value
+        })    
+    }
+
+    const getUserLoginEmail = (e) => {
+        dispatch({
+            type : 'SET_LOGIN_EMAIL',
+            payload : e.target.value
         })
-        
     }
     
     const getUserPassoword = (e) => {
         dispatch({
             type : 'SET_PASSWORD',
+            payload : e.target.value
+        })
+        
+    }
+    
+    const getUserLoginPassoword = (e) => {
+        dispatch({
+            type : 'SET_LOGIN_PASSWORD',
             payload : e.target.value
         })
         
@@ -51,13 +65,14 @@ export const AuthContextProvider = ({children}) => {
                     },
                     body: JSON.stringify({
                       fullname: fullname,
-                      email: email,
+                      email: email.toLowerCase(),
                       password: password
                     })
                 })
     
                 if(fetchResponse.ok){
                     const data = await fetchResponse.json()
+                    console.log(data)
                     localStorage.setItem('userToken', data?.encodedToken)
                     dispatch({type : 'CLEAR_FIELD'})  
                     navigate('/login')
@@ -72,17 +87,69 @@ export const AuthContextProvider = ({children}) => {
     }
 
 
+
+    const userLoginHandler = async (e, email, password) => {
+        e.preventDefault()
+        const storedToken = localStorage.getItem('userToken');
+        try {
+            const fetchResponse = await fetch('/api/auth/login', {
+                method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      authorization : storedToken
+                    },
+                    body: JSON.stringify({
+                      email: email.toLowerCase(),
+                      password: password
+                    })
+            });
+            if(fetchResponse.ok){
+                const data = await fetchResponse.json()
+                console.log(data)
+                console.log(data?.foundUser)
+                const userData = {token : data?.encodedToken, userInfo : data?.foundUser}
+                localStorage.setItem('userData', JSON.stringify(userData))
+                dispatch({type : 'CLEAR_FIELD'})  
+                navigate('/products')
+                dispatch({
+                    type : 'LOGIN_SUCCESS',
+                    payload : {
+                        userInfo : data?.foundUser,
+                        token : data?.encodedToken,
+                    }
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const userLogoutHandler = () => {
+        console.log('hello')
+        localStorage.removeItem('userData')
+        dispatch({
+            type : 'USER_LOGOUT',
+            payload : {
+                isLoggedIn : false
+            }
+        })
+        navigate('/')
+    }
+
+
     const value = {
-        fullname : state.fullname,
-        email : state.email,
-        password : state.password,
-        confirmpassword : state.confirmpassword,
-        registered : state.registered,
+        login : state.login,
+        signup : state.signup,
+        user : state.user,
         getUserFullName,
         getUserEmail,
         getUserPassoword,
         getUserConfirmPassword,
-        userRegistrationHandler
+        userRegistrationHandler,
+        userLoginHandler,
+        userLogoutHandler,
+        getUserLoginPassoword,
+        getUserLoginEmail,
     }
 
 

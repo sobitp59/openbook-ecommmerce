@@ -15,7 +15,8 @@ export const initialStates = {
     cart : [],
     wishlist : [],
     searchQuery : '',
-    searchedProducts : []
+    searchedProducts : [],
+    toastMessage : ''
 }
 
 export const reducerFunction = (state, action) => {
@@ -103,16 +104,3 @@ export const reducerFunction = (state, action) => {
             return state;
     }
 }
-
-// const categoriesChecked = [
-//     {category :  'Science-Fiction', checked : false},
-//     {category :  'Fiction', checked : false},
-//     {category :  'Non-fiction', checked : false},
-//     {category :  'Self-Help', checked : false}
-// ]
-
-// const s =  [...categoriesChecked].map((category) => {
-//     console.log({...category})
-//     const updatedCat = category?.category === categoryName ? {...category,  checked : e.target.checked} : {...category}  
-//     return updatedCat
-// })

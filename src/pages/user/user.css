@@ -1,0 +1,17 @@
+.user{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 4rem auto;
+    height: 80vh;
+}
+
+.user__buttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.user__details, .user__address{
+    border: 2px solid;
+}

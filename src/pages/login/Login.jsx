@@ -6,27 +6,42 @@ import './login.css';
 
 
 const Login = () => {
-    const {registered} = useAuth()
+    const { signup, login, userLoginHandler, getUserLoginPassoword, getUserLoginEmail  } = useAuth()
+    // const { signup :  registered, email,password, getUserLoginEmail, getUserLoginPassoword, userLoginHandler } = useAuth()
     
     useEffect(() => {
-        if(registered){
-            return toast.success('thankyou for registering! please login to continue.')
+        if(signup?.registered){
+            return toast.success('thankyou for registering. please login to continue')
         }
-    } , [registered]);
+        if(!signup?.registered){
+            return toast.success('please login to continue.')
+        }
+
+    } , [signup?.registered]);
 
     return(
         <div className="login">
             <Toaster />
             <h1>sign in</h1>
-            <form className="login__form">
+            <form className="login__form" onSubmit={(e) => userLoginHandler(e, login?.email, login?.password)}>
                 <label className="form__label" htmlFor="">
                     email address
-                    <input type="email" name="" id=""  />
+                    <input 
+                        value={login?.email} 
+                        type="email" 
+                        required
+                        onChange={getUserLoginEmail} 
+                        />
                 </label>
 
                 <label className="form__label" htmlFor="">
                     password
-                    <input type="password" name="" id="" />
+                    <input 
+                        value={login?.password} 
+                        type="password" 
+                        required
+                        onChange={getUserLoginPassoword} 
+                        />
                 </label>
 
                 <button className="form__button form__button">login</button>

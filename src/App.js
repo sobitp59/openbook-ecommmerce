@@ -5,26 +5,21 @@ import { Footer, Header, MockAPI, PrivateRoute } from "./components";
 import { Cart, Checkout, Home, Login, Products, SignUp, User, Wishlist } from './pages';
 
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from './contexts/authentication/AuthContext';
 import ProductDetail from './pages/product-detail/ProductDetail';
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false)
+  const {login, user} = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
-  console.log(location)
-  
-  
-  const loginHandler = () => {
-    console.log(isLogin)
-    setIsLogin((prev) => !prev)
-    navigate(location?.state?.from?.pathname)
-  }
+
+
 
 
   return (
     <div>
-    <Header loginHandler={loginHandler} isLogin={isLogin}/>
+    <Header isLogin={login?.loggedIn}/>
     
     
     <Routes>
@@ -37,19 +32,19 @@ function App() {
       <Route path="/products/:productID" element={ <ProductDetail /> }/>
       
       <Route path="/cart" element={
-        <PrivateRoute isLogin={isLogin}>
+        <PrivateRoute isLogin={user?.loggedIn}>
           <Cart /> 
         </PrivateRoute>
       }/>
       
       <Route path="/wishlist" element={ 
-        <PrivateRoute isLogin={isLogin}>
+        <PrivateRoute isLogin={user?.loggedIn}>
           <Wishlist /> 
         </PrivateRoute>
       }/>
 
       <Route path="/user-profile" element={ 
-        <PrivateRoute isLogin={isLogin}>
+        <PrivateRoute isLogin={user?.loggedIn}>
           <User />
         </PrivateRoute>
       }/>

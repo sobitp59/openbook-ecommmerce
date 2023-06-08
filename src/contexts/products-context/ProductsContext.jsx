@@ -64,7 +64,6 @@ export const ProductsContextProvider = ({children}) => {
                 checked : e.target.checked
             }
         })
-    
     }
 
     const addToCart = (productID) => {
