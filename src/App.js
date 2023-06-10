@@ -29,7 +29,7 @@ function App() {
       <Route path="/mock" element={ <MockAPI /> }/>
       <Route path="/products" element={ <Products /> }/>
       <Route path="/checkout" element={ <Checkout /> }/>
-      <Route path="/products/:productID" element={ <ProductDetail /> }/>
+      <Route path="/products/:productId" element={ <ProductDetail /> }/>
       
       <Route path="/cart" element={
         <PrivateRoute isLogin={user?.loggedIn}>

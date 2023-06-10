@@ -54,19 +54,18 @@ const Cart = () => {
     const [coupon, setCoupon] = useState(false);
     const [couponDiscount, setCouponDiscount] = useState([0, '']);
 
-    console.log(coupons)
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
-        return total +  (Number(curr?.originalPrice) * curr?.quantity);
+        return total +  (Number(curr?.originalPrice) * curr?.qty);
     }, 0)
     
     const totalDiscountedPrice = cart?.reduce((total, curr) => {
-        return total +  (curr?.originalPrice / 100 * curr?.percentageOff) * (curr?.quantity)
+        return total +  (curr?.originalPrice / 100 * curr?.percentageOff) * (curr?.qty)
     }, 0)
 
     const finalPrice = cart?.reduce((total, curr) => {
         const cost = curr?.originalPrice - (curr?.originalPrice / 100 * curr?.percentageOff);
-        const totalCost = cost * curr?.quantity
+        const totalCost = cost * curr?.qty
         return totalCost + total
     }, 0)
 
@@ -86,9 +85,8 @@ const Cart = () => {
         setCouponDiscount([0, ''])
     }
 
-    console.log(finalPrice / 100 * couponDiscount[0])
-    console.log(couponDiscount[0])
 
+    console.log(cart)
     return(
         <div className='cart'>
                 {cart?.length > 0 ? (
@@ -115,10 +113,10 @@ const Cart = () => {
     
                                         <section className='cart__quantity'>
     
-                                            <button style={{cursor : product?.quantity < 2 && 'not-allowed' }} disabled={product?.quantity < 2} onClick={() => decreaseProductQuantity(product?._id)} className='cart__quantity product-details__wishlist product-details-button'> - </button>
+                                            <button style={{cursor : product?.qty < 2 && 'not-allowed' }} disabled={product?.qty < 2} onClick={() => decreaseProductQuantity(product?._id)} className='cart__quantity product-details__wishlist product-details-button'> - </button>
     
-                                                <span>{product?.quantity}</span>
-                                            <button style={{cursor : product?.quantity > product?.maxQuantityPurchase && 'not-allowed' }} onClick={() => increaseProductQuantity(product?._id)} className='cart__quantity product-details__wishlist product-details-button'> + </button>
+                                                <span>{product?.qty}</span>
+                                            <button style={{cursor : product?.qty > product?.maxQuantityPurchase && 'not-allowed' }} onClick={() => increaseProductQuantity(product?._id)} className='cart__quantity product-details__wishlist product-details-button'> + </button>
                                         </section>
     
                                         <section className='cart__buttons'>

@@ -9,12 +9,12 @@ import './productDetail.css';
 
 const ProductDetail = () => {
     const {allProducts, addToCart, addToWishlist, wishlist, removeFromWishlist, cart} = useProducts();
-    const {productID} = useParams();
+    const {productId} = useParams();
     const navigate = useNavigate();
 
 
 
-    const product = allProducts.find((product) => product?._id === productID);
+    const product = allProducts.find((product) => product?._id === productId);
     console.log(product)
     const  [{star}] = product?.rating;
 

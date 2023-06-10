@@ -72,13 +72,11 @@ export const AuthContextProvider = ({children}) => {
     
                 if(fetchResponse.ok){
                     const data = await fetchResponse.json()
-                    console.log(data)
-                    localStorage.setItem('userToken', data?.encodedToken)
                     dispatch({type : 'CLEAR_FIELD'})  
                     navigate('/login')
                     dispatch({type : 'REGISTRATION_SUCCESS'})
                 }else{
-                    throw new Error('error occured')
+                    throw new Error('some error occured')
                 }
             } catch (error) {
                 console.log(error)
@@ -90,13 +88,12 @@ export const AuthContextProvider = ({children}) => {
 
     const userLoginHandler = async (e, email, password) => {
         e.preventDefault()
-        const storedToken = localStorage.getItem('userToken');
         try {
             const fetchResponse = await fetch('/api/auth/login', {
                 method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
-                      authorization : storedToken
+                      authorization : `Bearer ${state?.user?.userEncodedToken}`
                     },
                     body: JSON.stringify({
                       email: email.toLowerCase(),
@@ -107,17 +104,19 @@ export const AuthContextProvider = ({children}) => {
                 const data = await fetchResponse.json()
                 console.log(data)
                 console.log(data?.foundUser)
-                const userData = {token : data?.encodedToken, userInfo : data?.foundUser}
+                const userData = {token : `Bearer ${data?.encodedToken}`, userInfo : data?.foundUser}
                 localStorage.setItem('userData', JSON.stringify(userData))
                 dispatch({type : 'CLEAR_FIELD'})  
-                navigate('/products')
+                // navigate('/products')
                 dispatch({
                     type : 'LOGIN_SUCCESS',
                     payload : {
                         userInfo : data?.foundUser,
-                        token : data?.encodedToken,
+                        token : `Bearer ${data?.encodedToken}`,
                     }
                 })
+            }else{
+                console.log('some error occured')
             }
         } catch (error) {
             console.log(error)
@@ -126,7 +125,7 @@ export const AuthContextProvider = ({children}) => {
 
     const userLogoutHandler = () => {
         console.log('hello')
-        localStorage.removeItem('userData')
+        localStorage.clear()
         dispatch({
             type : 'USER_LOGOUT',
             payload : {

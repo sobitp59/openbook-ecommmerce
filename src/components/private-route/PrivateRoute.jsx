@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { Login } from '../../pages'
 
 const PrivateRoute = ({isLogin, children}) => {
     const location = useLocation()

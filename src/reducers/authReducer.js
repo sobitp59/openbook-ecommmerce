@@ -11,7 +11,7 @@ export const initialState = {
     },
     user : {
         registered : false,
-        loggedIn : localStorage.getItem('userToken') ||  false,
+        loggedIn : JSON.parse(localStorage.getItem('userData'))?.token ||  false,
         userEncodedToken : JSON.parse(localStorage.getItem('userData'))?.token || false,
         userInfo : JSON.parse(localStorage.getItem('userData'))?.userInfo || false
 

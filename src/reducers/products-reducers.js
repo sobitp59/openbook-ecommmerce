@@ -28,12 +28,15 @@ export const reducerFunction = (state, action) => {
         case 'LOADED' : {
             return {...state, isLoading : false, allProducts : action.payload}
         }
+        
+        // case 'CART_ITEMS' : {
+        //     return {...state,  cart : action.payload}
+        // }
 
         case 'FILTER_RANGE': {
             return {...state, filters : {...state.filters, priceRange : action.payload }}
         }
         
-        //TODO -  category filter
         case 'FILTER_CATEGORY': {
             if(action?.payload?.checked){
                 return {...state, filters : {...state.filters, categoryFilter : [...state?.filters?.categoryFilter,  action?.payload?.category] }}
@@ -51,11 +54,11 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'ADD_TO_CART': {
-            return {...state, cart : [...state?.cart, {...action.payload, quantity :  1}]}
+            return {...state, cart : [...state?.cart, {...action.payload}]}
         }
         
         case 'REMOVE_FROM_CART': {
-            return {...state, cart : action.payload}
+            return {...state, cart : [...action.payload] }
         }
         
         case 'ADD_TO_WISHLIST': {

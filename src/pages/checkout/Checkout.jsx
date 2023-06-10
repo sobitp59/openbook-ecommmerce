@@ -6,16 +6,16 @@ const Checkout = () => {
     const {cart} = useProducts()
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
-        return total +  (Number(curr?.originalPrice) * curr?.quantity);
+        return total +  (Number(curr?.originalPrice) * curr?.qty);
     }, 0)
     
     const totalDiscountedPrice = cart?.reduce((total, curr) => {
-        return total +  (curr?.originalPrice / 100 * curr?.percentageOff) * (curr?.quantity)
+        return total +  (curr?.originalPrice / 100 * curr?.percentageOff) * (curr?.qty)
     }, 0)
 
     const price = cart?.reduce((total, curr) => {
         const cost = curr?.originalPrice - (curr?.originalPrice / 100 * curr?.percentageOff);
-        const totalCost = cost * curr?.quantity
+        const totalCost = cost * curr?.qty
         return totalCost + total
     }, 0)
 
@@ -33,8 +33,8 @@ const Checkout = () => {
             <h2>order details</h2>
             <hr />
             <p><strong>item</strong> <strong>quantity</strong></p>
-            {cart?.map(({_id, title,quantity}) => {
-                return <p className='checkout__quantity' key={_id}><span>{title}</span> <span>{quantity}</span> </p>
+            {cart?.map(({_id, title,qty}) => {
+                return <p className='checkout__quantity' key={_id}><span>{title}</span> <span>{qty}</span> </p>
             })}
 
             <hr />

@@ -1,13 +1,17 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
+import { useAuth } from '../authentication/AuthContext';
 
 const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducerFunction, initialStates)
     const navigate = useNavigate()
-
+ 
+    const {user : {userEncodedToken, loggedIn}} = useAuth()
+ 
+ 
     const getProducts = async () => {
         dispatch({type : 'LOADING'})
         try {
@@ -19,9 +23,35 @@ export const ProductsContextProvider = ({children}) => {
             console.log(error.message)
         }
     }
+    
+    // const getCart = async () => {
+    //     try {
+    //         const response = await fetch('/api/user/cart', {
+    //             method : 'GET',
+    //             headers : {
+    //                 authorization : `Bearer ${userEncodedToken}`
+    //             }
+    //         });
+    //         if(response.ok){
+    //             const json = await response?.json()
+    //             console.log(json)
+    //             dispatch({
+    //                 type : 'CART_ITEMS',
+    //                 payload : json.cart
+    //             })
+    //         }
+    //         console.log(response) 
+    //     } catch (error) {
+    //         console.log(error.message)
+    //     }
+    // }
 
-    useEffect(() => {
+    useEffect( async () => {
         getProducts()
+        // getCart()
+
+        
+        
     }, [])
 
 
@@ -66,20 +96,61 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
 
-    const addToCart = (productID) => {
+    const addToCart = async (productID) => {
+        if(!loggedIn){
+            navigate('/login')
+        }
         const product = [...state?.allProducts].find(({_id}) => _id === productID)
-        dispatch({
-            type : 'ADD_TO_CART',
-            payload : product
-        })
+
+
+        try {
+            const response = await fetch('/api/user/cart', {
+                method : 'POST',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                },
+                body : JSON.stringify({product : {...product, quantity : 1} })
+            })
+            if(response.ok){
+                const data = await response.json()
+                const getProduct = [...data.cart].find(({_id}) => _id === productID )
+                dispatch({
+                    type : 'ADD_TO_CART',
+                    payload : {...getProduct}
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
     
-    const removeFromCart = (productID) => {
-        const updatedProducts = [...state?.cart].filter(({_id}) => _id !== productID)
-        dispatch({
-            type : 'REMOVE_FROM_CART',
-            payload : updatedProducts
-        })
+    const removeFromCart = async (productId) => {
+        
+        try {
+            const response = await fetch(`/api/user/cart/${productId}`, {
+                method : 'DELETE',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                }
+            })
+            
+            if(response?.ok){
+                const json = await response?.json();
+                console.log(json?.cart)
+
+                const updatedProducts = [...json?.cart].filter(({_id}) => {
+                    // console.log(productId, _id)
+                    return  _id !== productId
+                })
+                console.log(updatedProducts)
+                dispatch({
+                    type : 'REMOVE_FROM_CART',
+                    payload : json?.cart
+                })
+            }
+        } catch (error) {
+            console.log(error )
+        }
     }
     
     const addToWishlist = (productID) => {
@@ -113,32 +184,58 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
     
-    const increaseProductQuantity = (productID) => {
-        const updatedCart = [...state?.cart].map((product) => {
-            if(product?._id === productID){
-                return {...product, quantity : product?.quantity <= product?.maxQuantityPurchase ? product?.quantity + 1 : product?.quantity  }
-            }
-            return product;
-        })
+    const increaseProductQuantity = async (productID) => {
+        try {
+            const response = await fetch(`/api/user/cart/${productID}`, {
+                method : 'POST',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                },
+                body : JSON.stringify({
+                    action : {
+                        type : "increment"
+                    }
+                })
+            })
 
-        dispatch({
-            type : 'INCREASE_QUANTITY',
-            payload : updatedCart            
-        })
+            if(response?.ok){
+                const json = await response.json()
+                console.log(json?.cart)
+                dispatch({
+                    type : 'INCREASE_QUANTITY',
+                    payload : json?.cart            
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
     
-    const decreaseProductQuantity = (productID) => {
-        const updatedCart = [...state?.cart].map((product) => {
-            if(product?._id === productID){
-                return {...product, quantity : product?.quantity - 1  }
-            }
-            return product;
-        })
+    const decreaseProductQuantity = async (productID) => {
+        try {
+            const response = await fetch(`/api/user/cart/${productID}`, {
+                method : 'POST',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                },
+                body : JSON.stringify({
+                    action : {
+                        type : "decrement"
+                    }
+                })
+            })
 
-        dispatch({
-            type : 'DECREASE_QUANTITY',
-            payload : updatedCart            
-        })
+            if(response?.ok){
+                const json = await response.json()
+                console.log(json?.cart)
+                dispatch({
+                    type : 'DECREASE_QUANTITY',
+                    payload : json?.cart            
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const searchQueryResults = (e) => {
