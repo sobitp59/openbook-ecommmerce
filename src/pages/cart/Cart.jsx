@@ -48,7 +48,7 @@ const coupons = [
   ];
 
 const Cart = () => {
-    const {cart, increaseProductQuantity, decreaseProductQuantity, removeFromCart, moveToWishlist} = useProducts();
+    const {cart, wishlist, increaseProductQuantity, decreaseProductQuantity, removeFromCart, moveToWishlist} = useProducts();
     const navigate = useNavigate();
 
     const [coupon, setCoupon] = useState(false);
@@ -120,7 +120,13 @@ const Cart = () => {
                                         </section>
     
                                         <section className='cart__buttons'>
-                                            <button onClick={() => moveToWishlist(product?._id)} className='product-details__cart product-details-button'> <AiOutlineHeart/> move to wishlist </button>
+                                            {wishlist?.find(({_id}) => _id === product?._id) ? (
+                                                <button onClick={() => navigate('/wishlist')} className='product-details__cart product-details-button'> <AiOutlineHeart/> already in wishlist </button>
+                                            ) : (
+                                                 <button onClick={() => moveToWishlist(product?._id)} className='product-details__cart product-details-button'>      <AiOutlineHeart/> move to wishlist </button>
+                                            )}
+
+
                                             <button onClick={() => removeFromCart(product?._id)} className='product-details__wishlist product-details-button'> <RiDeleteBin7Line /> remove </button>
     
                                         </section>

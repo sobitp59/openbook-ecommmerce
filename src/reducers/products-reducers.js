@@ -54,7 +54,7 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'ADD_TO_CART': {
-            return {...state, cart : [...state?.cart, {...action.payload}]}
+            return {...state, cart : [...action.payload]}
         }
         
         case 'REMOVE_FROM_CART': {
@@ -62,7 +62,7 @@ export const reducerFunction = (state, action) => {
         }
         
         case 'ADD_TO_WISHLIST': {
-            return {...state, wishlist : [...state?.wishlist, {...action.payload }]}
+            return {...state, wishlist : [...action.payload]}
         }
         
         case 'REMOVE_FROM_WISHLIST': {

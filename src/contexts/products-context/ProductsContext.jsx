@@ -23,35 +23,9 @@ export const ProductsContextProvider = ({children}) => {
             console.log(error.message)
         }
     }
-    
-    // const getCart = async () => {
-    //     try {
-    //         const response = await fetch('/api/user/cart', {
-    //             method : 'GET',
-    //             headers : {
-    //                 authorization : `Bearer ${userEncodedToken}`
-    //             }
-    //         });
-    //         if(response.ok){
-    //             const json = await response?.json()
-    //             console.log(json)
-    //             dispatch({
-    //                 type : 'CART_ITEMS',
-    //                 payload : json.cart
-    //             })
-    //         }
-    //         console.log(response) 
-    //     } catch (error) {
-    //         console.log(error.message)
-    //     }
-    // }
 
     useEffect( async () => {
         getProducts()
-        // getCart()
-
-        
-        
     }, [])
 
 
@@ -109,14 +83,14 @@ export const ProductsContextProvider = ({children}) => {
                 headers : {
                     authorization : `Bearer ${userEncodedToken}`
                 },
-                body : JSON.stringify({product : {...product, quantity : 1} })
+                body : JSON.stringify({product : product})
             })
             if(response.ok){
                 const data = await response.json()
-                const getProduct = [...data.cart].find(({_id}) => _id === productID )
+                console.log(data?.cart)
                 dispatch({
                     type : 'ADD_TO_CART',
-                    payload : {...getProduct}
+                    payload : data?.cart
                 })
             }
         } catch (error) {
@@ -153,35 +127,101 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
     
-    const addToWishlist = (productID) => {
+    const addToWishlist = async (productID) => {
+        if(!loggedIn){
+            navigate('/login')
+        }
         const product = [...state?.allProducts].find(({_id}) => _id === productID)
-        dispatch({
-            type : 'ADD_TO_WISHLIST',
-            payload : product
-        })
+        try {
+            const response = await fetch(`/api/user/wishlist`, {
+                method : 'POST',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                },
+                body : JSON.stringify({
+                    product : product
+                })
+            })             
+
+            if(response?.ok){
+                const data = await response?.json()
+                console.log(data?.wishlist)
+                dispatch({
+                    type : 'ADD_TO_WISHLIST',
+                    payload : data?.wishlist
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
    
-    const moveToWishlist = (productID) => {
-        const wishlistItem = [...state?.wishlist].find(({_id}) => _id === productID)
-        const updatedCart = [...state?.cart].filter(({_id}) => _id !== productID)
-        const product = [...state?.cart].find(({_id}) => _id === productID)
-        const updatedWishlist = wishlistItem ? [...state?.wishlist] : [...state?.wishlist, product] 
-        dispatch({
-            type : 'MOVE_TO_WISHLIST',
-            payload : {
-                updatedCart,
-                updatedWishlist
+    const moveToWishlist = async (productID) => {
+        try {
+            const response = await fetch(`/api/user/cart/${productID}`, {
+                method : 'DELETE',
+                headers : {
+                    authorization : `Bearer ${userEncodedToken}`
+                }
+            })
+            
+            if(response?.ok){
+                const json = await response?.json();
+                dispatch({
+                    type : 'REMOVE_FROM_CART',
+                    payload : json?.cart
+
+                })
             }
-        })
+        } catch (error) {
+            console.log(error )
+        }
+        
+
+        const product = [...state?.allProducts].find(({_id}) => _id === productID)  
+        try {
+                const response = await fetch(`/api/user/wishlist`, {
+                    method : 'POST',
+                    headers : {
+                        authorization : `Bearer ${userEncodedToken}`
+                    },
+                    body : JSON.stringify({
+                        product : product
+                    })
+                })             
+    
+                if(response?.ok){
+                    const data = await response?.json()
+                    dispatch({
+                        type : 'ADD_TO_WISHLIST',
+                        payload : data?.wishlist
+                    })
+                    
+                }
+            } catch (error) {
+                console.log(error)
+            }
     }
     
-    const removeFromWishlist = (productID) => {
-        const updatedProducts = [...state?.wishlist].filter(({_id}) => _id !== productID)
-        console.log(updatedProducts)
-        dispatch({
-            type : 'REMOVE_FROM_WISHLIST',
-            payload : updatedProducts
-        })
+    const removeFromWishlist = async (productID) => {
+        try {
+            const response = await fetch(`/api/user/wishlist/${productID}`, {
+                method : 'DELETE',
+                headers : {
+                    authorization :  `Bearer ${userEncodedToken}`
+                }                
+            })
+            if(response?.ok){
+                const data = await response?.json()
+                dispatch({
+                    type : 'REMOVE_FROM_WISHLIST',
+                    payload : data?.wishlist
+                })
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }       
     }
     
     const increaseProductQuantity = async (productID) => {
@@ -260,7 +300,6 @@ export const ProductsContextProvider = ({children}) => {
                 }
             }) 
     }
-
 
     const filterClearHandler = () => {
         dispatch({type : 'CLEAR_FILTER'})

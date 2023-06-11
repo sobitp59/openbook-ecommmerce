@@ -41,7 +41,7 @@ const ProductCard = ({product, deleteButton}) => {
 
             </section>
 
-            {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>go to card</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to card</button>}
+            {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>already in cart</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to cart</button>}
             
     </div>
   )
