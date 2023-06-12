@@ -1,3 +1,42 @@
+const coupons = [
+    {
+      _id: 0,
+      couponDescription: "50% off",
+      coupon: 50,
+      couponCode: "SHOP50",
+    },
+    {
+      _id: 1,
+      couponDescription: "45% off",
+      coupon: 45,
+      couponCode: "NEW45",
+    },
+    {
+      _id: 2,
+      couponDescription: "30% off",
+      coupon: 30,
+      couponCode: "SHOP30",
+    },
+    {
+      _id: 3,
+      couponDescription: "80% off",
+      coupon: 80,
+      couponCode: "BIBLIO80",
+    },
+    {
+      _id: 4,
+      couponDescription: "10% off",
+      coupon: 10,
+      couponCode: "JUST10",
+    },
+    {
+      _id: 5,
+      couponDescription: "40% off",
+      coupon: 40,
+      couponCode: "AVID40",
+    },
+  ];
+
 export const initialStates = {
     allProducts : [],
     isLoading : true,
@@ -16,8 +55,19 @@ export const initialStates = {
     wishlist : [],
     searchQuery : '',
     searchedProducts : [],
-    toastMessage : ''
+    toastMessage : '',
+    coupons : coupons,
+    couponApplied : false,
+    couponDiscount : {
+        couponPercentage : 0,
+        couponCode : '',
+    }
+
+
 }
+
+// const [coupon, setCoupon] = useState(false);
+//     const [couponDiscount, setCouponDiscount] = useState([0, '']);
 
 export const reducerFunction = (state, action) => {
     switch(action.type){
@@ -29,10 +79,6 @@ export const reducerFunction = (state, action) => {
             return {...state, isLoading : false, allProducts : action.payload}
         }
         
-        // case 'CART_ITEMS' : {
-        //     return {...state,  cart : action.payload}
-        // }
-
         case 'FILTER_RANGE': {
             return {...state, filters : {...state.filters, priceRange : action.payload }}
         }
@@ -101,6 +147,30 @@ export const reducerFunction = (state, action) => {
                     HIGH_TO_LOW : false,
                 }
             }, }
+        }
+
+        case 'APPLY_COUPON' : {
+            console.log(action?.payload?.coupon, action?.payload?.couponCode)
+            return {
+                ...state,
+                couponApplied : true,
+                couponDiscount : {
+                couponPercentage : action?.payload?.coupon,
+                couponCode : action?.payload?.couponCode,
+            }
+        }
+        }
+
+        case 'REMOVE_COUPON' : {
+            return {
+                    ...state,
+                    couponApplied : false,
+                    couponDiscount : {
+                    couponPercentage : 0,
+                    couponCode : '',
+                }
+            }
+    
         }
 
         default:

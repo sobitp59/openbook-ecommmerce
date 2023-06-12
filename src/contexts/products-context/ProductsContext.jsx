@@ -306,6 +306,29 @@ export const ProductsContextProvider = ({children}) => {
     }
 
 
+    const addCouponHandler = (e, couponID) => {
+        const getCoupon = state?.coupons?.find(({_id}) => _id === couponID);
+       if(getCoupon){
+        dispatch({
+            type : 'APPLY_COUPON',
+            payload : {
+                coupon : getCoupon?.coupon,
+                couponCode : getCoupon?.couponCode,
+        }
+        })
+       }else{
+           dispatch({
+            type : 'REMOVE_COUPON'
+           })
+       }
+    }
+    
+    const removeCouponHandler = () => {
+       dispatch({
+        type : 'REMOVE_COUPON'
+       })
+    }
+
     const value = {
         allProducts : state.allProducts,
         sortedProducts : state.sortedProducts,
@@ -316,6 +339,9 @@ export const ProductsContextProvider = ({children}) => {
         searchQuery : state.searchQuery,
         searchQuery : state.searchQuery,
         searchedProducts : state.searchedProducts,
+        coupons : state.coupons,
+        couponApplied : state.couponApplied,
+        couponDiscount : state.couponDiscount,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
@@ -329,7 +355,9 @@ export const ProductsContextProvider = ({children}) => {
         moveToWishlist,
         searchQueryResults,
         showProductOnClick,
-        filterClearHandler
+        filterClearHandler,
+        addCouponHandler,
+        removeCouponHandler
     }
 
 

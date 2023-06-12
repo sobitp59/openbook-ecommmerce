@@ -69,3 +69,10 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+@media (width <= 500px) {
+    .search__input{
+        width: 300px;
+    }
+}

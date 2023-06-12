@@ -3,7 +3,7 @@ import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './checkout.css';
 
 const Checkout = () => {
-    const {cart} = useProducts()
+    const {cart, couponDiscount} = useProducts();
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
         return total +  (Number(curr?.originalPrice) * curr?.qty);
@@ -18,6 +18,7 @@ const Checkout = () => {
         const totalCost = cost * curr?.qty
         return totalCost + total
     }, 0)
+
 
   return (
     <div className='checkout'>
@@ -55,7 +56,7 @@ const Checkout = () => {
     
             <h2>
                 <span>total</span>
-                <span> &#8377;{price}</span>
+                <span> &#8377;{(price - (price / 100 * couponDiscount?.couponPercentage)).toFixed(2)}</span>
             </h2>
  
  

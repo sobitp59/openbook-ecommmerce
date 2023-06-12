@@ -60,3 +60,40 @@
     bottom: 2rem;
 
 }
+
+
+@media (width <= 500px) {
+    body{
+        background-color: lightgreen;
+    }
+
+
+    .header__navbar{
+        border: 2px solid;
+        padding: 1.5rem 1rem;
+        align-items: center;
+        display: grid;
+        grid-template-areas: "logo navlists"
+                             "search search";
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .logo{
+        grid-area: logo;
+    }
+    
+    .search{
+        grid-area: search;
+        width: 200px;
+
+    }
+
+    .navlists{
+        grid-area: navlists;
+    }
+
+
+    
+
+}

@@ -8,51 +8,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './cart.css';
 
-const coupons = [
-    {
-      _id: 0,
-      couponDescription: "50% off",
-      coupon: 50,
-      couponCode: "SHOP50",
-    },
-    {
-      _id: 1,
-      couponDescription: "45% off",
-      coupon: 45,
-      couponCode: "NEW45",
-    },
-    {
-      _id: 2,
-      couponDescription: "30% off",
-      coupon: 30,
-      couponCode: "SHOP30",
-    },
-    {
-      _id: 3,
-      couponDescription: "80% off",
-      coupon: 80,
-      couponCode: "BIBLIO80",
-    },
-    {
-      _id: 4,
-      couponDescription: "10% off",
-      coupon: 10,
-      couponCode: "JUST10",
-    },
-    {
-      _id: 5,
-      couponDescription: "40% off",
-      coupon: 40,
-      couponCode: "AVID40",
-    },
-  ];
+
 
 const Cart = () => {
-    const {cart, wishlist, increaseProductQuantity, decreaseProductQuantity, removeFromCart, moveToWishlist} = useProducts();
+    const {cart, coupons, addCouponHandler,couponApplied, removeCouponHandler, couponDiscount, wishlist, increaseProductQuantity, decreaseProductQuantity, removeFromCart, moveToWishlist} = useProducts();
     const navigate = useNavigate();
 
     const [coupon, setCoupon] = useState(false);
-    const [couponDiscount, setCouponDiscount] = useState([0, '']);
+    // const [couponDiscount, setCouponDiscount] = useState([0, '']);
 
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
@@ -70,23 +33,11 @@ const Cart = () => {
     }, 0)
 
 
-    const couponHandler = (couponID) => {
-        const coupon = coupons?.find(({_id}) => _id === couponID)
-        setCouponDiscount([coupon?.coupon, coupon?.couponCode])
-        setCoupon(false)
-    }
-    
-
     const couponModalHandler = () => {
         setCoupon((prev) => !prev)
     }
 
-    const couponRemoveHandler = () => {
-        setCouponDiscount([0, ''])
-    }
 
-
-    console.log(cart)
     return(
         <div className='cart'>
                 {cart?.length > 0 ? (
@@ -141,15 +92,20 @@ const Cart = () => {
                 <div className='cart__details'>
                         <p className='cart__coupons'><span><MdDiscount className='cart__couponlogo' /> have a coupon?</span> <button className='cart__coupon' onClick={couponModalHandler}>apply</button></p>
                         {coupon && 
-                            <ul className='coupon__list'>
+                            <div className='coupon__list'>
                                 {coupons?.map(({_id, couponDescription, coupon, couponCode}) => {
+                                    console.log(couponDescription, coupon, couponCode)
                                     return(
-                                        <li onClick={() => couponHandler(_id)} className='cart__couponItem' key={_id}>
-                                            <strong>{couponCode}</strong> <span>{couponDescription}</span> 
-                                        </li>
+                                        <label className='cart__couponItem'>
+                                            <div className='cart__coupons'>
+                                                <input name='coupon' type='radio' checked={couponCode === couponDiscount?.couponCode} onChange={(e)=>addCouponHandler(e, _id)} className='cart__couponItem' key={_id} />
+                                                <strong>{couponCode}</strong> 
+                                            </div>
+                                            <span>{couponDescription}</span> 
+                                        </label>
                                     )
                                 })}
-                            </ul>
+                            </div>
                         }
                         <hr />
                         <h2>PRICE DETAILS</h2>
@@ -163,11 +119,11 @@ const Cart = () => {
                             <span> -&#8377;{totalDiscountedPrice}</span>
                         </p>
                         <p className='cart__couponinfo'>
-                            {couponDiscount[1] !== '' && 
+                            {couponDiscount?.couponCode !== '' && 
                                 (
                                     <>
-                                        <span><strong>{couponDiscount[1]}</strong>  applied successfully</span>
-                                        <span onClick={couponRemoveHandler} className='cart__couponRemoveBtn'><CiCircleRemove/></span>
+                                        <span><strong>{couponDiscount?.couponCode}</strong>  applied successfully</span>
+                                        <span onClick={removeCouponHandler} className='cart__couponRemoveBtn'><CiCircleRemove/></span>
                                     </>
                                 )
                             }
@@ -175,10 +131,10 @@ const Cart = () => {
                         <hr />
                         <h2>
                             <span>total</span>
-                            <span> &#8377;{finalPrice - (finalPrice / 100 * couponDiscount[0])}</span>
+                            <span> &#8377;{(finalPrice - (finalPrice / 100 * couponDiscount?.couponPercentage)).toFixed(2)}</span>
                         </h2>
                         <hr />
-                        <p className='cart__message'>you will save &#8377;{totalDiscountedPrice + (finalPrice / 100 * couponDiscount[0])} on this order</p>
+                        <p className='cart__message'>you will save &#8377;{(totalDiscountedPrice + (finalPrice / 100 * couponDiscount?.couponPercentage)).toFixed(2)} on this order</p>
                         <button onClick={() => navigate('/checkout')} className='cart__checkout'>checkout</button>
                 </div>
                 </>

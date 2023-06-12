@@ -13,16 +13,16 @@ import Search from "../search/Search";
 
 const Header = () => {
     const {cart, wishlist} = useProducts();
-    const {login, user} = useAuth();
+    const {user} = useAuth();
 
     return(
         <div className="header">
             <div className="header__navbar">
 
-                <Logo />
-                <Search />
+                <Logo className='logo'/>
+                <Search className='search'/>
                 
-                <div className="header__right">
+                <div className="header__right navlists">
                     <NavLink className="header__links header__cartnav" to={'/products'}>
                         <GiWhiteBook className="header__cartlogo" />
                         <span className="header__linkname">books</span>
