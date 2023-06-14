@@ -5,14 +5,19 @@ import { FaFilter } from 'react-icons/fa'
 import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext'
 import { useProducts } from '../../contexts/products-context/ProductsContext'
 
-const FilterProducts = () => {
+const FilterProducts = ({showFilter}) => {
 const {filterPriceRangeHandler,productCategoryFilter,filterClearHandler,  filters, filterProductByRating, sortProducts} = useProducts();
 
 const categories = useProductCategory();
 const ratings = [1, 2, 3, 4];
 
+const filterShowStyle = {
+  'display' : showFilter ? 'block' : 'none',
+}
+
+
   return (
-    <aside className='products__filter'>
+    <aside className='products__filter' style={filterShowStyle}>
         
         <section className='products__top'>
           <div className=''>
@@ -22,7 +27,6 @@ const ratings = [1, 2, 3, 4];
           <button onClick={filterClearHandler} className='products__filterResetBtn'>clear</button>
           </div>
         </section>
-        
         
         {/* FILTER PRODUCTS BY PRICE RANGE */}
         <section className='products__filters'>

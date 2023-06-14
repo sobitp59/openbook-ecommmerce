@@ -75,4 +75,29 @@
     .search__input{
         width: 300px;
     }
+
+    .search{
+        width: 80%;
+        position: relative;
+    
+    }
+
+    .search__title{
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        font-size: 0.8rem;
+    }
+    .search__author{
+        font-size: 0.8rem;
+    }
+    
+    .search__description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        font-size: 0.6rem;
+    }
 }

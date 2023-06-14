@@ -167,3 +167,40 @@
 .product-details__backBtn:hover, .product-details__backBtn:active{
     outline: 4px solid #0000000a;
 }
+
+@media (width <= 380px){
+
+    .product-details{
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        gap: 2rem;
+    }
+
+    .product-details__product{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-details__title{
+        font-size: 1.6rem;
+        margin-top: 1rem;
+    }
+
+    .product-details__buttons{
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        gap: 8px;
+    }
+
+    .product-details__backBtn{
+        width: 30%;
+        margin: 0.5rem;
+        height: 2.7rem;
+    }
+
+
+}

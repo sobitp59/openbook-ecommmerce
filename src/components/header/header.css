@@ -62,10 +62,7 @@
 }
 
 
-@media (width <= 500px) {
-    body{
-        background-color: lightgreen;
-    }
+@media (width <= 380px) {
 
 
     .header__navbar{

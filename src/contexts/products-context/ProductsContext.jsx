@@ -24,8 +24,30 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
 
+    // Addresses
+    const getAddress = async (authToken) => {
+        console.log('ADDRESS CLCIKED')
+        try {
+            const response = await fetch('/api/user/addresses', {
+                headers : {authorization : authToken}
+            });
+            if(response?.ok){
+                const data = await response?.json();
+                console.log(data)
+                dispatch({
+                    type : 'SET_ADDRESS',
+                    payload : data?.address
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+
+
     useEffect( async () => {
-        getProducts()
+        getProducts();
     }, [])
 
 
@@ -357,7 +379,8 @@ export const ProductsContextProvider = ({children}) => {
         showProductOnClick,
         filterClearHandler,
         addCouponHandler,
-        removeCouponHandler
+        removeCouponHandler,
+        getAddress
     }
 
 

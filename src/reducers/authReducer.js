@@ -13,8 +13,7 @@ export const initialState = {
         registered : false,
         loggedIn : JSON.parse(localStorage.getItem('userData'))?.token ||  false,
         userEncodedToken : JSON.parse(localStorage.getItem('userData'))?.token || false,
-        userInfo : JSON.parse(localStorage.getItem('userData'))?.userInfo || false
-
+        userInfo : JSON.parse(localStorage.getItem('userData'))?.userInfo || false 
     }
 
 }
@@ -61,5 +60,6 @@ export const userAuthReducer = (state, action) => {
         case 'USER_LOGOUT' : {
             return {...state, user : {...state.user, registered : true, loggedIn : false, userEncodedToken : '', userInfo : ''}}
         }
+
     }
 }

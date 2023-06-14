@@ -53,6 +53,7 @@ export const initialStates = {
     },
     cart : [],
     wishlist : [],
+    address : [],
     searchQuery : '',
     searchedProducts : [],
     toastMessage : '',
@@ -66,8 +67,6 @@ export const initialStates = {
 
 }
 
-// const [coupon, setCoupon] = useState(false);
-//     const [couponDiscount, setCouponDiscount] = useState([0, '']);
 
 export const reducerFunction = (state, action) => {
     switch(action.type){
@@ -77,6 +76,10 @@ export const reducerFunction = (state, action) => {
 
         case 'LOADED' : {
             return {...state, isLoading : false, allProducts : action.payload}
+        }
+        
+        case 'SET_ADDRESS' : {
+            return {...state, address : action.payload}
         }
         
         case 'FILTER_RANGE': {

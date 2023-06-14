@@ -41,3 +41,34 @@
 .product__categoryBtn:hover, .product__categoryBtn:active{
     outline: 4px solid #6af34f13;
 }
+
+.products__filtering{
+    display: none;
+}
+
+
+/* mobile device */
+
+@media (width <= 380px){
+    .products{
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+    
+    .products__lists{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        overflow-y: scroll;
+    }
+    
+    .products__filtering{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+}

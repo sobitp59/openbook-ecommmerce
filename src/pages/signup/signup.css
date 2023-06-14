@@ -46,3 +46,14 @@
 .form__button:hover{
     outline: 3px solid var(--primary-color-light);
 }
+
+/* mobile-device */
+@media (width <= 380px){
+
+    .signup__form{
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

@@ -90,7 +90,7 @@ const Cart = () => {
                 </div>
                 
                 <div className='cart__details'>
-                        <p className='cart__coupons'><span><MdDiscount className='cart__couponlogo' /> have a coupon?</span> <button className='cart__coupon' onClick={couponModalHandler}>apply</button></p>
+                        <p className='cart__coupons'><span><MdDiscount className='cart__couponlogo' /> have a coupon?</span> <button className='cart__coupon' onClick={couponModalHandler}>{'see'}</button></p>
                         {coupon && 
                             <div className='coupon__list'>
                                 {coupons?.map(({_id, couponDescription, coupon, couponCode}) => {

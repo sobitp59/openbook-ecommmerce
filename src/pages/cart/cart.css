@@ -194,3 +194,36 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+
+@media (width <= 380px) {
+    .cart{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cart__lists{
+        gap: 1rem;
+    }
+
+    .cart__product{
+        width: 100%;
+       display: flex;
+       flex-direction: column;
+       /* justify-content: space-between; */
+       /* align-items: center; */
+    }   
+    
+    .cart__detail > p, h1{
+     font-size: 1.2rem;
+    }
+
+    .cart__productImage{
+        height: 100%;
+        width: 100%;
+
+    }
+
+}

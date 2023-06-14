@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/authentication/AuthContext';
+import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './user.css';
 
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
+  const {getAddress} = useProducts()
   const [userState, setUserState] = useState({profile : true, address : false})
   console.log(user)
   const {userInfo} = user;
@@ -37,7 +39,7 @@ const User = () => {
         ) : (
         <section className='user__address'>
             <h2>my addresses</h2>
-            <button>+ add new address</button>
+            <button onClick={() => getAddress(user?.userEncodedToken)}>+ add new address</button>
         </section>
 
         )

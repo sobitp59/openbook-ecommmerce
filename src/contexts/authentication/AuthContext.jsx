@@ -135,6 +135,8 @@ export const AuthContextProvider = ({children}) => {
         navigate('/')
     }
 
+    
+
 
     const value = {
         login : state.login,
@@ -149,6 +151,7 @@ export const AuthContextProvider = ({children}) => {
         userLogoutHandler,
         getUserLoginPassoword,
         getUserLoginEmail,
+ 
     }
 
 
