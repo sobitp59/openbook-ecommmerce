@@ -11,13 +11,11 @@ const {filterPriceRangeHandler,productCategoryFilter,filterClearHandler,  filter
 const categories = useProductCategory();
 const ratings = [1, 2, 3, 4];
 
-const filterShowStyle = {
-  'display' : showFilter ? 'block' : 'none',
-}
+const className = showFilter ?  'products__filter products__filter--show' : 'products__filter'
 
 
   return (
-    <aside className='products__filter' style={filterShowStyle}>
+    <aside className={className} >
         
         <section className='products__top'>
           <div className=''>

@@ -37,12 +37,13 @@ const Products = () => {
         <p>showing ({filteredProducts?.length}) products</p>
       </section>
     
+      {/* { !showFilter ? <FilterProducts showFilter={showFilter}/> : <FilterProducts />} */}
       <FilterProducts showFilter={showFilter}/>
-
+  
       <section>
 
         <ul className='products__lists'>
-          { !filteredProducts ? (
+          { filteredProducts?.length < 1 ? (
               <li>no products found!!</li>
           ) : (
             filteredProducts?.map((product) => {

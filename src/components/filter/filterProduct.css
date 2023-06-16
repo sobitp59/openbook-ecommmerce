@@ -81,3 +81,12 @@
     outline: 4px solid #f34f4f11;
 }
 
+@media (width <= 380px){
+    .products__filter{
+        display: none;
+    }
+    
+    .products__filter--show{
+        display: block;
+    }
+}
