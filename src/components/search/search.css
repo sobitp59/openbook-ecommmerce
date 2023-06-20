@@ -71,14 +71,15 @@
 }
 
 
-@media (width <= 500px) {
+@media (width <= 380px) {
     .search__input{
-        width: 300px;
+        width: 250px;
+        padding: 0.7rem;
     }
 
     .search{
-        width: 80%;
-        position: relative;
+        width: 100%;
+        position: static;
     
     }
 
@@ -99,5 +100,19 @@
         -webkit-box-orient: vertical;  
         overflow: hidden;
         font-size: 0.6rem;
+    }
+
+
+
+    .search__products{
+        position: absolute;
+        top: 80px;
+        left: 1rem;
+        right: 1rem;
+        border: 1px solid var(--primary-color-light);
+        z-index: 1000;
+        width: 90%;
+        margin: auto;
+        display: grid;
     }
 }

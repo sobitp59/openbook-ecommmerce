@@ -15,3 +15,12 @@
 .user__details, .user__address{
     border: 2px solid;
 }
+
+.user__addressform{
+    width: 60%;
+    margin: auto;
+}
+
+.user__addresses{
+    border: 2px solid red;
+}

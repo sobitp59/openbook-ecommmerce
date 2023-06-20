@@ -17,3 +17,21 @@
     text-align: left;
     list-style: none;
 }
+
+
+/* MOBILE DEVICE */
+@media (width <= 380px){
+    .footer{
+        padding: 2rem 1rem;
+        background: var(--secondary-color);
+        margin-bottom: 4rem;
+    }
+
+    .footer__bottom{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: left;
+        gap: 1.5rem;
+    }
+}

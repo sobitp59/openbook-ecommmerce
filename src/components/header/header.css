@@ -66,31 +66,35 @@
 
 
     .header__navbar{
-        border: 2px solid;
         padding: 1.5rem 1rem;
+        justify-content: center;
         align-items: center;
-        display: grid;
-        grid-template-areas: "logo navlists"
-                             "search search";
-        grid-template-columns: 100px 1fr;
-        grid-template-rows: 1fr 1fr;
-    }
-
-    .logo{
-        grid-area: logo;
+        gap: 1rem;
+        /* position: absolute; */
     }
     
-    .search{
-        grid-area: search;
-        width: 200px;
-
+    .header__right{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20000;
+        margin: auto;
+        width: 100%;
+        background-color: var(--primary-color);
+        padding: 0.8rem 0;
+        border-radius: 0.8rem 0.8rem  0 0;
     }
 
-    .navlists{
-        grid-area: navlists;
+    .header__links{
+        color: white;
     }
 
-
+    .header__links:hover, .header__links:active{
+        color: white;
+    }
     
 
 }

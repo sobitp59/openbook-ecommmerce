@@ -24,6 +24,15 @@ const Products = () => {
 
                             
 
+ 
+
+  const handleScroll = (event) => {
+    const scroll = event.currentTarget.scrollTop
+    if(scroll > 5 && showFilter){
+      setScrollTop(false);
+    }
+  };
+  
 
   return (
     <div className='products'>
@@ -57,5 +66,6 @@ const Products = () => {
     </div>
   )
 }
+
 
 export default Products;

@@ -54,6 +54,15 @@ export const initialStates = {
     cart : [],
     wishlist : [],
     address : [],
+    addressDetails : {
+        name : '',
+        house : '',
+        city : '',
+        state : '',
+        country : '',
+        postalCode : '',
+        mobileNumber : '',
+    },
     searchQuery : '',
     searchedProducts : [],
     toastMessage : '',
@@ -80,6 +89,37 @@ export const reducerFunction = (state, action) => {
         
         case 'SET_ADDRESS' : {
             return {...state, address : action.payload}
+        }
+
+        case 'USER_ADDRESS_DUMMY' : {
+            return {...state, addressDetails : { 
+                name : 'Krishna Kumar',
+                house : 'Sri Sri Krishna Balaram Mandir',
+                city : 'Vrindavan',
+                state : 'Uttar Pradesh',
+                country : 'India',
+                postalCode : '281121',
+                mobileNumber : '0123456789',}}
+        }
+        
+        case 'USER_ADDRESS_CANCEL' : {
+            return {...state, addressDetails : { 
+                name : '',
+                house : '',
+                city : '',
+                state : '',
+                country : '',
+                postalCode : '',
+                mobileNumber : '',
+            }}
+        }
+
+        case 'USER_ADDRESS_FORM' : {
+            return {...state, addressDetails : {...state?.addressDetails, [action?.payload?.name] : action?.payload?.value}}
+        }
+
+        case 'ADD_USER_ADDRESS' : {
+            return {...state, address : action?.payload?.address, addressDetails : action?.payload?.addressDetails}
         }
         
         case 'FILTER_RANGE': {

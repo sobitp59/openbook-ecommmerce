@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+    import { createContext, useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
 import { useAuth } from '../authentication/AuthContext';
@@ -33,7 +33,6 @@ export const ProductsContextProvider = ({children}) => {
             });
             if(response?.ok){
                 const data = await response?.json();
-                console.log(data)
                 dispatch({
                     type : 'SET_ADDRESS',
                     payload : data?.address
@@ -45,9 +44,82 @@ export const ProductsContextProvider = ({children}) => {
     }
     
 
+    const saveAddressForm = async (e, address, authToken, setShowAddressForm) => {
+        e.preventDefault();
+        console.log(address)
+        console.log(state?.addressDetails)
+        try {
+            const response = await fetch('/api/user/address', {
+                method : 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    authorization : authToken
+                },
+                body : JSON.stringify({address : state?.addressDetails})
+            })
+
+            if(response?.ok){
+                const data = await response?.json();
+                const [{address}] = data?.address;
+                console.log(address)
+                console.log(data?.address)
+                dispatch({
+                    type : 'ADD_USER_ADDRESS',
+                    payload : {
+                        address : data?.address,
+                        addressDetails : { 
+                            name : '',
+                            house : '',
+                            city : '',
+                            state : '',
+                            country : '',
+                            postalCode : '',
+                            mobileNumber : '',
+                        }
+                    }
+                })
+
+                setShowAddressForm(false)
+            }
+        } catch (error) {
+            console.log('SOME ERROR OCCURED : ', error)
+        }
+    }
+
+    const fillDummyData = (e) => {
+        e.preventDefault()
+        dispatch({
+            type : 'USER_ADDRESS_DUMMY'
+        })
+    }
+
+    const cancelForm = (e, setShowAddressForm) => {
+        e.preventDefault()
+        setShowAddressForm(false)
+        dispatch({
+            type : 'USER_ADDRESS_CANCEL' 
+        })
+    }
+
+    const handleUserAddressForm = (e) => {
+        e.preventDefault();
+        const {name, value} = e?.target;
+        console.log(name, value)
+        dispatch({
+            type : 'USER_ADDRESS_FORM',
+            payload : {
+                name : name,
+                value : value
+            }
+        })   
+    }
+
+    // address
+
 
     useEffect( async () => {
         getProducts();
+        getAddress();
     }, [])
 
 
@@ -357,6 +429,7 @@ export const ProductsContextProvider = ({children}) => {
         isLoading : state.isLoading,
         filters : state.filters,
         cart : state.cart,
+        address : state.address,
         wishlist : state.wishlist,
         searchQuery : state.searchQuery,
         searchQuery : state.searchQuery,
@@ -364,6 +437,7 @@ export const ProductsContextProvider = ({children}) => {
         coupons : state.coupons,
         couponApplied : state.couponApplied,
         couponDiscount : state.couponDiscount,
+        addressDetails : state.addressDetails,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
@@ -380,7 +454,10 @@ export const ProductsContextProvider = ({children}) => {
         filterClearHandler,
         addCouponHandler,
         removeCouponHandler,
-        getAddress
+        fillDummyData,
+        cancelForm,
+        saveAddressForm,
+        handleUserAddressForm
     }
 
 
@@ -392,8 +469,6 @@ export const ProductsContextProvider = ({children}) => {
     </ProductsContext.Provider>
 }
 
-export const useProducts = () => {
-    return useContext(ProductsContext)
-}
 
 
+export const useProducts  = () => useContext(ProductsContext)

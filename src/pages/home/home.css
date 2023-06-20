@@ -89,3 +89,36 @@
 .home__categoryDescription{
     font-size: 1.1rem;
 }
+
+
+/* MOBILE DEVICE */
+@media (width <= 380px){
+    .home__headline{
+        font-size: 3rem;
+        margin-top: 3rem;
+        padding: 0 1rem;
+        text-align: left;
+    }
+
+    .home__cta{
+        margin: 2rem auto;
+        width: 10rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+
+    .home__categories{
+        display: flex;
+        flex-direction: column;
+        padding: 10rem 1rem;
+    }
+
+    .home__title{
+        font-size: 2rem;
+    }
+
+    .home__lists{
+        display: flex;
+        flex-direction: column;
+    }
+}
