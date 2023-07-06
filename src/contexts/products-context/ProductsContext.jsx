@@ -114,6 +114,53 @@ export const ProductsContextProvider = ({children}) => {
         })   
     }
 
+    const userAddressDeleteHandler = async(authToken, addressID) => {
+        try {
+            const response = await fetch(`/api/user/address/${addressID}`, {
+                method : "DELETE",
+                headers : {
+                    authorization : authToken
+                }
+            })
+            
+            if(response?.ok){
+                const data = await response?.json();
+                dispatch({
+                    type : 'ADD_USER_ADDRESS',
+                    payload : {
+                        address : data?.address
+                    }
+                })
+            }
+            
+        } catch (error) {
+            console.log('SOME ERROR OCCURED', error);
+        }
+    }
+
+    // console.log('EDIT')
+    // console.log(authToken)
+    // console.log(addressID)
+    const userEditAddressHandler = async(authToken, addressID) => {
+        try {
+            const response = await fetch(`/api/user/address/${addressID}`, {
+                method : 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    authorization : authToken
+                },
+                body : JSON.stringify({address : state?.addressDetails})
+            })
+
+            if(response?.ok){
+                const data = await response?.json();
+                console.log(data);
+            }
+        } catch (error) {
+         console.log('SOME ERROR OCCURED : ', error)   
+        }
+    }
+
     // address
 
 
@@ -141,6 +188,8 @@ export const ProductsContextProvider = ({children}) => {
                 category, checked                
             }
         })
+
+        navigate('/products')
     }
 
     const filterProductByRating = (e) => {
@@ -457,7 +506,9 @@ export const ProductsContextProvider = ({children}) => {
         fillDummyData,
         cancelForm,
         saveAddressForm,
-        handleUserAddressForm
+        handleUserAddressForm,
+        userAddressDeleteHandler,
+        userEditAddressHandler
     }
 
 

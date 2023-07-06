@@ -5,6 +5,7 @@ const ProductCategoryContext = createContext()
 
 export  const ProductCategoryContextProvider = ({children}) => {
     const [productCategories, setProductCategories] = useState([])
+    const [productCategory, setProductCategory] = useState([]);
 
     const getProductCategories = async() => {
         try {
@@ -16,11 +17,18 @@ export  const ProductCategoryContextProvider = ({children}) => {
         }
     }
 
+    const getCategoryProducts = (category) => { 
+
+        if(!productCategory?.includes(category?.categoryName)){
+            setProductCategory(prev => [...prev, category?.categoryName])
+        }
+    }
+
     useEffect(() => {
         getProductCategories();
     }, [])
 
-    return <ProductCategoryContext.Provider value={productCategories}>
+    return <ProductCategoryContext.Provider value={{productCategories, getCategoryProducts, productCategory}}>
         {children}
     </ProductCategoryContext.Provider>;
 }

@@ -12,15 +12,16 @@ import "./products.css"
 
 const Products = () => {
   const {allProducts, filters} = useProducts()
-  const productCategories = useProductCategory()
   const [showFilter, setShowFilter] = useState(false)
+  const {productCategory} = useProductCategory();
+
 
   const filteredProducts = [...allProducts]
                             .filter((product) => filters?.priceRange ? product?.originalPrice - product?.originalPrice/100* product?.percentageOff <=  filters?.priceRange  : true)
                             .filter((product) => {
                               const [{star}] = product?.rating;
                               return  filters?.productRating?.rating ? star >= Number(filters?.productRating?.rating)  : true 
-                            }).filter(({categoryName}) => filters?.categoryFilter?.length === 0 ? true : filters?.categoryFilter?.includes(categoryName) )
+                            }).filter(({categoryName}) => filters?.categoryFilter?.length === 0 ? true : filters?.categoryFilter?.includes(categoryName))
 
                             
 

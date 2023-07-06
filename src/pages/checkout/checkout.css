@@ -22,4 +22,24 @@
     align-items: center;
 }
 
+.checkout__addressSelect{   
+    border: 2px solid var(--primary-color-light);
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+}
 
+.checkout__addressInput{
+    accent-color: var(--primary-color-light);
+}
+
+.checkout__addressSelect:hover{
+    border: 2px solid var(--primary-color-dark);
+}
+
+.checkout--div{
+    border: 2px solid var(--primary-color-light);
+    border-radius: 1rem;
+}

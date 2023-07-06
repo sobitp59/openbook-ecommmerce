@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './checkout.css';
 
+
 const Checkout = () => {
-    const {cart, couponDiscount} = useProducts();
+    const {cart, couponDiscount, address} = useProducts();
+    const navigate = useNavigate();
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
         return total +  (Number(curr?.originalPrice) * curr?.qty);
@@ -20,15 +23,34 @@ const Checkout = () => {
     }, 0)
 
 
+    console.log(address)
+
+
   return (
     <div className='checkout'>
-        <div className='checkout__address'>
+        <div className='checkout__address checkout--div'>
             <h1>
                 address
             </h1>
+
+            <button onClick={() => navigate('/user-profile')} className='user__addBtn'>add another address</button>
+            <section>
+                {address?.map(({address, _id}) => {
+                    return <label className='checkout__addressSelect' htmlFor="" key={_id}>
+                        <input type="radio" name='user_address' className='checkout__addressInput'/>
+                        <section>
+                            <h3>{address?.name}</h3>
+                            <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
+                            <p>{address?.country}</p>
+                            <p><strong>contact : </strong>{address?.mobileNumber}</p>
+                        </section>
+                    </label>
+                })}
+            </section>
+
         </div>
 
-        <div className='checkout__details'>
+        <div className='checkout__details checkout--div'>
 
             <hr />
             <h2>order details</h2>

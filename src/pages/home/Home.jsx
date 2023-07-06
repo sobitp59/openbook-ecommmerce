@@ -2,12 +2,15 @@ import { BiRightArrowAlt } from 'react-icons/bi';
 import { useNavigate } from 'react-router';
 import BooksCollage from '../../assets/book--home.png';
 import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext';
+import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './home.css';
 
 
 const Home = () => {
     const navigate = useNavigate()
-    const productCategories = useProductCategory();
+    const {productCategories} = useProductCategory();
+    const {productCategoryFilter, filters} = useProducts();
+
 
     const navigateToHomeOage = () => navigate('/products') 
 
@@ -25,10 +28,13 @@ const Home = () => {
                 <h2 className='home__title'>featured book categories</h2>
                 <ul className='home__lists'>
                     { productCategories?.map((category) => {
-                        return <li key={category?._id} className='home__category'>
-                            <h2 className='home__categoryName'>{category?.categoryName}</h2>
-                            <p className='home__categoryDescription'>{category?.description}</p>
-                        </li>
+                    return(
+                            <label className='home__category'>
+                                <input className='home__input' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
+                                <h2 className='home__categoryName'>{category?.categoryName}</h2>
+                                <p className='home__categoryDescription'>{category?.description}</p>
+                            </label>
+                    )
                     })}                 
                 </ul>
             </section>

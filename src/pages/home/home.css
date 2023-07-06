@@ -90,6 +90,12 @@
     font-size: 1.1rem;
 }
 
+.home__input{
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}
+
 
 /* MOBILE DEVICE */
 @media (width <= 380px){

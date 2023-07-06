@@ -7,11 +7,13 @@ import './user.css';
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
-  const {address} = useProducts()
+  const {address, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
   const [userState, setUserState] = useState({profile : true, address : false})
   const [showAddressForm, setShowAddressForm] = useState(false);
   const {userInfo} = user;
-  
+
+  const styleAddress = address.length > 0 && 'user__addresses'
+
   return (
     <div className='user'>
 
@@ -20,12 +22,12 @@ const User = () => {
       </div>
       
       <div className='user__buttons'>
-        <button onClick={() => setUserState({profile : true, address : false})}>profile</button>
-        <button onClick={() => setUserState({profile : false, address : true})}>address</button>
+        <button style={{background : userState?.profile && '#994ff3', color : userState?.profile && 'white'}} className='user__button user__button--profile' onClick={() => setUserState({profile : true, address : false})}>profile</button>
+        <button style={{background : userState?.address && '#994ff3', color : userState?.address && 'white'}} className='user__button user__button--address' onClick={() => setUserState({profile : false, address : true})}>address</button>
       </div>
 
       {userState.profile ? (
-        <section className='user__details'>
+        <section className='user__details user--data'>
             <h2>profile details</h2>
             <article>
               <strong>name</strong> <span>{userInfo?.fullname}</span>
@@ -35,29 +37,29 @@ const User = () => {
             </article>
 
             <h2>account settings</h2>
-            <button onClick={userLogoutHandler}>logout</button>
+            <button className='user__deleteBtn' onClick={userLogoutHandler}>logout</button>
         </section>
         ) : (
-        <section className='user__address'>
+        <section className='user__address user--data'>
             <h2>my addresses</h2>
             
             {/* address */}
-            <ul className='user__addresses'>
+            <ul>
               {address?.map(({ address, _id}) => (
-                <li key={_id}>
+                <li key={_id} className={styleAddress}>
                   <h3>{address?.name}</h3>
                   <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
                   <p>{address?.country}</p>
                   <p><strong>contact : </strong>{address?.mobileNumber}</p>
                   <section>
-                    <button>edit</button>
-                    <button>delete</button>
+                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, _id)} className='user__addressButton user__editBtn'>edit</button>
+                    <button onClick={() => userAddressDeleteHandler(user?.userEncodedToken, _id)} className='user__addressButton user__deleteBtn'>delete</button>
                   </section>
                 </li>
               ))}
             </ul>
 
-            <button onClick={() => setShowAddressForm(true)}>+ add a new address</button>
+            <button className='user__addBtn' onClick={() => setShowAddressForm(true)}>+ add a new address</button>
         </section>
 
         )

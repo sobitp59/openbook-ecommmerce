@@ -8,7 +8,7 @@ import { useProducts } from '../../contexts/products-context/ProductsContext'
 const FilterProducts = ({showFilter}) => {
 const {filterPriceRangeHandler,productCategoryFilter,filterClearHandler,  filters, filterProductByRating, sortProducts} = useProducts();
 
-const categories = useProductCategory();
+const {productCategories, productCategory} = useProductCategory();
 const ratings = [1, 2, 3, 4];
 
 const className = showFilter ?  'products__filter products__filter--show' : 'products__filter'
@@ -39,10 +39,10 @@ const className = showFilter ?  'products__filter products__filter--show' : 'pro
        {/* FILTER PRODUCTS BY CATEGORY */}
         <section className='products__filters'>
             <h2>category</h2>       
-            { categories?.map(({categoryName}) => {
+            { productCategories?.map(({categoryName}) => {
               return(
                   <label>
-                    <input onChange={productCategoryFilter} value={categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(categoryName)} />
+                    <input onChange={productCategoryFilter} value={categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(categoryName)}/>
                     {categoryName}
                   </label>
               )

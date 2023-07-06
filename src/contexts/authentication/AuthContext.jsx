@@ -71,7 +71,10 @@ export const AuthContextProvider = ({children}) => {
                 })
     
                 if(fetchResponse.ok){
-                    const data = await fetchResponse.json()
+                    const data = await fetchResponse.json();
+                    console.log(data)
+                    const userSignUpData = {token : `${data?.encodedToken}`}
+                localStorage.setItem('userSignUpData', JSON.stringify(userSignUpData))
                     dispatch({type : 'CLEAR_FIELD'})  
                     navigate('/login')
                     dispatch({type : 'REGISTRATION_SUCCESS'})
@@ -88,6 +91,7 @@ export const AuthContextProvider = ({children}) => {
 
     const userLoginHandler = async (e, email, password) => {
         e.preventDefault()
+        console.log(email, password)
         try {
             const fetchResponse = await fetch('/api/auth/login', {
                 method: 'POST',
@@ -104,15 +108,14 @@ export const AuthContextProvider = ({children}) => {
                 const data = await fetchResponse.json()
                 console.log(data)
                 console.log(data?.foundUser)
-                const userData = {token : `Bearer ${data?.encodedToken}`, userInfo : data?.foundUser}
-                localStorage.setItem('userData', JSON.stringify(userData))
+                const userLoginData = {token : `${data?.encodedToken}`, userInfo : data?.foundUser}
+                localStorage.setItem('userLoginData', JSON.stringify(userLoginData))
                 dispatch({type : 'CLEAR_FIELD'})  
-                // navigate('/products')
                 dispatch({
                     type : 'LOGIN_SUCCESS',
                     payload : {
                         userInfo : data?.foundUser,
-                        token : `Bearer ${data?.encodedToken}`,
+                        token : `${data?.encodedToken}`,
                     }
                 })
             }else{

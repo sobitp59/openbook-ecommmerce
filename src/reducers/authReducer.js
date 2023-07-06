@@ -11,9 +11,9 @@ export const initialState = {
     },
     user : {
         registered : false,
-        loggedIn : JSON.parse(localStorage.getItem('userData'))?.token ||  false,
-        userEncodedToken : JSON.parse(localStorage.getItem('userData'))?.token || false,
-        userInfo : JSON.parse(localStorage.getItem('userData'))?.userInfo || false 
+        loggedIn : JSON.parse(localStorage.getItem('userLoginData'))?.token || '',
+        userEncodedToken : JSON.parse(localStorage.getItem('userLoginData'))?.token || false,
+        userInfo : JSON.parse(localStorage.getItem('userLoginData'))?.userInfo || false 
     }
 
 }
