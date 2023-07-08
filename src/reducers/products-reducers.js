@@ -54,6 +54,7 @@ export const initialStates = {
     cart : [],
     wishlist : [],
     address : [],
+    deliveryAddress : [],
     addressDetails : {
         name : '',
         house : '',
@@ -122,6 +123,21 @@ export const reducerFunction = (state, action) => {
             return {...state, address : action?.payload?.address, addressDetails : action?.payload?.addressDetails}
         }
         
+        case 'DELETE_USER_ADDRESS' : {
+            return {...state, address : action?.payload?.address, deliveryAddress : action?.payload?.delAddress}
+        }
+        
+        case 'ADDRESS_CHECKOUT' : {
+           console.log(state?.address?.length)
+           console.log(action?.payload)
+            const [{_id}] = action?.payload;
+            console.log(_id) 
+
+            // console.log(state?.address?.length > 0 ? action.payload : 'NO DELIVERY ADDRESS' )
+
+            return {...state, deliveryAddress : action.payload  }
+        }
+
         case 'FILTER_RANGE': {
             return {...state, filters : {...state.filters, priceRange : action.payload }}
         }

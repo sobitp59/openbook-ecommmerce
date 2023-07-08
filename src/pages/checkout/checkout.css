@@ -29,10 +29,13 @@
     padding: 1rem;
     border-radius: 1rem;
     margin-bottom: 0.5rem;
+    cursor: pointer; 
 }
+
 
 .checkout__addressInput{
     accent-color: var(--primary-color-light);
+    cursor: pointer; 
 }
 
 .checkout__addressSelect:hover{

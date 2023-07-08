@@ -1,11 +1,14 @@
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './checkout.css';
 
 
 const Checkout = () => {
-    const {cart, couponDiscount, address} = useProducts();
+    const {cart, couponDiscount, address, deliveryAddress, selectCheckoutAddress} = useProducts();
+    const {user} = useAuth()
     const navigate = useNavigate();
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
@@ -23,30 +26,47 @@ const Checkout = () => {
     }, 0)
 
 
+
+    console.log(deliveryAddress)
     console.log(address)
+
+
+    const [{address : addressCheckout, _id : deliveryAddressID} = {}] = deliveryAddress ?? [];
+
+
+    const handleCheckout = () => {
+        console.log('hello')
+        if(address?.length === 0){
+            toast.error('please add an address!')
+        }else if(deliveryAddress?.length === 0){
+            toast.error('please select an address!')
+        }        
+    }
+
 
 
   return (
     <div className='checkout'>
+        <Toaster />
+         
         <div className='checkout__address checkout--div'>
             <h1>
                 address
             </h1>
 
             <button onClick={() => navigate('/user-profile')} className='user__addBtn'>add another address</button>
-            <section>
-                {address?.map(({address, _id}) => {
-                    return <label className='checkout__addressSelect' htmlFor="" key={_id}>
-                        <input type="radio" name='user_address' className='checkout__addressInput'/>
-                        <section>
-                            <h3>{address?.name}</h3>
-                            <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
-                            <p>{address?.country}</p>
-                            <p><strong>contact : </strong>{address?.mobileNumber}</p>
-                        </section>
-                    </label>
-                })}
-            </section>
+
+            {address?.map(({address, _id}) => {
+                return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
+                    <input checked={deliveryAddressID === _id} onChange={() => {}} type="radio" name='user_address' className='checkout__addressInput'/>
+                    <section>
+                        <h3>{address?.name}</h3>
+                        <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
+                        <p>{address?.country}</p>
+                        <p><strong>contact : </strong>{address?.mobileNumber}</p>
+                    </section>
+                </label>
+            })}
 
         </div>
 
@@ -86,13 +106,16 @@ const Checkout = () => {
             <h2>deliver to</h2>
             <hr />
 
-            <p>Rutvik Umak
-
-            #1/4 , 100ft Ring Road, Karve Nagar, Bangalore , Maharashtra ,India. 452412
-                        
-            Phone Number : 123456789</p>
-
-            <button className='cart__checkout'>place order</button>
+            { deliveryAddress?.length > 0 && (
+                <>
+                    <h3>{addressCheckout?.name}</h3>
+                    <p>{addressCheckout?.house} {addressCheckout?.city}, {addressCheckout?.state}  {addressCheckout?.postalCode}</p>
+                    <p>{addressCheckout?.country}</p>
+                    <p><strong>contact : </strong>{addressCheckout?.mobileNumber}</p>
+                </>
+            ) }
+            
+            <button onClick={handleCheckout} className='cart__checkout'>place order</button>
 
         </div>
     </div>

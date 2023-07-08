@@ -125,10 +125,16 @@ export const ProductsContextProvider = ({children}) => {
             
             if(response?.ok){
                 const data = await response?.json();
+
+                const [{_id} = []] = state?.deliveryAddress ?? [];
+                const deliveryAddressCheck = _id === addressID ? [] : state?.deliveryAddress
+                console.log(deliveryAddressCheck)
+
                 dispatch({
-                    type : 'ADD_USER_ADDRESS',
+                    type : 'DELETE_USER_ADDRESS',
                     payload : {
-                        address : data?.address
+                        address : data?.address,
+                        delAddress : deliveryAddressCheck
                     }
                 })
             }
@@ -138,9 +144,6 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
 
-    // console.log('EDIT')
-    // console.log(authToken)
-    // console.log(addressID)
     const userEditAddressHandler = async(authToken, addressID) => {
         try {
             const response = await fetch(`/api/user/address/${addressID}`, {
@@ -159,6 +162,16 @@ export const ProductsContextProvider = ({children}) => {
         } catch (error) {
          console.log('SOME ERROR OCCURED : ', error)   
         }
+    }
+
+    const selectCheckoutAddress = async (addressID , authToken) => {
+        console.log(state?.address)
+        const address = state?.address?.filter(({_id}) => _id === addressID)
+        dispatch({
+            type : 'ADDRESS_CHECKOUT',
+            payload : state?.address?.length > 0 ? address : []
+        })
+        console.log(address)
     }
 
     // address
@@ -258,7 +271,7 @@ export const ProductsContextProvider = ({children}) => {
                 const updatedProducts = [...json?.cart].filter(({_id}) => {
                     // console.log(productId, _id)
                     return  _id !== productId
-                })
+            })
                 console.log(updatedProducts)
                 dispatch({
                     type : 'REMOVE_FROM_CART',
@@ -487,6 +500,7 @@ export const ProductsContextProvider = ({children}) => {
         couponApplied : state.couponApplied,
         couponDiscount : state.couponDiscount,
         addressDetails : state.addressDetails,
+        deliveryAddress : state.deliveryAddress,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
@@ -508,7 +522,8 @@ export const ProductsContextProvider = ({children}) => {
         saveAddressForm,
         handleUserAddressForm,
         userAddressDeleteHandler,
-        userEditAddressHandler
+        userEditAddressHandler,
+        selectCheckoutAddress
     }
 
 
