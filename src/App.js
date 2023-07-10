@@ -7,6 +7,7 @@ import { Cart, Checkout, Home, Login, Products, SignUp, User, Wishlist } from '.
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/authentication/AuthContext';
 import ProductDetail from './pages/product-detail/ProductDetail';
+import OrderSuccessFull from './pages/successfullOrder/OrderSuccessFull';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Route path="/mock" element={ <MockAPI /> }/>
       <Route path="/products" element={ <Products /> }/>
       <Route path="/checkout" element={ <Checkout /> }/>
+      <Route path="/order-successfull" element={ <OrderSuccessFull /> }/>
       <Route path="/products/:productId" element={ <ProductDetail /> }/>
       
       <Route path="/cart" element={

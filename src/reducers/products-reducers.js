@@ -54,6 +54,7 @@ export const initialStates = {
     cart : [],
     wishlist : [],
     address : [],
+    orderedProducts : [],
     deliveryAddress : [],
     addressDetails : {
         name : '',
@@ -229,7 +230,16 @@ export const reducerFunction = (state, action) => {
                     couponCode : '',
                 }
             }
-    
+        }
+
+
+        case "CLEAR_CART_DATA" : {
+            return {...state, cart : []}
+        }
+
+        case "GET_ORDER_DETAILS" : {
+            console.log(action?.payload)
+            return {...state, orderedProducts : [...state?.orderedProducts, action?.payload]}
         }
 
         default:

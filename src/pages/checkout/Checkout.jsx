@@ -1,15 +1,28 @@
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import BrandLogo from '../../../src/assets/brandlogo.png';
 import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './checkout.css';
 
 
 const Checkout = () => {
-    const {cart, couponDiscount, address, deliveryAddress, selectCheckoutAddress} = useProducts();
+    const {cart, getOrderDetails,clearCart, couponDiscount, address, deliveryAddress, selectCheckoutAddress, addressDetails : {mobileNumber}} = useProducts();
     const {user} = useAuth()
     const navigate = useNavigate();
+
+
+    const {email, fullname} = user?.userInfo;
+
+    const totalPrice = cart?.reduce((total, curr) => {
+        const cost = curr?.originalPrice - (curr?.originalPrice / 100 * curr?.percentageOff);
+        const totalCost = cost * curr?.qty
+        return totalCost + total
+    }, 0)
+
+    const totalPriceToPay  = (totalPrice - (totalPrice / 100 * couponDiscount?.couponPercentage)).toFixed(2)
+
 
     const totalOriginalPrice = cart?.reduce((total, curr) => {
         return total +  (Number(curr?.originalPrice) * curr?.qty);
@@ -23,20 +36,77 @@ const Checkout = () => {
         const cost = curr?.originalPrice - (curr?.originalPrice / 100 * curr?.percentageOff);
         const totalCost = cost * curr?.qty
         return totalCost + total
-    }, 0)
-
-
-
-    console.log(deliveryAddress)
-    console.log(address)
-
+    }, 0);
 
     const [{address : addressCheckout, _id : deliveryAddressID} = {}] = deliveryAddress ?? [];
 
+    const getDeliveryDate = () => {
+        const today = new Date();
+        const deliveryDate = new Date(today.getTime() + (7 * 24 * 24 * 60 * 1000));
+        
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        }
+        const formattedDeliveryDate = deliveryDate.toLocaleDateString("en-US", options); 
+        return formattedDeliveryDate;
+    }
+    
+
+    const handlePaymentSuccess = (response) => {
+        const orderDetail = {
+          paymentID : response?.razorpay_payment_id,
+          productsLists : [...cart],
+          deliveryAddress : deliveryAddress,
+          totalAmount : totalPriceToPay,
+          date : new Date(),
+          deliveryDate : getDeliveryDate()
+        }
+    
+        getOrderDetails(orderDetail);
+    
+        navigate("/order-successfull");
+    
+        clearCart();
+    
+        setTimeout(() => {
+          navigate("/user-profile");
+        }, 5000);
+      }
+    
+    
+      const razorpayOptions = {
+          key: "rzp_test_8lFoFGsmvIuwB7",
+          amount: parseInt(totalPriceToPay) * 100,
+          name: "OpenBook",
+          description: "Thank You For Purchasing",
+          image: BrandLogo,
+          
+          handler: (response) => handlePaymentSuccess(response),
+          
+          prefill: {
+            name: fullname,
+            email: email,
+            contact: mobileNumber,
+          },
+          
+          notes: {
+            address: deliveryAddress,
+          },
+          theme: {
+            color: "#994ff3",
+          },
+        };
+    
+
 
     const handleCheckout = () => {
-        console.log('hello')
-        if(address?.length === 0){
+        if(deliveryAddress?.length > 0){
+            const razorpayInstance = new window.Razorpay(razorpayOptions);
+            razorpayInstance.open();
+        }else if(address?.length === 0){
             toast.error('please add an address!')
         }else if(deliveryAddress?.length === 0){
             toast.error('please select an address!')
@@ -89,11 +159,7 @@ const Checkout = () => {
             </p>
             <p>
                 <span>discount</span>
-                <span> -&#8377;{totalDiscountedPrice}</span>
-            </p>
-            <p>
-                <span>discount</span>
-                <span> -&#8377;{0}</span>
+                <span> -&#8377;{totalDiscountedPrice ? totalDiscountedPrice : 0}</span>
             </p>
     
             <h2>

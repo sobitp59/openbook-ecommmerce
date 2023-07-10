@@ -38,7 +38,6 @@ const ProductCard = ({product, deleteButton}) => {
                 <h4 className='product__originalPrice'>&#x20B9;{product?.originalPrice}</h4>
                 <h4 className='product__off'>{product?.percentageOff}%OFF</h4>
                 <h4  className='product__rating'>{star}<AiTwotoneStar className='product__star' /> </h4>
-
             </section>
 
             {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>already in cart</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to cart</button>}

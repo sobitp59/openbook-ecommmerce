@@ -177,6 +177,17 @@ export const ProductsContextProvider = ({children}) => {
     // address
 
 
+    // ORDER
+    const getOrderDetails = (orderDetail) => {
+        console.log(orderDetail)
+        dispatch({ type: "GET_ORDER_DETAILS", payload: orderDetail })
+    }
+
+
+    const clearCart = () => {
+        dispatch({ type: "CLEAR_CART_DATA" })
+    }
+
     useEffect( async () => {
         getProducts();
         getAddress();
@@ -501,6 +512,7 @@ export const ProductsContextProvider = ({children}) => {
         couponDiscount : state.couponDiscount,
         addressDetails : state.addressDetails,
         deliveryAddress : state.deliveryAddress,
+        orderedProducts : state.orderedProducts,
         filterPriceRangeHandler,
         productCategoryFilter,
         filterProductByRating,
@@ -523,7 +535,9 @@ export const ProductsContextProvider = ({children}) => {
         handleUserAddressForm,
         userAddressDeleteHandler,
         userEditAddressHandler,
-        selectCheckoutAddress
+        selectCheckoutAddress,
+        getOrderDetails,
+        clearCart
     }
 
 
@@ -537,4 +551,4 @@ export const ProductsContextProvider = ({children}) => {
 
 
 
-export const useProducts  = () => useContext(ProductsContext)
+export const useProducts = () => useContext(ProductsContext)
