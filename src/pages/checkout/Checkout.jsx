@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BrandLogo from '../../../src/assets/brandlogo.png';
 import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
+import { getRandomNumber } from '../../utils/getRandomNumber';
 import './checkout.css';
 
 
@@ -41,8 +42,9 @@ const Checkout = () => {
     const [{address : addressCheckout, _id : deliveryAddressID} = {}] = deliveryAddress ?? [];
 
     const getDeliveryDate = () => {
+        const randomNumber = getRandomNumber(4, 8)
         const today = new Date();
-        const deliveryDate = new Date(today.getTime() + (7 * 24 * 24 * 60 * 1000));
+        const deliveryDate = new Date(today.getTime() + (randomNumber * 24 * 24 * 60 * 1000));
         
         const options = {
             weekday: "long",
