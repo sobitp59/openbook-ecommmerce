@@ -90,10 +90,18 @@
     font-size: 1.1rem;
 }
 
-.home__input{
+.home__inputBox{
+    /* /* position: fixed; */
+    
+
     position: fixed;
     opacity: 0;
     pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 

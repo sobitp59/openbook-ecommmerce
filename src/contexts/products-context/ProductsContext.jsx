@@ -185,7 +185,34 @@ export const ProductsContextProvider = ({children}) => {
 
 
     const clearCart = () => {
-        dispatch({ type: "CLEAR_CART_DATA" })
+        const cartItems = state?.cart;
+
+        cartItems?.map(async ({_id}) => {
+            try {
+                const response = await fetch(`/api/user/cart/${_id}`, {
+                    method : 'DELETE',
+                    headers : {
+                        authorization : `Bearer ${userEncodedToken}`
+                    }
+                })
+                
+                if(response?.ok){
+                    const json = await response?.json();
+                    console.log(json?.cart)
+    
+                    const updatedProducts = [...json?.cart].filter(({_id}) => {
+                        return  _id !== productId
+                })
+                    console.log(updatedProducts)
+                    dispatch({
+                        type : 'REMOVE_FROM_CART',
+                        payload : json?.cart
+                    })
+                }
+            } catch (error) {
+                console.log(error )
+            }
+        })
     }
 
     useEffect( async () => {
@@ -203,6 +230,7 @@ export const ProductsContextProvider = ({children}) => {
 
     
     const productCategoryFilter = (e) => {
+        console.log(e.target.value)
         const category = e?.target?.value
         const checked = e?.target?.checked
 

@@ -233,10 +233,6 @@ export const reducerFunction = (state, action) => {
         }
 
 
-        case "CLEAR_CART_DATA" : {
-            return {...state, cart : []}
-        }
-
         case "GET_ORDER_DETAILS" : {
             console.log(action?.payload)
             return {...state, orderedProducts : [...state?.orderedProducts, action?.payload]}

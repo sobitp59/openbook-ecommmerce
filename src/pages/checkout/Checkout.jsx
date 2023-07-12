@@ -139,7 +139,6 @@ const Checkout = () => {
                     </section>
                 </label>
             })}
-
         </div>
 
         <div className='checkout__details checkout--div'>

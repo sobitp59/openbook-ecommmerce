@@ -30,7 +30,7 @@ const Home = () => {
                     { productCategories?.map((category) => {
                     return(
                             <label className='home__category' htmlFor=''>
-                                <input className='home__input' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
+                                <input className='home__inputBox' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
                                 <h2 className='home__categoryName'>{category?.categoryName}</h2>
                                 <p className='home__categoryDescription'>{category?.description}</p>
                             </label>
