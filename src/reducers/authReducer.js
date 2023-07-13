@@ -61,5 +61,10 @@ export const userAuthReducer = (state, action) => {
             return {...state, user : {...state.user, registered : true, loggedIn : false, userEncodedToken : '', userInfo : ''}}
         }
 
+        case 'LOGIN_AS_GUEST' : {
+            console.log(action.payload.email, action.payload.password);
+            return {...state, login : { email : action?.payload?.email , password : action?.payload?.password},}
+        }
+
     }
 }

@@ -48,43 +48,55 @@ export const ProductsContextProvider = ({children}) => {
         e.preventDefault();
         console.log(address)
         console.log(state?.addressDetails)
-        try {
-            const response = await fetch('/api/user/address', {
-                method : 'POST',
-                headers : {
-                    'Content-Type': 'application/json',
-                    authorization : authToken
-                },
-                body : JSON.stringify({address : state?.addressDetails})
-            })
 
-            if(response?.ok){
-                const data = await response?.json();
-                const [{address}] = data?.address;
-                console.log(address)
-                console.log(data?.address)
-                dispatch({
-                    type : 'ADD_USER_ADDRESS',
-                    payload : {
-                        address : data?.address,
-                        addressDetails : { 
-                            name : '',
-                            house : '',
-                            city : '',
-                            state : '',
-                            country : '',
-                            postalCode : '',
-                            mobileNumber : '',
-                        }
-                    }
+
+        console.log(authToken, setShowAddressForm)
+        if(authToken){
+
+            try {
+                const response = await fetch('/api/user/address', {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type': 'application/json',
+                        authorization : authToken
+                    },
+                    body : JSON.stringify({address : state?.addressDetails})
                 })
-
-                setShowAddressForm(false)
+                
+                console.log('INSIDE TRY AND CATCH BLOCK');
+                
+                if(response?.ok){
+                    const data = await response?.json();
+                    console.log(data)
+                    dispatch({
+                        type : 'ADD_USER_ADDRESS',
+                        payload : {
+                            address : data?.address,
+                            addressDetails : { 
+                                name : '',
+                                house : '',
+                                city : '',
+                                state : '',
+                                country : '',
+                                postalCode : '',
+                                mobileNumber : '',
+                            }
+                        }
+                    })
+                    
+                    setShowAddressForm(false)
+                }
+            } catch (error) {
+                console.log('SOME ERROR OCCURED : ', error)
             }
-        } catch (error) {
-            console.log('SOME ERROR OCCURED : ', error)
+            
+            
+            console.log('OUTSIDE TRY AND CATCH BLOCK');
+        }else{
+            console.log('awesome error occured')
         }
-    }
+
+        }
 
     const fillDummyData = (e) => {
         e.preventDefault()

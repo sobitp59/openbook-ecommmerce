@@ -15,7 +15,7 @@ const User = () => {
 
   const styleAddress = address.length > 0 && 'user__addresses'
 
- 
+ console.log(userInfo)
 
   return (
     <div className='user'>

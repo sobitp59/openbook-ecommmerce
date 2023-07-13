@@ -6,7 +6,7 @@ import './login.css';
 
 
 const Login = () => {
-    const { signup, login, userLoginHandler, getUserLoginPassoword, getUserLoginEmail  } = useAuth()
+    const { signup,loginAsGuestHandler, login, userLoginHandler, getUserLoginPassoword, getUserLoginEmail  } = useAuth()
     // const { signup :  registered, email,password, getUserLoginEmail, getUserLoginPassoword, userLoginHandler } = useAuth()
     
     useEffect(() => {
@@ -18,6 +18,7 @@ const Login = () => {
         }
 
     } , [signup?.registered]);
+
 
     return(
         <div className="login">
@@ -45,7 +46,7 @@ const Login = () => {
                 </label>
 
                 <button className="form__button form__button">login</button>
-                <button className="form__button form__button">login as guest</button>
+                <button className="form__button form__button" onClick={loginAsGuestHandler}>login as guest</button>
             </form>
             <p>don't have an account? <Link to={'/signup'}>signup</Link></p>
         </div>
