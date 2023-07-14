@@ -47,6 +47,27 @@
     outline: 3px solid var(--primary-color-light);
 }
 
+
+
+.form__label{
+    position: relative;
+}
+
+.form__passButton{
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    background: transparent;
+    border : none;
+    cursor: pointer;
+}
+
+.passBtn{
+    font-size: 1.3rem;
+}
+
+
+
 /* mobile-device */
 @media (width <= 380px){
 

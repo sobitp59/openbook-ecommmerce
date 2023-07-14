@@ -2,6 +2,7 @@ import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import BrandLogo from '../../../src/assets/brandlogo.png';
+import { AddressForm } from '../../components';
 import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import { getRandomNumber } from '../../utils/getRandomNumber';
@@ -9,7 +10,7 @@ import './checkout.css';
 
 
 const Checkout = () => {
-    const {cart, getOrderDetails,clearCart, couponDiscount, address, deliveryAddress, selectCheckoutAddress, addressDetails : {mobileNumber}} = useProducts();
+    const {cart, getOrderDetails,clearCart, couponDiscount, address, deliveryAddress, selectCheckoutAddress, addressDetails : {mobileNumber}, showAddressForm, showAddressModal} = useProducts();
     const {user} = useAuth()
     const navigate = useNavigate();
 
@@ -120,13 +121,13 @@ const Checkout = () => {
   return (
     <div className='checkout'>
         <Toaster />
-         
+        
         <div className='checkout__address checkout--div'>
             <h1>
                 address
             </h1>
 
-            <button onClick={() => navigate('/user-profile')} className='user__addBtn'>add another address</button>
+            <button onClick={showAddressModal} className='user__addBtn'>add another address</button>
 
             {address?.map(({address, _id}) => {
                 return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
@@ -139,6 +140,12 @@ const Checkout = () => {
                     </section>
                 </label>
             })}
+
+
+
+<div className='user__addressform'>
+         {showAddressForm && <AddressForm />}
+        </div>
         </div>
 
         <div className='checkout__details checkout--div'>

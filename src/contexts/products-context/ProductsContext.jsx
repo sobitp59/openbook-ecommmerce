@@ -44,13 +44,9 @@ export const ProductsContextProvider = ({children}) => {
     }
     
 
-    const saveAddressForm = async (e, address, authToken, setShowAddressForm) => {
+    const saveAddressForm = async (e, address, authToken) => {
         e.preventDefault();
-        console.log(address)
-        console.log(state?.addressDetails)
 
-
-        console.log(authToken, setShowAddressForm)
         if(authToken){
 
             try {
@@ -81,10 +77,9 @@ export const ProductsContextProvider = ({children}) => {
                                 postalCode : '',
                                 mobileNumber : '',
                             }
-                        }
+                        },
+                        showAddressForm : false
                     })
-                    
-                    setShowAddressForm(false)
                 }
             } catch (error) {
                 console.log('SOME ERROR OCCURED : ', error)
@@ -107,9 +102,11 @@ export const ProductsContextProvider = ({children}) => {
 
     const cancelForm = (e, setShowAddressForm) => {
         e.preventDefault()
-        setShowAddressForm(false)
         dispatch({
-            type : 'USER_ADDRESS_CANCEL' 
+            type : 'USER_ADDRESS_CANCEL',
+            payload : {
+                showAddressForm : false
+            }  
         })
     }
 
@@ -156,24 +153,33 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
 
-    const userEditAddressHandler = async(authToken, addressID) => {
-        try {
-            const response = await fetch(`/api/user/address/${addressID}`, {
-                method : 'POST',
-                headers : {
-                    'Content-Type': 'application/json',
-                    authorization : authToken
-                },
-                body : JSON.stringify({address : state?.addressDetails})
-            })
+    const userEditAddressHandler = async(authToken, addressID, setShowAddressForm) => {
+        setShowAddressForm(true)
+        const address = state?.address?.filter(({_id}) => _id === addressID );
+        console.log(address)
+        dispatch({
+            type : 'EDIT_ADDRESS',
+            payload : address,
+        })
 
-            if(response?.ok){
-                const data = await response?.json();
-                console.log(data);
-            }
-        } catch (error) {
-         console.log('SOME ERROR OCCURED : ', error)   
-        }
+        
+        // try {
+        //     const response = await fetch(`/api/user/address/${addressID}`, {
+        //         method : 'POST',
+        //         headers : {
+        //             'Content-Type': 'application/json',
+        //             authorization : authToken
+        //         },
+        //         body : JSON.stringify({address : state?.addressDetails})
+        //     })
+
+        //     if(response?.ok){
+        //         const data = await response?.json();
+        //         console.log(data);
+        //     }
+        // } catch (error) {
+        //  console.log('SOME ERROR OCCURED : ', error)   
+        // }
     }
 
     const selectCheckoutAddress = async (addressID , authToken) => {
@@ -186,6 +192,13 @@ export const ProductsContextProvider = ({children}) => {
         console.log(address)
     }
 
+
+    const showAddressModal = () => {
+        dispatch({
+            type : 'SHOW_ADDRESS_MODAL',
+            payload : true
+        })
+    }
     // address
 
 
@@ -551,6 +564,7 @@ export const ProductsContextProvider = ({children}) => {
         couponApplied : state.couponApplied,
         couponDiscount : state.couponDiscount,
         addressDetails : state.addressDetails,
+        showAddressForm : state.showAddressForm,
         deliveryAddress : state.deliveryAddress,
         orderedProducts : state.orderedProducts,
         filterPriceRangeHandler,
@@ -577,7 +591,8 @@ export const ProductsContextProvider = ({children}) => {
         userEditAddressHandler,
         selectCheckoutAddress,
         getOrderDetails,
-        clearCart
+        clearCart,
+        showAddressModal
     }
 
 

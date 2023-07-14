@@ -54,6 +54,7 @@ export const initialStates = {
     cart : [],
     wishlist : [],
     address : [],
+    showAddressForm : false,
     orderedProducts : [],
     deliveryAddress : [],
     addressDetails : {
@@ -113,7 +114,9 @@ export const reducerFunction = (state, action) => {
                 country : '',
                 postalCode : '',
                 mobileNumber : '',
-            }}
+                },
+                showAddressForm : action?.payload?.showAddressForm
+             }
         }
 
         case 'USER_ADDRESS_FORM' : {
@@ -121,11 +124,28 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'ADD_USER_ADDRESS' : {
-            return {...state, address : action?.payload?.address, addressDetails : action?.payload?.addressDetails}
+            return {...state, address : action?.payload?.address, addressDetails : action?.payload?.addressDetails, showAddressForm : action?.payload?.showAddressForm}
         }
         
         case 'DELETE_USER_ADDRESS' : {
             return {...state, address : action?.payload?.address, deliveryAddress : action?.payload?.delAddress}
+        }
+
+        case 'EDIT_ADDRESS' : {
+            const [{address : {name, house, city, state, country, postalCode, mobileNumber} = {}}] = action?.payload ?? [];
+            return {...state, addressDetails : {
+                name : name,
+                house : house,
+                city : city,
+                state : state,
+                country : country,
+                postalCode : postalCode,
+                mobileNumber : mobileNumber,
+            }}
+        }   
+
+        case 'SHOW_ADDRESS_MODAL' : {
+            return {...state, showAddressForm : action?.payload}
         }
         
         case 'ADDRESS_CHECKOUT' : {

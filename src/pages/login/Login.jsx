@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication/AuthContext";
 import './login.css';
@@ -7,8 +8,13 @@ import './login.css';
 
 const Login = () => {
     const { signup,loginAsGuestHandler, login, userLoginHandler, getUserLoginPassoword, getUserLoginEmail  } = useAuth()
-    // const { signup :  registered, email,password, getUserLoginEmail, getUserLoginPassoword, userLoginHandler } = useAuth()
+    const [showPassword, setShowPassword] = useState(false)
     
+    const passwordHandler = (e) => {
+        e.preventDefault()
+        setShowPassword((prev) => !prev)
+    }  
+
     useEffect(() => {
         if(signup?.registered){
             return toast.success('thankyou for registering. please login to continue')
@@ -39,10 +45,11 @@ const Login = () => {
                     password
                     <input 
                         value={login?.password} 
-                        type="password" 
+                        type={showPassword ? "text" : "password"} 
                         required
                         onChange={getUserLoginPassoword} 
                         />
+                    <button className="form__passButton" onClick={passwordHandler}>{showPassword ? <AiFillEye className="passBtn"  /> : <AiFillEyeInvisible className="passBtn" />  }</button>
                 </label>
 
                 <button className="form__button form__button">login</button>

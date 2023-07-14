@@ -8,12 +8,11 @@ import './user.css';
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
-  const {address, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
+  const {address, showAddressForm, showAddressModal, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
   const [userState, setUserState] = useState({profile : true, address : false, orders : false})
-  const [showAddressForm, setShowAddressForm] = useState(false);
   const {userInfo} = user;
 
-  const styleAddress = address.length > 0 && 'user__addresses'
+  const styleAddress = address?.length > 0 && 'user__addresses'
 
  console.log(userInfo)
 
@@ -56,14 +55,14 @@ const User = () => {
                   <p>{address?.country}</p>
                   <p><strong>contact : </strong>{address?.mobileNumber}</p>
                   <section>
-                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, _id)} className='user__addressButton user__editBtn'>edit</button>
+                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, _id, setShowAddressForm)} className='user__addressButton user__editBtn'>edit</button>
                     <button onClick={() => userAddressDeleteHandler(user?.userEncodedToken, _id)} className='user__addressButton user__deleteBtn'>delete</button>
                   </section>
                 </li>
               ))}
             </ul>
 
-            <button className='user__addBtn' onClick={() => setShowAddressForm(true)}>+ add a new address</button>
+            <button className='user__addBtn' onClick={showAddressModal}>+ add a new address</button>
         </section>
 
         ) : (userState?.orders) && (
@@ -108,7 +107,7 @@ const User = () => {
                           <img className='user__ordersImage' src={imageURL} alt={title} />
                           <p><strong>quantity : </strong> {qty} </p>
                           <section className='user__ordersPrice'>
-                                <h4 className='user__ordersPayablePrice'> &#x20B9;{originalPrice - (originalPrice / 100 * percentageOff)} per book</h4>
+                                <h4 className='user__ordersPayablePrice'> &#x20B9;{originalPrice - (originalPrice / 100 * percentageOff)} / book</h4>
                             </section>
                         </li>
                       </Link>
@@ -121,13 +120,11 @@ const User = () => {
         </section>
 
         )
-         
-        // const [{date, deliveryAddress, deliveryDate, paymentID, productsLists, totalAmount} = {}] = orderedProducts ?? [];
 
         }
 
         <div className='user__addressform'>
-         {showAddressForm && <AddressForm setShowAddressForm={setShowAddressForm} />}
+         {showAddressForm && <AddressForm />}
         </div>
     </div>
   )

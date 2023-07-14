@@ -10,7 +10,7 @@ const Search = () => {
   return (
     <div className='search'>
             <input value={searchQuery} onChange={(e) => searchQueryResults(e)} className='search__input' type="search" placeholder='search products...'/>
-            {searchedProducts.length > 0 ? (
+            {searchedProducts?.length > 0 ? (
                 <ul style={{display : searchQuery ? 'block' : 'none'}} className='search__products'>
                 {searchedProducts?.map(({title, _id, imageURL, author, description}) => {
                         return(

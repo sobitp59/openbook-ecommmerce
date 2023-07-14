@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './addressForm.css';
 
-const AddressForm = ({setShowAddressForm}) => {
+const AddressForm = () => {
     
     const {fillDummyData, cancelForm, saveAddressForm, addressDetails, handleUserAddressForm} = useProducts();
 
@@ -92,8 +92,8 @@ const AddressForm = ({setShowAddressForm}) => {
 
 
                 <div className='form__buttons'>
-                    <button className="form__button form__button--save" onClick={(e) => saveAddressForm(e, addressDetails, userEncodedToken, setShowAddressForm)}> save </button>
-                    <button className="form__button form__button--cancel" onClick={(e) => cancelForm(e, setShowAddressForm)}> cancel </button>
+                    <button className="form__button form__button--save" onClick={(e) => saveAddressForm(e, addressDetails, userEncodedToken)}> save </button>
+                    <button className="form__button form__button--cancel" onClick={cancelForm}> cancel </button>
                     <button className="form__button form__button--dummy" onClick={fillDummyData}> fill dummy data </button>
                 </div>
             </form>

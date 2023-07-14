@@ -1,12 +1,25 @@
-
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication/AuthContext";
 
+
+import { useState } from "react";
 import './signup.css';
 const SignUp = () => {
     const {signup, getUserFullName, getUserEmail, getUserPassoword,getUserConfirmPassword, userRegistrationHandler,} = useAuth();
-    // const {fullname, email, password, confirmpassword,   registered} = useAuth();
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
+
+    const passwordHandler = (e) => {
+        e.preventDefault()
+        setShowPassword((prev) => !prev)
+    }  
+
+    const confirmPasswordHandler = (e) => {
+        e.preventDefault()
+        setShowConfirmPassword((prev) => !prev)
+    }
 
     return(
         <div className="signup">
@@ -36,22 +49,25 @@ const SignUp = () => {
                     password
                     <input 
                         value={signup?.password} 
-                        type="password" 
+                        type={showPassword ? "text" : "password"} 
                         required
                         onChange={getUserPassoword} 
                         />
+                    <button className="form__passButton" onClick={passwordHandler}>{showPassword ? <AiFillEye className="passBtn" /> : <AiFillEyeInvisible className="passBtn" />  }</button>
                 </label>
                 
                 <label  className="form__label" htmlFor="">
                     confirm password
                     <input 
                         value={signup?.confirmpassword} 
-                        type="text" 
+                        type={showConfirmPassword ? "text" : "password"} 
                         required 
                         onChange={getUserConfirmPassword} 
-                    />
-                    <p>{signup?.password !== signup?.confirmpassword && 'password mismatches!'}</p>
+                        />
+                    <button className="form__passButton" onClick={confirmPasswordHandler}>{showConfirmPassword ? <AiFillEye className="passBtn" /> : <AiFillEyeInvisible className="passBtn"/>   }</button>
+
                 </label>
+                    <p>{signup?.password !== signup?.confirmpassword && 'password mismatches!'}</p>
 
                 <button style={{cursor : signup?.password !== signup?.confirmpassword && 'not-allowed' }} disabled={signup?.password !== signup?.confirmpassword} className="form__button"> create new account</button>
             </form>
