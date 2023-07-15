@@ -14,8 +14,8 @@ const AddressForm = () => {
 
     return (
     <div className='addressForm'>
-        <h2>add new address</h2>
         <form className='address-form'>
+                <h2>add new address</h2>
                 <label className="form__label" htmlFor="">
                     <input 
                         type="text" 

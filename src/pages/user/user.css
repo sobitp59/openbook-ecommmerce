@@ -1,4 +1,4 @@
-.user{
+.user__addressform{
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -150,4 +150,18 @@
 .user__ordersPayablePrice{
 text-decoration: none;
     font-size: medium;
+}
+
+@media (width <= 380px) {
+    .user__addressform{
+        width: 90%;
+        margin: 2rem auto;
+        padding: 0;
+    }
+
+    
+.user--data{
+    border: none;
+}
+
 }

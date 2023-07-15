@@ -39,9 +39,9 @@ const Products = () => {
     <div className='products'>
       
       <section className='products__filtering'>
-        <button onClick={() => setShowFilter((prev) => !prev)}>
-        {showFilter ?  <GrFormClose showFilter={showFilter} /> : 
-          <BsFilterLeft showFilter={showFilter} />
+        <button className="products__filterBtn" onClick={() => setShowFilter((prev) => !prev)}>
+        {showFilter ?  <GrFormClose className='products__filterIcons' showFilter={showFilter} /> : 
+          <BsFilterLeft className='products__filterIcons' showFilter={showFilter} />
         }
         </button>
         <p>showing ({filteredProducts?.length}) products</p>
@@ -54,7 +54,7 @@ const Products = () => {
 
         <ul className='products__lists'>
           { filteredProducts?.length < 1 ? (
-              <li>no products found!!</li>
+              <li className='products__notfound'>no products found!!</li>
           ) : (
             filteredProducts?.map((product) => {
             return <li className='product__card' key={product?._id}>

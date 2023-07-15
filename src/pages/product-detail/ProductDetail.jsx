@@ -16,7 +16,7 @@ const ProductDetail = () => {
 
     const product = allProducts.find((product) => product?._id === productId);
     console.log(product)
-    const  [{star}] = product?.rating;
+    const  [{star} = {}] = product?.rating ?? [];
 
     const relatedProducts = allProducts.filter(({categoryName, _id}) => categoryName === product?.categoryName && _id !==  product?._id)
     

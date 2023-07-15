@@ -206,15 +206,7 @@
 
     .cart__lists{
         gap: 1rem;
-    }
-
-    .cart__product{
-        width: 100%;
-       display: flex;
-       flex-direction: column;
-       /* justify-content: space-between; */
-       /* align-items: center; */
-    }   
+    }  
     
     .cart__detail > p, h1{
      font-size: 1.2rem;
@@ -224,6 +216,25 @@
         height: 100%;
         width: 100%;
 
+    }
+
+    .cart__buttons{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.6rem;
+    }
+
+    .cart__product{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        /* padding: 0; */
+    }
+
+    .product-details-button{
+        width: 100%;
     }
 
 }

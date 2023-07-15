@@ -24,7 +24,9 @@
 
 .product-details__relatedProducts{
     display: flex;
+    gap: 2rem;
     overflow-x: scroll;
+    padding: 1.5rem;
 }
 
 .product__card{
@@ -188,8 +190,9 @@
     }
 
     .product-details__buttons{
-        display: grid;
-        grid-template-columns: 1fr 0.9fr;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         align-items: center;
         cursor: pointer;
         margin-bottom: 2rem;
@@ -202,5 +205,13 @@
         height: 2.7rem;
     }
 
+    .product-details-button{
+        width: 100%;
+    }
+
+
+    .product-details__image{
+        width: 75%;
+    }
 
 }

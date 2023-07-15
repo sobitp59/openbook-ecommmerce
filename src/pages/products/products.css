@@ -44,8 +44,29 @@
 
 .products__filtering{
     display: none;
+    margin: 0 1rem;
 }
 
+
+.products__filterBtn{
+    background:  var(--primary-color-light);
+    cursor: pointer;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+}
+
+.products__filterIcons{
+    font-size: 1.2rem;
+}
+
+.products__notfound{
+    width: 100%;
+    height: 80%;
+    /* position: absolute; */
+    display: grid;
+    place-content: center;
+}
 
 /* mobile device */
 
@@ -60,8 +81,9 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding: 1rem;
+        /* padding: 1rem; */
         overflow-y: scroll;
+        margin: auto;
     }
     
     .products__filtering{
@@ -69,6 +91,13 @@
         justify-content: space-between;
         align-items: center;
     }
-
+    
+    .product__card{
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
 
 }

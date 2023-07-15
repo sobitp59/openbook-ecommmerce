@@ -25,3 +25,11 @@
 .form__button .form__button--save{
     background: red;
 }
+
+@media (width <= 380px) {
+   .form__buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+   }
+}

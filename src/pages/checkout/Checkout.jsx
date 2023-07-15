@@ -126,8 +126,8 @@ const Checkout = () => {
             <h1>
                 address
             </h1>
-
-            <button onClick={showAddressModal} className='user__addBtn'>add another address</button>
+            
+            <button onClick={showAddressModal} className='user__addBtn'>{address?.length > 0 ? "add another address" : "add an address"}</button>
 
             {address?.map(({address, _id}) => {
                 return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
@@ -143,11 +143,12 @@ const Checkout = () => {
 
 
 
-<div className='user__addressform'>
-         {showAddressForm && <AddressForm />}
-        </div>
         </div>
 
+        <div className='user__addressform'>
+                {showAddressForm && <AddressForm />}
+        </div>
+        
         <div className='checkout__details checkout--div'>
 
             <hr />

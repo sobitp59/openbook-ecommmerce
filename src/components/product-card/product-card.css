@@ -8,8 +8,12 @@
 
 .product__card{
     list-style: none;
-    padding: 1rem;
     text-transform: lowercase;
+}
+
+.product__link{
+    list-style: none;
+    text-decoration: none;
 }
 
 .product__info{

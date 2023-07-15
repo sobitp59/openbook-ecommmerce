@@ -46,3 +46,26 @@
     border: 2px solid var(--primary-color-light);
     border-radius: 1rem;
 }
+
+
+/* MOBILE DEVICE */
+
+@media (width <= 380px) {
+    .checkout{
+        display: flex;
+        width: 90%;
+        flex-direction: column;
+    }
+
+    .user__addressform{
+        width: 80%;
+        margin: auto;
+        padding: 0;
+    }
+
+    .addressForm{
+        width: 80%;
+        margin: auto;
+    }
+
+}

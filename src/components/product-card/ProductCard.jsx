@@ -21,7 +21,7 @@ const ProductCard = ({product, deleteButton}) => {
   return (
     <div>
             <section className='product__top'>
-              <Link to={`/products/${product?._id}  `}>
+              <Link className='product__link' to={`/products/${product?._id}  `}>
                 <img className='product__image' src={product?.imageURL} alt="" />
                 <h2 className='product__title'>{product?.title}</h2>
                 <h4  className='product__author'>{product?.author}</h4>
@@ -40,7 +40,7 @@ const ProductCard = ({product, deleteButton}) => {
                 <h4  className='product__rating'>{star}<AiTwotoneStar className='product__star' /> </h4>
             </section>
 
-            {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>already in cart</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to cart</button>}
+            {  cart?.find(({_id}) => _id === product?._id) ? <button onClick={() => navigate('/cart')} className='product__button'>go to cart</button> : <button onClick={() => addToCart(product?._id)} className='product__button'>add to cart</button>}
             
     </div>
   )
