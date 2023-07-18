@@ -1,10 +1,15 @@
 .checkout{
-    width: 70%;
-    margin: 4rem auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 
+}
+
+.checkout__address{
+    width: 100%;
 }
 
 .checkout__address, .checkout__details{
@@ -34,7 +39,7 @@
 
 
 .checkout__addressInput{
-    accent-color: var(--primary-color-light);
+    accent-color: var(--primary-color);
     cursor: pointer; 
 }
 

@@ -9,6 +9,19 @@
 }
 
 :root {
+  --primary-color : #00214d;
+  --secondary-color : #fde24f;
+  --secondary-color-light : #fde34f41;
+  --text-para : #2e2e2e;
+  --primary-color-dark :#00214d;
+  --primary-color-light : rgba(124, 17, 255, 0.123);
+  --text-para : #1b2d45;
+  --text : #00214d;
+  --background : #f2eef5;
+  --primary-font : 'Manrope', sans-serif;
+  --secondary-font : 'Cabinet Grotesk', sans-serif;
+}
+/* :root {
   --primary-color : #994ff3;
   --secondary-color : #94ff86;
   --secondary-color-light : #1eff002d;
@@ -19,7 +32,7 @@
   --background : #f2eef5;
   --primary-font : 'Manrope', sans-serif;
   --secondary-font : 'Cabinet Grotesk', sans-serif;
-}
+} */
 
 body {
   font-family: var(--primary-font);

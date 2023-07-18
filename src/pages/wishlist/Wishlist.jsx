@@ -10,11 +10,11 @@ const Wishlist = () => {
     return(
         <div className="wishlist">
             <Toaster />
-            {!wishlist.length && <h1>nothing in the wishlist</h1> }
+            {!wishlist.length && <h1 className="wishlist__empty">nothing in the wishlist</h1> }
             <section>
                 <ul className='wishlist__lists'>
                     { !wishlist ? (
-                    <li>no products found!!</li>
+                    <li className="wishlist__noproductFound">no products found!!</li>
                     ) : (
                     wishlist?.map((product) => {
                     return <li className='product__card' key={product?._id}>

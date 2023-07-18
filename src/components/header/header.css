@@ -58,7 +58,6 @@
     position: absolute;
     right: -0.4rem;
     bottom: 2rem;
-
 }
 
 
@@ -96,5 +95,9 @@
         color: white;
     }
     
+    
+    .header__cart{
+        right: 0.4rem;
 
+    }
 }

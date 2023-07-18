@@ -99,7 +99,7 @@ const Checkout = () => {
             address: deliveryAddress,
           },
           theme: {
-            color: "#994ff3",
+            color: "#00214d",
           },
         };
     

@@ -27,9 +27,9 @@ const User = () => {
       </div>
       
       <div className='user__buttons'>
-        <button style={{background : userState?.profile && '#994ff3', color : userState?.profile && 'white'}} className='user__button user__button--profile' onClick={() => setUserState({profile : true, address : false, orders : false})}>profile</button>
-        <button style={{background : userState?.address && '#994ff3', color : userState?.address && 'white'}} className='user__button user__button--address' onClick={() => setUserState({profile : false, address : true, orders : false})}>address</button>
-        <button style={{background : userState?.orders && '#994ff3', color : userState?.orders && 'white'}} className='user__button user__button--orders' onClick={() => setUserState({profile : false, address : false, orders : true})}>orders</button>
+        <button style={{background : userState?.profile && '#00214d', color : userState?.profile && 'white'}} className='user__button user__button--profile' onClick={() => setUserState({profile : true, address : false, orders : false})}>profile</button>
+        <button style={{background : userState?.address && '#00214d', color : userState?.address && 'white'}} className='user__button user__button--address' onClick={() => setUserState({profile : false, address : true, orders : false})}>address</button>
+        <button style={{background : userState?.orders && '#00214d', color : userState?.orders && 'white'}} className='user__button user__button--orders' onClick={() => setUserState({profile : false, address : false, orders : true})}>orders</button>
       </div>
 
       {userState?.profile ? (

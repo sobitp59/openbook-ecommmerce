@@ -13,3 +13,20 @@
     justify-content: left;
     align-items: center;
 }
+
+
+.wishlist__empty{
+    width: 100%;
+    height: 80%;
+    display: grid;
+    place-content: center;
+}
+
+/* .wishlist__noproductFound{
+    position: absolute;
+    top: 400px;
+    /* width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center; */
+

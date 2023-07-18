@@ -144,7 +144,7 @@ const Cart = () => {
                 ) : (
                     <>
                         <h1>nothing in cart</h1>
-                        <p>cart is wmpty</p>
+                        <p>cart is empty</p>
                     </>
                 )}
             

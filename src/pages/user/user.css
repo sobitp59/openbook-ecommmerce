@@ -20,7 +20,7 @@
 }
 
 .user__button{
-    color : #994ff3;
+    color : var(--primary-color);
     padding: 0.7rem;
     font-size: 1.1rem;
     background: transparent;
@@ -65,16 +65,16 @@
 .user__addBtn{
     margin: 0.5rem 0;
     padding: 0.7rem 1.5rem;
-    background: rgba(159, 255, 159, 0.137);
+    background: var(--primary-color-light);
     border: none;
     border-radius: 5rem;
     font-size: 1.1rem;
-    color: rgb(0, 255, 13);
+    color: var(--text);
     cursor: pointer;
 }
 
 .user__addBtn:hover, .user__addBtn:active{
-    outline: 2px solid rgba(0, 255, 0, 0.171);
+    outline: 2px solid var(--primary-color);
 }
 
 .user__addresses{
@@ -124,7 +124,7 @@
 }
 
 .user__orders--title{
-    color: rgb(0, 255, 0);
+    color: var(--primary-color);
 }
 
 .user__ordersProducts{
