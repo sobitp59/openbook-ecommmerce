@@ -119,81 +119,83 @@ const Checkout = () => {
 
 
   return (
-    <div className='checkout'>
-        <Toaster />
-        
-        <div className='checkout__address checkout--div'>
-            <h1>
-                address
-            </h1>
-            
-            <button onClick={showAddressModal} className='user__addBtn'>{address?.length > 0 ? "add another address" : "add an address"}</button>
-
-            {address?.map(({address, _id}) => {
-                return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
-                    <input checked={deliveryAddressID === _id} onChange={() => {}} type="radio" name='user_address' className='checkout__addressInput'/>
-                    <section>
-                        <h3>{address?.name}</h3>
-                        <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
-                        <p>{address?.country}</p>
-                        <p><strong>contact : </strong>{address?.mobileNumber}</p>
-                    </section>
-                </label>
-            })}
-
-
-
-        </div>
-
+    <>
+            <Toaster />
         <div className='user__addressform'>
-                {showAddressForm && <AddressForm />}
+            {showAddressForm && <AddressForm />}
         </div>
-        
-        <div className='checkout__details checkout--div'>
-
-            <hr />
-            <h2>order details</h2>
-            <hr />
-            <p><strong>item</strong> <strong>quantity</strong></p>
-            {cart?.map(({_id, title,qty}) => {
-                return <p className='checkout__quantity' key={_id}><span>{title}</span> <span>{qty}</span> </p>
-            })}
-
-            <hr />
-            <h2>price details</h2>
-            <hr />
-            <p>
-                <span>price ({cart?.length} items)</span>
-                <span>&#8377; {totalOriginalPrice}</span>
-            </p>
-            <p>
-                <span>discount</span>
-                <span> -&#8377;{totalDiscountedPrice ? totalDiscountedPrice : 0}</span>
-            </p>
-    
-            <h2>
-                <span>total</span>
-                <span> &#8377;{(price - (price / 100 * couponDiscount?.couponPercentage)).toFixed(2)}</span>
-            </h2>
- 
- 
-            <hr />
-            <h2>deliver to</h2>
-            <hr />
-
-            { deliveryAddress?.length > 0 && (
-                <>
-                    <h3>{addressCheckout?.name}</h3>
-                    <p>{addressCheckout?.house} {addressCheckout?.city}, {addressCheckout?.state}  {addressCheckout?.postalCode}</p>
-                    <p>{addressCheckout?.country}</p>
-                    <p><strong>contact : </strong>{addressCheckout?.mobileNumber}</p>
-                </>
-            ) }
+        <div className='checkout'>
             
-            <button onClick={handleCheckout} className='cart__checkout'>place order</button>
+            
+            <div className='checkout__address checkout--div'>
+                <h1>
+                    address
+                </h1>
+                
+                <button onClick={showAddressModal} className='user__addBtn'>{address?.length > 0 ? "add another address" : "add an address"}</button>
 
+                {address?.map(({address, _id}) => {
+                    return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
+                        <input checked={deliveryAddressID === _id} onChange={() => {}} type="radio" name='user_address' className='checkout__addressInput'/>
+                        <section>
+                            <h3>{address?.name}</h3>
+                            <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
+                            <p>{address?.country}</p>
+                            <p><strong>contact : </strong>{address?.mobileNumber}</p>
+                        </section>
+                    </label>
+                })}
+
+
+
+            </div>
+            
+            <div className='checkout__details checkout--div'>
+
+                <hr />
+                <h2>order details</h2>
+                <hr />
+                <p><strong>item</strong> <strong>quantity</strong></p>
+                {cart?.map(({_id, title,qty}) => {
+                    return <p className='checkout__quantity' key={_id}><span>{title}</span> <span>{qty}</span> </p>
+                })}
+
+                <hr />
+                <h2>price details</h2>
+                <hr />
+                <p>
+                    <span>price ({cart?.length} items)</span>
+                    <span>&#8377; {totalOriginalPrice}</span>
+                </p>
+                <p>
+                    <span>discount</span>
+                    <span> -&#8377;{totalDiscountedPrice ? totalDiscountedPrice : 0}</span>
+                </p>
+        
+                <h2>
+                    <span>total</span>
+                    <span> &#8377;{(price - (price / 100 * couponDiscount?.couponPercentage)).toFixed(2)}</span>
+                </h2>
+    
+    
+                <hr />
+                <h2>deliver to</h2>
+                <hr />
+
+                { deliveryAddress?.length > 0 && (
+                    <>
+                        <h3>{addressCheckout?.name}</h3>
+                        <p>{addressCheckout?.house} {addressCheckout?.city}, {addressCheckout?.state}  {addressCheckout?.postalCode}</p>
+                        <p>{addressCheckout?.country}</p>
+                        <p><strong>contact : </strong>{addressCheckout?.mobileNumber}</p>
+                    </>
+                ) }
+                
+                <button onClick={handleCheckout} className='cart__checkout'> pay and place order</button>
+
+            </div>
         </div>
-    </div>
+    </>
   )
 }
 

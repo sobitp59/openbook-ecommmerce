@@ -27,6 +27,12 @@
 }
 
 @media (width <= 380px) {
+    .addressForm{
+        width: 100%;
+        position: absolute;
+        top: 100px;
+    }
+
    .form__buttons{
     display: flex;
     flex-direction: column;

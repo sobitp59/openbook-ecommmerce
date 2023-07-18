@@ -142,10 +142,10 @@ const Cart = () => {
                 </div>
                 </>
                 ) : (
-                    <>
+                    <div className='cart__empty'>
                         <h1>nothing in cart</h1>
                         <p>cart is empty</p>
-                    </>
+                    </div>
                 )}
             
         </div>

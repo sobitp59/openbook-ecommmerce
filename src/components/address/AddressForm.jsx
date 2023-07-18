@@ -9,9 +9,6 @@ const AddressForm = () => {
 
     const {user : {userEncodedToken}} = useAuth();
 
-
-    console.log(addressDetails)
-
     return (
     <div className='addressForm'>
         <form className='address-form'>

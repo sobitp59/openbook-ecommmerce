@@ -1,17 +1,16 @@
 .checkout{
     width: 80%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 4rem auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
 
 }
 
-.checkout__address{
+.checkout__page{
     width: 100%;
-}
-
+    position: relative;
+} 
 .checkout__address, .checkout__details{
     border: 2px solid;
     padding: 2rem;
@@ -63,13 +62,13 @@
     }
 
     .user__addressform{
-        width: 80%;
+        width: 100%;
         margin: auto;
         padding: 0;
     }
 
     .addressForm{
-        width: 80%;
+        /* width: 80%; */
         margin: auto;
     }
 

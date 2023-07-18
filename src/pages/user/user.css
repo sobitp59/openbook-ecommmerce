@@ -1,5 +1,5 @@
 .user{
-    max-width : 60%;
+    width : 60%;
     margin: 4rem auto;
 }
 
@@ -160,13 +160,15 @@ text-decoration: none;
 @media (width <= 380px) {
 
     .user{
-        max-width : 90%;
+        width : 90%;
+        position: relative;
         margin: 2rem auto;
     }
 
     .user__addressform{
-        width: 90%;
-        margin: 2rem auto;
+        position: absolute;
+        width: 100%;
+        margin: 4rem auto;
         padding: 0;
     }
 

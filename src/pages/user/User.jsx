@@ -20,7 +20,10 @@ const User = () => {
 
   return (
     <div className='user'>
-      <Toaster /> 
+      <Toaster />
+      <div className='user__addressform'>
+         {showAddressForm && <AddressForm />}
+      </div> 
 
       <div>
         <h1>account</h1>
@@ -127,9 +130,7 @@ const User = () => {
 
         }
 
-        <div className='user__addressform'>
-         {showAddressForm && <AddressForm />}
-        </div>
+       
     </div>
   )
 }
