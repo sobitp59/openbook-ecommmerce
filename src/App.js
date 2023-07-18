@@ -12,9 +12,7 @@ import OrderSuccessFull from './pages/successfullOrder/OrderSuccessFull';
 
 function App() {
   const {login, user} = useAuth()
-  const location = useLocation()
-  const navigate = useNavigate()
-
+ 
 
 
 

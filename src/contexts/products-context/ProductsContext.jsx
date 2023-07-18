@@ -1,8 +1,8 @@
     import { createContext, useContext, useEffect, useReducer } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
 import { useAuth } from '../authentication/AuthContext';
-
 const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({children}) => {
@@ -81,6 +81,9 @@ export const ProductsContextProvider = ({children}) => {
                         showAddressForm : false
                     })
                 }
+
+                toast.success('address added')
+
             } catch (error) {
                 console.log('SOME ERROR OCCURED : ', error)
             }
@@ -147,7 +150,7 @@ export const ProductsContextProvider = ({children}) => {
                     }
                 })
             }
-            
+            toast.error('address removed');
         } catch (error) {
             console.log('SOME ERROR OCCURED', error);
         }
@@ -296,7 +299,6 @@ export const ProductsContextProvider = ({children}) => {
         }
         const product = [...state?.allProducts].find(({_id}) => _id === productID)
 
-
         try {
             const response = await fetch('/api/user/cart', {
                 method : 'POST',
@@ -307,11 +309,11 @@ export const ProductsContextProvider = ({children}) => {
             })
             if(response.ok){
                 const data = await response.json()
-                console.log(data?.cart)
                 dispatch({
                     type : 'ADD_TO_CART',
                     payload : data?.cart
                 })
+                toast.success(`${product?.title} added to cart`)
             }
         } catch (error) {
             console.log(error)
@@ -320,6 +322,8 @@ export const ProductsContextProvider = ({children}) => {
     
     const removeFromCart = async (productId) => {
         
+        const product = [...state?.allProducts].find(({_id}) => _id === productId)
+
         try {
             const response = await fetch(`/api/user/cart/${productId}`, {
                 method : 'DELETE',
@@ -327,13 +331,12 @@ export const ProductsContextProvider = ({children}) => {
                     authorization : `Bearer ${userEncodedToken}`
                 }
             })
-            
+
             if(response?.ok){
                 const json = await response?.json();
                 console.log(json?.cart)
 
                 const updatedProducts = [...json?.cart].filter(({_id}) => {
-                    // console.log(productId, _id)
                     return  _id !== productId
             })
                 console.log(updatedProducts)
@@ -342,6 +345,7 @@ export const ProductsContextProvider = ({children}) => {
                     payload : json?.cart
                 })
             }
+            toast.success(`${product?.title} removed from cart`)
         } catch (error) {
             console.log(error )
         }
@@ -352,6 +356,7 @@ export const ProductsContextProvider = ({children}) => {
             navigate('/login')
         }
         const product = [...state?.allProducts].find(({_id}) => _id === productID)
+        
         try {
             const response = await fetch(`/api/user/wishlist`, {
                 method : 'POST',
@@ -370,6 +375,7 @@ export const ProductsContextProvider = ({children}) => {
                     type : 'ADD_TO_WISHLIST',
                     payload : data?.wishlist
                 })
+                toast.success(`${product?.title} added to wishlist`)
             }
         } catch (error) {
             console.log(error)
@@ -397,6 +403,7 @@ export const ProductsContextProvider = ({children}) => {
             console.log(error )
         }
         
+        
 
         const product = [...state?.allProducts].find(({_id}) => _id === productID)  
         try {
@@ -416,14 +423,17 @@ export const ProductsContextProvider = ({children}) => {
                         type : 'ADD_TO_WISHLIST',
                         payload : data?.wishlist
                     })
-                    
                 }
+                toast.success(`${product?.title} moved to wishlist`)
             } catch (error) {
                 console.log(error)
             }
     }
     
     const removeFromWishlist = async (productID) => {
+        
+        const product = [...state?.allProducts].find(({_id}) => _id === productID)
+
         try {
             const response = await fetch(`/api/user/wishlist/${productID}`, {
                 method : 'DELETE',
@@ -438,6 +448,8 @@ export const ProductsContextProvider = ({children}) => {
                     payload : data?.wishlist
                 })
             }
+
+            toast.success(`${product?.title} removed from wishlist`)
             
         } catch (error) {
             console.log(error)
@@ -445,6 +457,8 @@ export const ProductsContextProvider = ({children}) => {
     }
     
     const increaseProductQuantity = async (productID) => {
+        const product = [...state?.allProducts].find(({_id}) => _id === productID);
+
         try {
             const response = await fetch(`/api/user/cart/${productID}`, {
                 method : 'POST',
@@ -466,12 +480,15 @@ export const ProductsContextProvider = ({children}) => {
                     payload : json?.cart            
                 })
             }
+            toast.success(`${product?.title} quantity increased`)
         } catch (error) {
             console.log(error)
         }
     }
     
     const decreaseProductQuantity = async (productID) => {
+        const product = [...state?.allProducts].find(({_id}) => _id === productID);
+
         try {
             const response = await fetch(`/api/user/cart/${productID}`, {
                 method : 'POST',
@@ -493,6 +510,7 @@ export const ProductsContextProvider = ({children}) => {
                     payload : json?.cart            
                 })
             }
+            toast.success(`${product?.title} quantity decreased`)
         } catch (error) {
             console.log(error)
         }
@@ -528,12 +546,14 @@ export const ProductsContextProvider = ({children}) => {
 
     const addCouponHandler = (e, couponID) => {
         const getCoupon = state?.coupons?.find(({_id}) => _id === couponID);
-       if(getCoupon){
+        console.log(getCoupon)
+        if(getCoupon){
         dispatch({
             type : 'APPLY_COUPON',
             payload : {
                 coupon : getCoupon?.coupon,
                 couponCode : getCoupon?.couponCode,
+                couponID : getCoupon?._id,
         }
         })
        }else{
@@ -541,12 +561,16 @@ export const ProductsContextProvider = ({children}) => {
             type : 'REMOVE_COUPON'
            })
        }
+       toast.success(`${getCoupon?.couponCode} applied successfully`)
     }
     
-    const removeCouponHandler = () => {
-       dispatch({
-        type : 'REMOVE_COUPON'
-       })
+    const removeCouponHandler = (couponID) => {
+        const getCoupon = state?.coupons?.find(({_id}) => _id === couponID);
+        console.log(getCoupon)
+        dispatch({
+            type : 'REMOVE_COUPON'
+        })
+        toast.success(`${getCoupon?.couponCode} removed successfully`)
     }
 
     const value = {

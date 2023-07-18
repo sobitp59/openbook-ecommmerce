@@ -5,6 +5,7 @@ import { useProductCategory } from '../../contexts/product-category-context/Prod
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './home.css';
 
+import { Toaster } from 'react-hot-toast';
 
 const Home = () => {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ const Home = () => {
 
     return(
         <div className='home'>
+            <Toaster />
             <section className='home__top'>
                 <img className='home__images' src={BooksCollage} alt="image of collection of different books in a collage format" />
                 <section className='home__shop'>

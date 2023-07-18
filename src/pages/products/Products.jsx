@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext'
-import { useProducts } from '../../contexts/products-context/ProductsContext'
+import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { useProductCategory } from '../../contexts/product-category-context/ProductCategoryContext';
+import { useProducts } from '../../contexts/products-context/ProductsContext';
 
-import { BsFilterLeft } from 'react-icons/bs'
-import { GrFormClose } from 'react-icons/gr'
 
-import { FilterProducts, ProductCard } from '../../components'
-import "./products.css"
+import { BsFilterLeft } from 'react-icons/bs';
+import { GrFormClose } from 'react-icons/gr';
+
+import { FilterProducts, ProductCard } from '../../components';
+import "./products.css";
 
   
 
@@ -37,6 +39,8 @@ const Products = () => {
 
   return (
     <div className='products'>
+
+      <Toaster />
       
       <section className='products__filtering'>
         <button className="products__filterBtn" onClick={() => setShowFilter((prev) => !prev)}>
@@ -47,7 +51,6 @@ const Products = () => {
         <p>showing ({filteredProducts?.length}) products</p>
       </section>
     
-      {/* { !showFilter ? <FilterProducts showFilter={showFilter}/> : <FilterProducts />} */}
       <FilterProducts showFilter={showFilter}/>
   
       <section>

@@ -74,6 +74,7 @@ export const initialStates = {
     couponDiscount : {
         couponPercentage : 0,
         couponCode : '',
+        couponID : '',
     }
 
 
@@ -230,13 +231,14 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'APPLY_COUPON' : {
-            console.log(action?.payload?.coupon, action?.payload?.couponCode)
+            console.log(action?.payload?.coupon, action?.payload?.couponCode, action?.payload?.couponID)
             return {
                 ...state,
                 couponApplied : true,
                 couponDiscount : {
                 couponPercentage : action?.payload?.coupon,
                 couponCode : action?.payload?.couponCode,
+                couponID : action?.payload?.couponID
             }
         }
         }

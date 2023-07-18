@@ -1,12 +1,15 @@
 import { createContext, useContext, useReducer } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { initialState, userAuthReducer } from "../../reducers/authReducer";
+
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(userAuthReducer, initialState)
     const navigate = useNavigate()
+    const location = useLocation()
 
     const getUserFullName = (e) => {
         dispatch({
@@ -91,7 +94,6 @@ export const AuthContextProvider = ({children}) => {
 
     const userLoginHandler = async (e, email, password) => {
         e.preventDefault()
-        console.log(email, password)
         try {
             const fetchResponse = await fetch('/api/auth/login', {
                 method: 'POST',
@@ -104,10 +106,9 @@ export const AuthContextProvider = ({children}) => {
                       password: password
                     })
             });
+
             if(fetchResponse.ok){
                 const data = await fetchResponse.json()
-                console.log(data)
-                console.log(data?.foundUser)
                 const userLoginData = {token : `${data?.encodedToken}`, userInfo : data?.foundUser}
                 localStorage.setItem('userLoginData', JSON.stringify(userLoginData))
                 dispatch({type : 'CLEAR_FIELD'})  
@@ -117,10 +118,12 @@ export const AuthContextProvider = ({children}) => {
                         userInfo : data?.foundUser,
                         token : `${data?.encodedToken}`,
                     }
-                })
+            })
+            location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
             }else{
                 console.log('some error occured')
             }
+            console.log(location)
         } catch (error) {
             console.log(error)
         }
@@ -135,10 +138,15 @@ export const AuthContextProvider = ({children}) => {
                 isLoggedIn : false
             }
         })
+        setTimeout(() => {
+            toast.error('logged out successfully')
+        }, 400)
         navigate('/')
     }
 
     const loginAsGuestHandler = async () => {
+        console.log(location)
+
         dispatch ({
             type : 'LOGIN_AS_GUEST',
             payload : {
@@ -147,7 +155,6 @@ export const AuthContextProvider = ({children}) => {
             }
         });
 
-        // signup
         try {
             const fetchResponse = await fetch(`/api/auth/signup`, {
                 method: 'POST',
@@ -163,7 +170,6 @@ export const AuthContextProvider = ({children}) => {
 
             if(fetchResponse.ok){
                 const data = await fetchResponse.json();
-                console.log(data)
                 const userSignUpData = {token : `${data?.encodedToken}`}
             localStorage.setItem('userSignUpData', JSON.stringify(userSignUpData))
                 dispatch({type : 'CLEAR_FIELD'})  
@@ -201,6 +207,8 @@ export const AuthContextProvider = ({children}) => {
                         token : data?.encodedToken,
                     }
                 })
+            location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
+
             }else{
                 console.log('some error occured')
             }

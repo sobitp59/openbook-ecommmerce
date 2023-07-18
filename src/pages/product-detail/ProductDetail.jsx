@@ -7,6 +7,8 @@ import { ProductCard } from '../../components';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './productDetail.css';
 
+import toast, { Toaster } from 'react-hot-toast';
+
 const ProductDetail = () => {
     const {allProducts, addToCart, addToWishlist, wishlist, removeFromWishlist, cart} = useProducts();
     const {productId} = useParams();
@@ -27,6 +29,7 @@ const ProductDetail = () => {
 
     return (
     <div className='product-details'>
+        <Toaster />
             <button onClick={goBackHandler} className='product-details__backBtn'>goback</button>
         <div className='product-details__product'>
             <img className='product-details__image' src={product?.imageURL} alt="" />

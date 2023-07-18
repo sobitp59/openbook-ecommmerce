@@ -1,14 +1,15 @@
 import { ProductCard } from "../../components";
 import { useProducts } from "../../contexts/products-context/ProductsContext";
 
+import toast, { Toaster } from 'react-hot-toast';
 import './wishlist.css';
-
 
 const Wishlist = () => {
     const {wishlist} = useProducts();
     console.log(wishlist)
     return(
         <div className="wishlist">
+            <Toaster />
             {!wishlist.length && <h1>nothing in the wishlist</h1> }
             <section>
                 <ul className='wishlist__lists'>

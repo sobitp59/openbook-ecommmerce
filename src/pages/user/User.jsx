@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
 import './user.css';
 
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
@@ -18,6 +20,7 @@ const User = () => {
 
   return (
     <div className='user'>
+      <Toaster /> 
 
       <div>
         <h1>account</h1>
@@ -45,6 +48,7 @@ const User = () => {
         ) : (userState?.address) ? (
         <section className='user__address user--data'>
             <h2>my addresses</h2>
+            
             
             {/* address */}
             <ul>

@@ -1,5 +1,5 @@
-
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { CiCircleRemove } from 'react-icons/ci';
 import { MdDiscount } from 'react-icons/md';
@@ -33,6 +33,8 @@ const Cart = () => {
     }, 0)
 
 
+    console.log(couponDiscount)
+
     const couponModalHandler = () => {
         setCoupon((prev) => !prev)
     }
@@ -40,6 +42,7 @@ const Cart = () => {
 
     return(
         <div className='cart'>
+                <Toaster />
                 {cart?.length > 0 ? (
                     <>
                     <div className='cart__products'>
@@ -123,7 +126,7 @@ const Cart = () => {
                                 (
                                     <>
                                         <span><strong>{couponDiscount?.couponCode}</strong>  applied successfully</span>
-                                        <span onClick={removeCouponHandler} className='cart__couponRemoveBtn'><CiCircleRemove/></span>
+                                        <span onClick={() => removeCouponHandler(couponDiscount?.couponID)} className='cart__couponRemoveBtn'><CiCircleRemove/></span>
                                     </>
                                 )
                             }
