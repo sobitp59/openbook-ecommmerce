@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast';
 const Home = () => {
     const navigate = useNavigate()
     const {productCategories} = useProductCategory();
-    const {productCategoryFilter, filters} = useProducts();
+    const {filterProductCategory} = useProducts();
 
 
     const navigateToHomeOage = () => navigate('/products') 
@@ -28,21 +28,31 @@ const Home = () => {
 
             <section className='home__categories'>
                 <h2 className='home__title'>featured book categories</h2>
-                <ul className='home__lists'>
+                <div className='home__lists'>
                     { productCategories?.map((category) => {
                     return(
-                            <label className='home__category' htmlFor=''>
-                                <input className='home__inputBox' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
+                            <div className='home__category' onClick={() => filterProductCategory(category?.categoryName)}>
                                 <h2 className='home__categoryName'>{category?.categoryName}</h2>
                                 <p className='home__categoryDescription'>{category?.description}</p>
-                            </label>
+                            </div>
                     )
                     })}                 
-                </ul>
+                </div>
             </section>
         </div>
         
     )
 }
+                // <ul className='home__lists'>
+                //     { productCategories?.map((category) => {
+                //     return(
+                //             <label className='home__category' htmlFor=''>
+                //                 <input className='home__inputBox' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
+                //                 <h2 className='home__categoryName'>{category?.categoryName}</h2>
+                //                 <p className='home__categoryDescription'>{category?.description}</p>
+                //             </label>
+                //     )
+                //     })}                 
+                // </ul>
 
 export default Home;

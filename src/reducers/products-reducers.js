@@ -133,16 +133,7 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'EDIT_ADDRESS' : {
-            const [{address : {name, house, city, state, country, postalCode, mobileNumber} = {}}] = action?.payload ?? [];
-            return {...state, addressDetails : {
-                name : name,
-                house : house,
-                city : city,
-                state : state,
-                country : country,
-                postalCode : postalCode,
-                mobileNumber : mobileNumber,
-            }}
+            return {...state, address : action?.payload?.address}
         }   
 
         case 'SHOW_ADDRESS_MODAL' : {
@@ -170,6 +161,10 @@ export const reducerFunction = (state, action) => {
             }else{
                 return {...state, filters : {...state.filters, categoryFilter : [...state?.filters?.categoryFilter]?.filter((category) => category !== action?.payload?.category) }}
             }
+        }
+
+        case 'FILTER_CATEGORY_HOME' : {
+            return {...state, filters : {...state.filters, categoryFilter : [...state?.filters?.categoryFilter,  action?.payload] }}
         }
         
         case 'FILTER_RATING' : {

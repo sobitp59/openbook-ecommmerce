@@ -16,7 +16,6 @@ const User = () => {
 
   const styleAddress = address?.length > 0 && 'user__addresses'
 
- console.log(userInfo)
 
   return (
     <div className='user'>
@@ -55,14 +54,14 @@ const User = () => {
             
             {/* address */}
             <ul>
-              {address?.map(({ address, _id}) => (
+              {(address?.name !== '' || address?.house !== '' || address?.city !== '' || address?.state !== '' || address?.country !== '' || address?.postalCode !== '' || address?.mobileNumber !== '') && address?.map(({ address, _id}) => (
                 <li key={_id} className={styleAddress}>
                   <h3>{address?.name}</h3>
                   <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
                   <p>{address?.country}</p>
                   <p><strong>contact : </strong>{address?.mobileNumber}</p>
                   <section>
-                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, _id, setShowAddressForm)} className='user__addressButton user__editBtn'>edit</button>
+                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, address,  _id, showAddressModal)} className='user__addressButton user__editBtn'>edit</button>
                     <button onClick={() => userAddressDeleteHandler(user?.userEncodedToken, _id)} className='user__addressButton user__deleteBtn'>delete</button>
                   </section>
                 </li>

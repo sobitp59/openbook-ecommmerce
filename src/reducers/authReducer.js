@@ -53,7 +53,6 @@ export const userAuthReducer = (state, action) => {
         }
        
         case 'LOGIN_SUCCESS' : {
-            console.log()
             return {...state, user : {...state.user, registered : true, loggedIn : true, userEncodedToken : action?.payload?.token, userInfo : action?.payload?.userInfo}}
         }
 
@@ -62,7 +61,6 @@ export const userAuthReducer = (state, action) => {
         }
 
         case 'LOGIN_AS_GUEST' : {
-            console.log(action.payload.email, action.payload.password);
             return {...state, login : { email : action?.payload?.email , password : action?.payload?.password},}
         }
 

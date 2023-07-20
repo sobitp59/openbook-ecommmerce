@@ -1,4 +1,4 @@
-    import { createContext, useContext, useEffect, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
@@ -44,10 +44,10 @@ export const ProductsContextProvider = ({children}) => {
     }
     
 
-    const saveAddressForm = async (e, address, authToken) => {
+    const saveAddressForm = async (e, addressDetails, authToken) => {
         e.preventDefault();
 
-        if(authToken){
+        if(authToken && (addressDetails?.name !== '' || addressDetails?.house !== '' || addressDetails?.city !== '' || addressDetails?.state !== '' || addressDetails?.country !== '' || addressDetails?.postalCode !== '' || addressDetails?.mobileNumber !== '')){
 
             try {
                 const response = await fetch('/api/user/address', {
@@ -59,11 +59,9 @@ export const ProductsContextProvider = ({children}) => {
                     body : JSON.stringify({address : state?.addressDetails})
                 })
                 
-                console.log('INSIDE TRY AND CATCH BLOCK');
                 
                 if(response?.ok){
                     const data = await response?.json();
-                    console.log(data)
                     dispatch({
                         type : 'ADD_USER_ADDRESS',
                         payload : {
@@ -87,10 +85,8 @@ export const ProductsContextProvider = ({children}) => {
             } catch (error) {
                 console.log('SOME ERROR OCCURED : ', error)
             }
-            
-            
-            console.log('OUTSIDE TRY AND CATCH BLOCK');
         }else{
+            toast.error('please enter all the fields')
             console.log('awesome error occured')
         }
 
@@ -103,7 +99,7 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
 
-    const cancelForm = (e, setShowAddressForm) => {
+    const cancelForm = (e) => {
         e.preventDefault()
         dispatch({
             type : 'USER_ADDRESS_CANCEL',
@@ -127,6 +123,7 @@ export const ProductsContextProvider = ({children}) => {
     }
 
     const userAddressDeleteHandler = async(authToken, addressID) => {
+        console.log(addressID)
         try {
             const response = await fetch(`/api/user/address/${addressID}`, {
                 method : "DELETE",
@@ -140,7 +137,6 @@ export const ProductsContextProvider = ({children}) => {
 
                 const [{_id} = []] = state?.deliveryAddress ?? [];
                 const deliveryAddressCheck = _id === addressID ? [] : state?.deliveryAddress
-                console.log(deliveryAddressCheck)
 
                 dispatch({
                     type : 'DELETE_USER_ADDRESS',
@@ -156,33 +152,34 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
 
-    const userEditAddressHandler = async(authToken, addressID, setShowAddressForm) => {
-        setShowAddressForm(true)
-        const address = state?.address?.filter(({_id}) => _id === addressID );
-        console.log(address)
-        dispatch({
-            type : 'EDIT_ADDRESS',
-            payload : address,
-        })
+    const userEditAddressHandler = async(authToken, address, addressID, showAddressModal) => {
 
+        showAddressModal();
         
-        // try {
-        //     const response = await fetch(`/api/user/address/${addressID}`, {
-        //         method : 'POST',
-        //         headers : {
-        //             'Content-Type': 'application/json',
-        //             authorization : authToken
-        //         },
-        //         body : JSON.stringify({address : state?.addressDetails})
-        //     })
+        try {
+            const response = await fetch(`/api/user/address/${addressID}`, {
+                method : 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    authorization : authToken
+                },
+                body : JSON.stringify({address : address})
+            })
 
-        //     if(response?.ok){
-        //         const data = await response?.json();
-        //         console.log(data);
-        //     }
-        // } catch (error) {
-        //  console.log('SOME ERROR OCCURED : ', error)   
-        // }
+            if(response?.ok){
+                const data = await response?.json();
+                console.log(data)
+                console.log(data?.address)
+                dispatch({
+                    type : 'EDIT_ADDRESS',
+                    payload : {
+                        address : data?.address,
+                    },
+                })
+            }
+        } catch (error) {
+         console.log('SOME ERROR OCCURED : ', error)   
+        }
     }
 
     const selectCheckoutAddress = async (addressID , authToken) => {
@@ -256,9 +253,18 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
 
+    const filterProductCategory = (categoryName) => {
+        dispatch({
+            type : 'FILTER_CATEGORY_HOME',
+            payload : categoryName
+        })
+
+        navigate('/products') 
+    }
+
     
     const productCategoryFilter = (e) => {
-        console.log(e.target.value)
+        
         const category = e?.target?.value
         const checked = e?.target?.checked
 
@@ -268,8 +274,6 @@ export const ProductsContextProvider = ({children}) => {
                 category, checked                
             }
         })
-
-        navigate('/products')
     }
 
     const filterProductByRating = (e) => {
@@ -593,6 +597,7 @@ export const ProductsContextProvider = ({children}) => {
         orderedProducts : state.orderedProducts,
         filterPriceRangeHandler,
         productCategoryFilter,
+        filterProductCategory,
         filterProductByRating,
         sortProducts,
         addToCart,

@@ -121,7 +121,8 @@ export const AuthContextProvider = ({children}) => {
             })
             location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
             }else{
-                console.log('some error occured')
+                console.log('some error occured');
+                toast.error('please enter valid credentials')
             }
             console.log(location)
         } catch (error) {
@@ -179,6 +180,7 @@ export const AuthContextProvider = ({children}) => {
             }
         } catch (error) {
             console.log(error)
+
         }
 
 
