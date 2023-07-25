@@ -1,7 +1,7 @@
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import BrandLogo from '../../../src/assets/brandlogo.png';
+import BrandLogo from '../../../src/assets/openbook-logo.png';
 import { AddressForm } from '../../components';
 import { useAuth } from '../../contexts/authentication/AuthContext';
 import { useProducts } from '../../contexts/products-context/ProductsContext';
@@ -40,7 +40,8 @@ const Checkout = () => {
         return totalCost + total
     }, 0);
 
-    const [{address : addressCheckout, _id : deliveryAddressID} = {}] = deliveryAddress ?? [];
+    console.log(deliveryAddress)
+
 
     const getDeliveryDate = () => {
         const randomNumber = getRandomNumber(4, 8)
@@ -60,48 +61,48 @@ const Checkout = () => {
 
     const handlePaymentSuccess = (response) => {
         const orderDetail = {
-          paymentID : response?.razorpay_payment_id,
-          productsLists : [...cart],
-          deliveryAddress : deliveryAddress,
-          totalAmount : totalPriceToPay,
-          date : new Date(),
-          deliveryDate : getDeliveryDate()
+            paymentID : response?.razorpay_payment_id,
+            productsLists : [...cart],
+            deliveryAddress : deliveryAddress,
+            totalAmount : totalPriceToPay,
+            date : new Date(),
+            deliveryDate : getDeliveryDate()
         }
-    
+
         getOrderDetails(orderDetail);
-    
+
         navigate("/order-successfull");
-    
+
         clearCart();
-    
+
         setTimeout(() => {
-          navigate("/user-profile");
+            navigate("/user-profile");
         }, 5000);
-      }
+    }
     
     
-      const razorpayOptions = {
-          key: "rzp_test_8lFoFGsmvIuwB7",
-          amount: parseInt(totalPriceToPay) * 100,
-          name: "OpenBook",
-          description: "Thank You For Purchasing",
-          image: BrandLogo,
-          
-          handler: (response) => handlePaymentSuccess(response),
-          
-          prefill: {
-            name: fullname,
-            email: email,
-            contact: mobileNumber,
-          },
-          
-          notes: {
-            address: deliveryAddress,
-          },
-          theme: {
-            color: "#00214d",
-          },
-        };
+    const razorpayOptions = {
+        key: 'rzp_test_8lFoFGsmvIuwB7',
+        amount: parseInt(totalPriceToPay) * 100,
+        name: "OpenBook",
+        description: "Thank You For Purchasing",
+        image: BrandLogo,
+        
+        handler: (response) => handlePaymentSuccess(response),
+        
+        prefill: {
+        name: fullname,
+        email: email,
+        contact: mobileNumber,
+        },
+        
+        notes: {
+        address: deliveryAddress,
+        },
+        theme: {
+        color: "#00214d",
+        },
+    };
     
 
 
@@ -134,14 +135,14 @@ const Checkout = () => {
                 
                 <button onClick={showAddressModal} className='user__addBtn'>{address?.length > 0 ? "add another address" : "add an address"}</button>
 
-                {address?.map(({address, _id}) => {
-                    return <label onClick={() => selectCheckoutAddress(_id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={_id}>
-                        <input checked={deliveryAddressID === _id} onChange={() => {}} type="radio" name='user_address' className='checkout__addressInput'/>
+                {address?.map((userAddress) => {
+                    return <label onClick={() => selectCheckoutAddress(userAddress?._id, user?.userEncodedToken)} className='checkout__addressSelect' htmlFor="user_address" key={userAddress?._id}>
+                        <input checked={deliveryAddress?._id === userAddress?._id} onChange={() => {}} type="radio" name='user_address' className='checkout__addressInput'/>
                         <section>
-                            <h3>{address?.name}</h3>
-                            <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
-                            <p>{address?.country}</p>
-                            <p><strong>contact : </strong>{address?.mobileNumber}</p>
+                            <h3>{userAddress?.name}</h3>
+                            <p>{userAddress?.house}, {userAddress?.city}, {userAddress?.state} - {userAddress?.postalCode}</p>
+                            <p>{userAddress?.country}</p>
+                            <p><strong>contact : </strong>{userAddress?.mobileNumber}</p>
                         </section>
                     </label>
                 })}
@@ -182,12 +183,12 @@ const Checkout = () => {
                 <h2>deliver to</h2>
                 <hr />
 
-                { deliveryAddress?.length > 0 && (
+                { deliveryAddress._id  && (
                     <>
-                        <h3>{addressCheckout?.name}</h3>
-                        <p>{addressCheckout?.house} {addressCheckout?.city}, {addressCheckout?.state}  {addressCheckout?.postalCode}</p>
-                        <p>{addressCheckout?.country}</p>
-                        <p><strong>contact : </strong>{addressCheckout?.mobileNumber}</p>
+                        <h3>{deliveryAddress?.name}</h3>
+                        <p>{deliveryAddress?.house} {deliveryAddress?.city}, {deliveryAddress?.stateName}  {deliveryAddress?.postalCode}</p>
+                        <p>{deliveryAddress?.country}</p>
+                        <p><strong>contact : </strong>{deliveryAddress?.mobileNumber}</p>
                     </>
                 ) }
                 

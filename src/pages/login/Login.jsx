@@ -52,8 +52,8 @@ const Login = () => {
                     <button className="form__passButton" onClick={passwordHandler}>{showPassword ? <AiFillEye className="passBtn"  /> : <AiFillEyeInvisible className="passBtn" />  }</button>
                 </label>
 
-                <button className="form__button form__button">login</button>
-                <button className="form__button form__button" onClick={loginAsGuestHandler}>login as guest</button>
+                <button type='submit' className="form__button form__button" >login</button>
+                <button type='submit' className="form__button form__button" onClick={loginAsGuestHandler}>login as guest</button>
             </form>
             <p>don't have an account? <Link to={'/signup'}>signup</Link></p>
         </div>

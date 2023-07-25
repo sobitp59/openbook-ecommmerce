@@ -35,7 +35,9 @@ const coupons = [
       coupon: 40,
       couponCode: "AVID40",
     },
-  ];
+];
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const initialStates = {
     allProducts : [],
@@ -55,13 +57,15 @@ export const initialStates = {
     wishlist : [],
     address : [],
     showAddressForm : false,
+    editedAddress : false,
     orderedProducts : [],
-    deliveryAddress : [],
+    deliveryAddress : {},
     addressDetails : {
+        _id : '',
         name : '',
         house : '',
         city : '',
-        state : '',
+        stateName : '',
         country : '',
         postalCode : '',
         mobileNumber : '',
@@ -97,10 +101,11 @@ export const reducerFunction = (state, action) => {
 
         case 'USER_ADDRESS_DUMMY' : {
             return {...state, addressDetails : { 
+                _id : uuidv4(),
                 name : 'Krishna Kumar',
                 house : 'Sri Sri Krishna Balaram Mandir',
                 city : 'Vrindavan',
-                state : 'Uttar Pradesh',
+                stateName : 'Uttar Pradesh',
                 country : 'India',
                 postalCode : '281121',
                 mobileNumber : '0123456789',}}
@@ -108,10 +113,11 @@ export const reducerFunction = (state, action) => {
         
         case 'USER_ADDRESS_CANCEL' : {
             return {...state, addressDetails : { 
+                _id : '',
                 name : '',
                 house : '',
                 city : '',
-                state : '',
+                stateName : '',
                 country : '',
                 postalCode : '',
                 mobileNumber : '',
@@ -125,29 +131,39 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'ADD_USER_ADDRESS' : {
-            return {...state, address : action?.payload?.address, addressDetails : action?.payload?.addressDetails, showAddressForm : action?.payload?.showAddressForm}
+            return {...state, address : action?.payload?.address, showAddressForm : action?.payload?.showAddressForm,  addressDetails : { 
+                _id : '',
+                name : '',
+                house : '',
+                city : '',
+                stateName : '',
+                country : '',
+                postalCode : '',
+                mobileNumber : '',
+                },}
         }
         
         case 'DELETE_USER_ADDRESS' : {
             return {...state, address : action?.payload?.address, deliveryAddress : action?.payload?.delAddress}
         }
 
-        case 'EDIT_ADDRESS' : {
-            return {...state, address : action?.payload?.address}
-        }   
+        case 'UPDATE_ADDRESS_DATA' : {
+            return {...state, addressDetails : {...action?.payload?.addressDetails}, editedAddress : action?.payload?.editedAddress}
+        }
+        // case 'EDIT_ADDRESS' : {
+        //     return {...state, address : action?.payload?.address, editedAddress : true}
+        // }   
+        
+        case 'UPDATE_ADDRESS' : {
+            console.log(action?.payload)
+            return {...state, address : [...action?.payload?.address], editedAddress : false, showAddressForm : action?.payload?.showAddressForm}
+        }
 
         case 'SHOW_ADDRESS_MODAL' : {
             return {...state, showAddressForm : action?.payload}
         }
         
         case 'ADDRESS_CHECKOUT' : {
-           console.log(state?.address?.length)
-           console.log(action?.payload)
-            const [{_id}] = action?.payload;
-            console.log(_id) 
-
-            // console.log(state?.address?.length > 0 ? action.payload : 'NO DELIVERY ADDRESS' )
-
             return {...state, deliveryAddress : action.payload  }
         }
 

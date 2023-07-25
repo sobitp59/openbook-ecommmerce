@@ -10,12 +10,15 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
-  const {address, showAddressForm, showAddressModal, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
+  const {address,addressDetails, showAddressForm, showAddressModal, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
   const [userState, setUserState] = useState({profile : true, address : false, orders : false})
   const {userInfo} = user;
 
   const styleAddress = address?.length > 0 && 'user__addresses'
 
+  console.log(user?.userInfo)
+  console.log(address)
+  console.log(user)
 
   return (
     <div className='user'>
@@ -54,18 +57,21 @@ const User = () => {
             
             {/* address */}
             <ul>
-              {(address?.name !== '' || address?.house !== '' || address?.city !== '' || address?.state !== '' || address?.country !== '' || address?.postalCode !== '' || address?.mobileNumber !== '') && address?.map(({ address, _id}) => (
-                <li key={_id} className={styleAddress}>
-                  <h3>{address?.name}</h3>
-                  <p>{address?.house}, {address?.city}, {address?.state} - {address?.postalCode}</p>
-                  <p>{address?.country}</p>
-                  <p><strong>contact : </strong>{address?.mobileNumber}</p>
+              {(address?.length > 0) && address?.map((userAddress) => {
+                return(
+                <li key={userAddress?._id} className={styleAddress}>
+                  <h3>{userAddress?.name}</h3>
+                  <p>{userAddress?.house}, {userAddress?.city}, {userAddress?.stateName} - {userAddress?.postalCode}</p>
+                  <p>{userAddress?.country}</p>
+                  <p><strong>contact : </strong>{userAddress?.mobileNumber}</p>
                   <section>
-                    <button onClick={() => userEditAddressHandler(user?.userEncodedToken, address,  _id, showAddressModal)} className='user__addressButton user__editBtn'>edit</button>
-                    <button onClick={() => userAddressDeleteHandler(user?.userEncodedToken, _id)} className='user__addressButton user__deleteBtn'>delete</button>
+                    <button onClick={() => userEditAddressHandler( userAddress, showAddressModal)} className='user__addressButton user__editBtn'>edit</button>
+                    <button onClick={() => userAddressDeleteHandler(user?.userEncodedToken, userAddress?._id)} className='user__addressButton user__deleteBtn'>delete</button>
                   </section>
                 </li>
-              ))}
+              )}
+              
+              )}
             </ul>
 
             <button className='user__addBtn' onClick={showAddressModal}>+ add a new address</button>

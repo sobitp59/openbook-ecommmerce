@@ -9,11 +9,19 @@ import { formatDate } from "../utils/authUtils";
 export const users = [
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balika",
-    email: "adarshbalika@gmail.com",
-    password: "adarshbalika",
+    fullname: "Sobit Prasad",
+    email: "guest@gmail.com",
+    password: "guest@test",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    address : [{ 
+      _id : uuid(),
+      name : 'Sobit Prasad',
+      house : 'White Memoral Hostel',
+      city : 'Guwhati',
+      stateName : 'Assam',
+      country : 'India',
+      postalCode : '781001',
+      mobileNumber : '0123456789',}],
   },
 ];

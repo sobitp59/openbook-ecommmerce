@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { initialStates, reducerFunction } from '../../reducers/products-reducers';
 import { useAuth } from '../authentication/AuthContext';
 const ProductsContext = createContext();
@@ -11,7 +12,7 @@ export const ProductsContextProvider = ({children}) => {
  
     const {user : {userEncodedToken, loggedIn}} = useAuth()
  
- 
+    
     const getProducts = async () => {
         dispatch({type : 'LOADING'})
         try {
@@ -25,14 +26,16 @@ export const ProductsContextProvider = ({children}) => {
     }
 
     // Addresses
-    const getAddress = async (authToken) => {
+    const getAddress = async () => {
         console.log('ADDRESS CLCIKED')
+        console.log(userEncodedToken)
         try {
             const response = await fetch('/api/user/addresses', {
-                headers : {authorization : authToken}
+                headers : {authorization : userEncodedToken}
             });
             if(response?.ok){
                 const data = await response?.json();
+                console.log('GET ADDRESS DATA',data)
                 dispatch({
                     type : 'SET_ADDRESS',
                     payload : data?.address
@@ -44,10 +47,24 @@ export const ProductsContextProvider = ({children}) => {
     }
     
 
-    const saveAddressForm = async (e, addressDetails, authToken) => {
+    const saveAddressForm = async (e, authToken, addressDetails) => {
         e.preventDefault();
 
-        if(authToken && (addressDetails?.name !== '' || addressDetails?.house !== '' || addressDetails?.city !== '' || addressDetails?.state !== '' || addressDetails?.country !== '' || addressDetails?.postalCode !== '' || addressDetails?.mobileNumber !== '')){
+        console.log(addressDetails)
+        console.log(state?.addressDetails)
+        console.log(authToken)
+        
+
+        const entry = state?.address?.find((address) => {
+            console.log(address?._id , addressDetails?._id)
+            return address?._id === addressDetails?._id
+        });
+
+        console.log(entry)
+
+        // if(authToken && (addressDetails?.name !== '' || addressDetails?.house !== '' || addressDetails?.city !== '' || addressDetails?.state !== '' || addressDetails?.country !== '' || addressDetails?.postalCode !== '' || addressDetails?.mobileNumber !== ''))
+        
+        if(!entry){
 
             try {
                 const response = await fetch('/api/user/address', {
@@ -56,38 +73,58 @@ export const ProductsContextProvider = ({children}) => {
                         'Content-Type': 'application/json',
                         authorization : authToken
                     },
-                    body : JSON.stringify({address : state?.addressDetails})
+                    body : JSON.stringify({address :addressDetails, _id : addressDetails?._id.length > 0 ? addressDetails?._id : uuidv4()})
                 })
                 
                 
                 if(response?.ok){
                     const data = await response?.json();
+                    console.log(data)
                     dispatch({
                         type : 'ADD_USER_ADDRESS',
                         payload : {
                             address : data?.address,
-                            addressDetails : { 
-                                name : '',
-                                house : '',
-                                city : '',
-                                state : '',
-                                country : '',
-                                postalCode : '',
-                                mobileNumber : '',
-                            }
+                            showAddressForm : false
                         },
-                        showAddressForm : false
                     })
+                    toast.success('address added')
                 }
 
-                toast.success('address added')
 
             } catch (error) {
                 console.log('SOME ERROR OCCURED : ', error)
             }
         }else{
-            toast.error('please enter all the fields')
-            console.log('awesome error occured')
+            console.log('ALREADY PRESENT ADDRESS')
+           try {
+            const response = await fetch(`/api/user/address/${entry?._id}`, {
+                method : 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    authorization : authToken
+                },
+                body : JSON.stringify({address :entry})
+            })
+
+
+            if(response?.ok){
+                const data = await response?.json();
+                console.log(data)
+                console.log(data?.address)
+                
+                dispatch({
+                    type : 'UPDATE_ADDRESS',
+                    payload : {
+                        address : data?.address,
+                        showAddressForm : false
+                    },
+                })
+
+                
+            }
+        } catch (error) {
+         console.log('SOME ERROR OCCURED : ', error)   
+        }
         }
 
         }
@@ -135,8 +172,12 @@ export const ProductsContextProvider = ({children}) => {
             if(response?.ok){
                 const data = await response?.json();
 
-                const [{_id} = []] = state?.deliveryAddress ?? [];
-                const deliveryAddressCheck = _id === addressID ? [] : state?.deliveryAddress
+                // console.log(data)
+                // console.log(state?.deliveryAddress)
+                // const [{_id} = {}] = state?.deliveryAddress ?? [];
+                const deliveryAddressCheck = state?.deliveryAddress?._id === addressID ? {} : state?.deliveryAddress
+
+                // console.log(deliveryAddressCheck)
 
                 dispatch({
                     type : 'DELETE_USER_ADDRESS',
@@ -152,42 +193,27 @@ export const ProductsContextProvider = ({children}) => {
         }
     }
 
-    const userEditAddressHandler = async(authToken, address, addressID, showAddressModal) => {
+    const userEditAddressHandler = ( address, showAddressModal) => {
+
 
         showAddressModal();
-        
-        try {
-            const response = await fetch(`/api/user/address/${addressID}`, {
-                method : 'POST',
-                headers : {
-                    'Content-Type': 'application/json',
-                    authorization : authToken
-                },
-                body : JSON.stringify({address : address})
-            })
-
-            if(response?.ok){
-                const data = await response?.json();
-                console.log(data)
-                console.log(data?.address)
-                dispatch({
-                    type : 'EDIT_ADDRESS',
-                    payload : {
-                        address : data?.address,
-                    },
-                })
+        dispatch({
+            type : 'UPDATE_ADDRESS_DATA',
+            payload : {
+                isEdited : true,
+                addressDetails : address
             }
-        } catch (error) {
-         console.log('SOME ERROR OCCURED : ', error)   
-        }
+        })
     }
 
+
     const selectCheckoutAddress = async (addressID , authToken) => {
-        console.log(state?.address)
+
         const address = state?.address?.filter(({_id}) => _id === addressID)
+        const [{_id, name, house ,city , stateName ,country ,postalCode , mobileNumber } = {}] = address ?? []; 
         dispatch({
             type : 'ADDRESS_CHECKOUT',
-            payload : state?.address?.length > 0 ? address : []
+            payload : state?.address?.length > 0 ? {_id, name, house ,city , stateName ,country ,postalCode , mobileNumber} : {}
         })
         console.log(address)
     }
@@ -240,10 +266,12 @@ export const ProductsContextProvider = ({children}) => {
         })
     }
 
-    useEffect( async () => {
+    useEffect(() => {
         getProducts();
-        getAddress();
-    }, [])
+        if(userEncodedToken){
+            getAddress();
+        }
+    }, [userEncodedToken])
 
 
     const filterPriceRangeHandler = (e) => {
@@ -264,7 +292,7 @@ export const ProductsContextProvider = ({children}) => {
 
     
     const productCategoryFilter = (e) => {
-        
+
         const category = e?.target?.value
         const checked = e?.target?.checked
 
@@ -550,7 +578,7 @@ export const ProductsContextProvider = ({children}) => {
 
     const addCouponHandler = (e, couponID) => {
         const getCoupon = state?.coupons?.find(({_id}) => _id === couponID);
-        console.log(getCoupon)
+
         if(getCoupon){
         dispatch({
             type : 'APPLY_COUPON',
@@ -593,6 +621,7 @@ export const ProductsContextProvider = ({children}) => {
         couponDiscount : state.couponDiscount,
         addressDetails : state.addressDetails,
         showAddressForm : state.showAddressForm,
+        editedAddress : state.editedAddress,
         deliveryAddress : state.deliveryAddress,
         orderedProducts : state.orderedProducts,
         filterPriceRangeHandler,
@@ -623,9 +652,6 @@ export const ProductsContextProvider = ({children}) => {
         clearCart,
         showAddressModal
     }
-
-
- 
 
 
     return <ProductsContext.Provider value={value}>

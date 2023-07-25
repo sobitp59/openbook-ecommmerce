@@ -5,13 +5,13 @@ import './addressForm.css';
 
 const AddressForm = () => {
     
-    const {fillDummyData, cancelForm, saveAddressForm, addressDetails, handleUserAddressForm} = useProducts();
+    const {fillDummyData, editedAddress, cancelForm, saveAddressForm, addressDetails, handleUserAddressForm} = useProducts();
 
     const {user : {userEncodedToken}} = useAuth();
 
     return (
     <div className='addressForm'>
-        <form className='address-form'>
+        <form className='address-form' onSubmit={(e) => saveAddressForm(e, userEncodedToken, addressDetails)}>
                 <h2>add new address</h2>
                 <label className="form__label" htmlFor="">
                     <input 
@@ -19,7 +19,7 @@ const AddressForm = () => {
                         required
                         placeholder='enter name'
                         name='name'
-                        value={addressDetails?.name ? addressDetails?.name : ''}
+                        value={addressDetails?.name}
                         onChange={handleUserAddressForm}
                         />
                 </label>
@@ -30,7 +30,7 @@ const AddressForm = () => {
                         required
                         placeholder='enter house mo., road, colony'
                         name='house'
-                        value={addressDetails?.house ? addressDetails?.house : ''}
+                        value={addressDetails?.house}
                         onChange={handleUserAddressForm}
                         />
                 </label>
@@ -51,8 +51,8 @@ const AddressForm = () => {
                         type="text" 
                         required
                         placeholder='enter state'
-                        name='state'
-                        value={addressDetails?.state}
+                        name='stateName'
+                        value={addressDetails?.stateName}
                         onChange={handleUserAddressForm}
                         />
                 </label>
@@ -89,7 +89,7 @@ const AddressForm = () => {
 
 
                 <div className='form__buttons'>
-                    <button className="form__button form__button--save" onClick={(e) => saveAddressForm(e, addressDetails, userEncodedToken)}> save </button>
+                    <button className="form__button form__button--save"> save </button>
                     <button className="form__button form__button--cancel" onClick={cancelForm}> cancel </button>
                     <button className="form__button form__button--dummy" onClick={fillDummyData}> fill dummy data </button>
                 </div>

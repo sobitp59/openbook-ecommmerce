@@ -93,13 +93,13 @@ export const AuthContextProvider = ({children}) => {
 
 
     const userLoginHandler = async (e, email, password) => {
-        e.preventDefault()
+        e.preventDefault();
+
         try {
             const fetchResponse = await fetch('/api/auth/login', {
                 method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
-                      authorization : `Bearer ${state?.user?.userEncodedToken}`
                     },
                     body: JSON.stringify({
                       email: email.toLowerCase(),
@@ -116,7 +116,7 @@ export const AuthContextProvider = ({children}) => {
                     type : 'LOGIN_SUCCESS',
                     payload : {
                         userInfo : data?.foundUser,
-                        token : `${data?.encodedToken}`,
+                        token : data?.encodedToken,
                     }
             })
             location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
@@ -145,8 +145,7 @@ export const AuthContextProvider = ({children}) => {
         navigate('/')
     }
 
-    const loginAsGuestHandler = async () => {
-        console.log(location)
+    const loginAsGuestHandler = () => {
 
         dispatch ({
             type : 'LOGIN_AS_GUEST',
@@ -155,71 +154,7 @@ export const AuthContextProvider = ({children}) => {
                 password : 'guest@test'
             }
         });
-
-        try {
-            const fetchResponse = await fetch(`/api/auth/signup`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  fullname: 'guest user',
-                  email: state?.login?.email?.toLowerCase() || 'guest@gmail.com',
-                  password: state?.login?.password || 'guest@test'
-                })
-            })
-
-            if(fetchResponse.ok){
-                const data = await fetchResponse.json();
-                const userSignUpData = {token : `${data?.encodedToken}`}
-            localStorage.setItem('userSignUpData', JSON.stringify(userSignUpData))
-                dispatch({type : 'CLEAR_FIELD'})  
-                dispatch({type : 'REGISTRATION_SUCCESS'})
-            }else{
-                throw new Error('some error occured')
-            }
-        } catch (error) {
-            console.log(error)
-
-        }
-
-
-        // login
-        try {
-            const fetchResponse = await fetch('/api/auth/login', {
-                method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      authorization : `Bearer ${state?.user?.userEncodedToken}`
-                    },
-                    body: JSON.stringify({
-                      email: state?.login?.email?.toLowerCase(),
-                      password: state?.login?.password
-                    })
-            });
-            if(fetchResponse.ok){
-                const data = await fetchResponse.json()
-                const userLoginData = {token : `${data?.encodedToken}`, userInfo : data?.foundUser}
-                localStorage.setItem('userLoginData', JSON.stringify(userLoginData))
-                dispatch({type : 'CLEAR_FIELD'})  
-                dispatch({
-                    type : 'LOGIN_SUCCESS',
-                    payload : {
-                        userInfo : data?.foundUser,
-                        token : data?.encodedToken,
-                    }
-                })
-            location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
-
-            }else{
-                console.log('some error occured')
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-
-        console.log('LOGIN AS GUEST')
+        
     }
 
     
