@@ -62,8 +62,37 @@ export const ProductsContextProvider = ({children}) => {
 
         console.log(entry)
         
-        if(!entry?._id){
-
+        if(entry?._id){
+            console.log('ALREADY PRESENT ADDRESS')
+            try {
+             const response = await fetch(`/api/user/address/${entry?._id}`, {
+                 method : 'POST',
+                 headers : {
+                     authorization : authToken
+                 },
+                 body : JSON.stringify({address :entry})
+             })
+ 
+ 
+             if(response?.ok){
+                 const data = await response?.json();
+                 console.log(data)
+                 console.log(data?.address)
+                 
+                 dispatch({
+                     type : 'UPDATE_ADDRESS',
+                     payload : {
+                         address : data?.address,
+                         showAddressForm : false
+                     },
+                 })
+ 
+                 
+             }
+         } catch (error) {
+          console.log('SOME ERROR OCCURED : ', error)   
+         }
+        }else if(!entry?._id){
             try {
                 const response = await fetch('/api/user/address', {
                     method : 'POST',
@@ -77,7 +106,6 @@ export const ProductsContextProvider = ({children}) => {
                 
                 if(response?.ok){
                     const data = await response?.json();
-                    console.log(data)
                     dispatch({
                         type : 'ADD_USER_ADDRESS',
                         payload : {
@@ -92,36 +120,6 @@ export const ProductsContextProvider = ({children}) => {
             } catch (error) {
                 console.log('SOME ERROR OCCURED : ', error)
             }
-        }else{
-            console.log('ALREADY PRESENT ADDRESS')
-           try {
-            const response = await fetch(`/api/user/address/${entry?._id}`, {
-                method : 'POST',
-                headers : {
-                    authorization : authToken
-                },
-                body : JSON.stringify({address :entry})
-            })
-
-
-            if(response?.ok){
-                const data = await response?.json();
-                console.log(data)
-                console.log(data?.address)
-                
-                dispatch({
-                    type : 'UPDATE_ADDRESS',
-                    payload : {
-                        address : data?.address,
-                        showAddressForm : false
-                    },
-                })
-
-                
-            }
-        } catch (error) {
-         console.log('SOME ERROR OCCURED : ', error)   
-        }
         }
 
         }
