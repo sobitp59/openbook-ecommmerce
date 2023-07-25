@@ -10,38 +10,22 @@ export const initialState = {
         password : '',
     },
     user : {
-        registered : false,
-        loggedIn : JSON.parse(localStorage.getItem('userLoginData'))?.token || '',
-        userEncodedToken : JSON.parse(localStorage.getItem('userLoginData'))?.token || false,
-        userInfo : JSON.parse(localStorage.getItem('userLoginData'))?.userInfo || false 
+        loggedIn : JSON.parse(localStorage.getItem('userData'))?.token,
+        userEncodedToken : JSON.parse(localStorage.getItem('userData'))?.token,
+        userInfo : JSON.parse(localStorage.getItem('userData'))?.userInfo 
     }
 
 }
 
 export const userAuthReducer = (state, action) => {
     switch(action.type){
-        case 'SET_FULLNAME': {
-            return {...state, signup : {...state.signup, fullname : action?.payload}}
+ 
+        case 'USER_LOGIN' : {
+            return {...state, login : {...state.login, [action?.payload?.name] : action?.payload?.value}}
         }
         
-        case 'SET_EMAIL' : {
-            return {...state, signup : {...state.signup, email : action?.payload}}
-        }
-
-        case 'SET_LOGIN_EMAIL' : {
-            return {...state, login : {...state.login, email : action?.payload}}
-        }
-        
-        case 'SET_PASSWORD' : {
-            return {...state, signup : {...state.signup, password : action?.payload}}
-        }
-        
-        case 'SET_LOGIN_PASSWORD' : {
-            return {...state, login : {...state.login, password : action?.payload}}
-        }
-        
-        case 'SET_CONFIRMPASSWORD' : {
-            return {...state, signup : {...state.signup, confirmpassword : action?.payload}}
+        case 'USER_SIGNUP' : {
+            return {...state, signup : {...state.signup, [action?.payload?.name] : action?.payload?.value}}
         }
         
         case 'CLEAR_FIELD' : {
@@ -49,15 +33,15 @@ export const userAuthReducer = (state, action) => {
         }
         
         case 'REGISTRATION_SUCCESS' : {
-            return {...state, user : {...state.signup, registered : true}}
+            return {...state, user : {...state.signup, userEncodedToken : action?.payload?.token, userInfo : action?.payload?.userInfo, loggedIn : true}}
         }
        
         case 'LOGIN_SUCCESS' : {
-            return {...state, user : {...state.user, registered : true, loggedIn : true, userEncodedToken : action?.payload?.token, userInfo : action?.payload?.userInfo}}
+            return {...state, user : {...state.user, loggedIn : true, userEncodedToken : action?.payload?.token, userInfo : action?.payload?.userInfo}}
         }
 
         case 'USER_LOGOUT' : {
-            return {...state, user : {...state.user, registered : true, loggedIn : false, userEncodedToken : '', userInfo : ''}}
+            return {...state, user : {loggedIn : false, userEncodedToken : '', userInfo : ''}}
         }
 
         case 'LOGIN_AS_GUEST' : {

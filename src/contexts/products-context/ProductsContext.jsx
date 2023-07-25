@@ -47,8 +47,8 @@ export const ProductsContextProvider = ({children}) => {
     }
     
 
-    const saveAddressForm = async (e, authToken, addressDetails) => {
-        e.preventDefault();
+    const saveAddressForm = async (event, authToken, addressDetails) => {
+        event.preventDefault();
 
         console.log(addressDetails)
         console.log(state?.addressDetails)
@@ -61,10 +61,8 @@ export const ProductsContextProvider = ({children}) => {
         });
 
         console.log(entry)
-
-        // if(authToken && (addressDetails?.name !== '' || addressDetails?.house !== '' || addressDetails?.city !== '' || addressDetails?.state !== '' || addressDetails?.country !== '' || addressDetails?.postalCode !== '' || addressDetails?.mobileNumber !== ''))
         
-        if(!entry){
+        if(!entry?._id){
 
             try {
                 const response = await fetch('/api/user/address', {
@@ -100,7 +98,6 @@ export const ProductsContextProvider = ({children}) => {
             const response = await fetch(`/api/user/address/${entry?._id}`, {
                 method : 'POST',
                 headers : {
-                    'Content-Type': 'application/json',
                     authorization : authToken
                 },
                 body : JSON.stringify({address :entry})
@@ -171,14 +168,7 @@ export const ProductsContextProvider = ({children}) => {
             
             if(response?.ok){
                 const data = await response?.json();
-
-                // console.log(data)
-                // console.log(state?.deliveryAddress)
-                // const [{_id} = {}] = state?.deliveryAddress ?? [];
                 const deliveryAddressCheck = state?.deliveryAddress?._id === addressID ? {} : state?.deliveryAddress
-
-                // console.log(deliveryAddressCheck)
-
                 dispatch({
                     type : 'DELETE_USER_ADDRESS',
                     payload : {
@@ -224,13 +214,12 @@ export const ProductsContextProvider = ({children}) => {
             type : 'SHOW_ADDRESS_MODAL',
             payload : true
         })
-    }
+    } 
     // address
 
 
     // ORDER
     const getOrderDetails = (orderDetail) => {
-        console.log(orderDetail)
         dispatch({ type: "GET_ORDER_DETAILS", payload: orderDetail })
     }
 
@@ -249,12 +238,6 @@ export const ProductsContextProvider = ({children}) => {
                 
                 if(response?.ok){
                     const json = await response?.json();
-                    console.log(json?.cart)
-    
-                    const updatedProducts = [...json?.cart].filter(({_id}) => {
-                        return  _id !== productId
-                })
-                    console.log(updatedProducts)
                     dispatch({
                         type : 'REMOVE_FROM_CART',
                         payload : json?.cart
@@ -263,6 +246,32 @@ export const ProductsContextProvider = ({children}) => {
             } catch (error) {
                 console.log(error )
             }
+        })
+    }
+
+    const clearWishlist = async () => {
+
+        const wishlistItems = state?.wishlist;
+
+        wishlistItems?.map(async ({_id}) => {
+            try{
+                const response = await fetch(`/api/user/wishlist/${_id}`, {
+                    method : 'DELETE',
+                    headers : {
+                        authorization :  `Bearer ${userEncodedToken}`
+                    }                
+                })
+                if(response?.ok){
+                    const data = await response?.json();
+                    dispatch({
+                        type : 'REMOVE_FROM_WISHLIST',
+                        payload : data?.wishlist
+                    })
+                }
+                    
+            } catch (error) {
+                console.log(error)
+            }       
         })
     }
 
@@ -650,6 +659,7 @@ export const ProductsContextProvider = ({children}) => {
         selectCheckoutAddress,
         getOrderDetails,
         clearCart,
+        clearWishlist,
         showAddressModal
     }
 

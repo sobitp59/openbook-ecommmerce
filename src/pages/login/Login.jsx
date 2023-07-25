@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -7,24 +7,13 @@ import './login.css';
 
 
 const Login = () => {
-    const { signup,loginAsGuestHandler, login, userLoginHandler, getUserLoginPassoword, getUserLoginEmail  } = useAuth()
+    const { handleUserLoginData, loginAsGuestHandler, login, userLoginHandler} = useAuth()
     const [showPassword, setShowPassword] = useState(false)
     
     const passwordHandler = (e) => {
         e.preventDefault()
         setShowPassword((prev) => !prev)
     }  
-
-    useEffect(() => {
-        if(signup?.registered){
-            return toast.success('thankyou for registering. please login to continue')
-        }
-        if(!signup?.registered){
-            return toast.success('please login to continue.')
-        }
-
-    } , [signup?.registered]);
-
 
     return(
         <div className="login">
@@ -35,9 +24,10 @@ const Login = () => {
                     email address
                     <input 
                         value={login?.email} 
-                        type="email" 
+                        type="email"
+                        name="email" 
                         required
-                        onChange={getUserLoginEmail} 
+                        onChange={handleUserLoginData} 
                         />
                 </label>
 
@@ -47,7 +37,8 @@ const Login = () => {
                         value={login?.password} 
                         type={showPassword ? "text" : "password"} 
                         required
-                        onChange={getUserLoginPassoword} 
+                        name="password"
+                        onChange={handleUserLoginData} 
                         />
                     <button className="form__passButton" onClick={passwordHandler}>{showPassword ? <AiFillEye className="passBtn"  /> : <AiFillEyeInvisible className="passBtn" />  }</button>
                 </label>

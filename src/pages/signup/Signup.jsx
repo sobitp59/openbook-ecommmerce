@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/authentication/AuthContext";
 import { useState } from "react";
 import './signup.css';
 const SignUp = () => {
-    const {signup, getUserFullName, getUserEmail, getUserPassoword,getUserConfirmPassword, userRegistrationHandler,} = useAuth();
+    const {signup, handleUserSignupData, userRegistrationHandler,} = useAuth();
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -31,7 +31,8 @@ const SignUp = () => {
                         value={signup?.fullname} 
                         type="text" 
                         required
-                        onChange={getUserFullName} 
+                        name="fullname"
+                        onChange={handleUserSignupData} 
                         />
                 </label>
                 
@@ -41,7 +42,8 @@ const SignUp = () => {
                         value={signup?.email} 
                         type="email" 
                         required
-                        onChange={getUserEmail} 
+                        name="email"
+                        onChange={handleUserSignupData} 
                         />
                 </label>
 
@@ -51,7 +53,8 @@ const SignUp = () => {
                         value={signup?.password} 
                         type={showPassword ? "text" : "password"} 
                         required
-                        onChange={getUserPassoword} 
+                        name="password"
+                        onChange={handleUserSignupData} 
                         />
                     <button className="form__passButton" onClick={passwordHandler}>{showPassword ? <AiFillEye className="passBtn" /> : <AiFillEyeInvisible className="passBtn" />  }</button>
                 </label>
@@ -62,7 +65,8 @@ const SignUp = () => {
                         value={signup?.confirmpassword} 
                         type={showConfirmPassword ? "text" : "password"} 
                         required 
-                        onChange={getUserConfirmPassword} 
+                        name="confirmpassword"
+                        onChange={handleUserSignupData} 
                         />
                     <button className="form__passButton" onClick={confirmPasswordHandler}>{showConfirmPassword ? <AiFillEye className="passBtn" /> : <AiFillEyeInvisible className="passBtn"/>   }</button>
 

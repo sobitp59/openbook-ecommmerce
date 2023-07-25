@@ -10,15 +10,12 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const User = () => {
   const {user, userLogoutHandler} = useAuth()
-  const {address,addressDetails, showAddressForm, showAddressModal, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
+  const {clearCart, clearWishlist, address,addressDetails, showAddressForm, showAddressModal, orderedProducts, userAddressDeleteHandler, userEditAddressHandler} = useProducts()
   const [userState, setUserState] = useState({profile : true, address : false, orders : false})
   const {userInfo} = user;
 
   const styleAddress = address?.length > 0 && 'user__addresses'
 
-  console.log(user?.userInfo)
-  console.log(address)
-  console.log(user)
 
   return (
     <div className='user'>
@@ -48,7 +45,7 @@ const User = () => {
             </article>
 
             <h2>account settings</h2>
-            <button className='user__deleteBtn' onClick={userLogoutHandler}>logout</button>
+            <button className='user__deleteBtn' onClick={() => userLogoutHandler(clearCart, clearWishlist)}>logout</button>
         </section>
         ) : (userState?.address) ? (
         <section className='user__address user--data'>

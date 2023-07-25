@@ -9,14 +9,14 @@ import { formatDate } from "../utils/authUtils";
 export const users = [
   {
     _id: uuid(),
-    fullname: "Sobit Prasad",
+    fullname: "Guest User",
     email: "guest@gmail.com",
     password: "guest@test",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     address : [{ 
       _id : uuid(),
-      name : 'Sobit Prasad',
+      name : 'Guest User',
       house : 'White Memoral Hostel',
       city : 'Guwhati',
       stateName : 'Assam',

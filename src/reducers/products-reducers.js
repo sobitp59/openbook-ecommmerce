@@ -148,15 +148,20 @@ export const reducerFunction = (state, action) => {
         }
 
         case 'UPDATE_ADDRESS_DATA' : {
-            return {...state, addressDetails : {...action?.payload?.addressDetails}, editedAddress : action?.payload?.editedAddress}
+            return {...state, addressDetails : {...state?.addressDetails, ...action?.payload?.addressDetails}, editedAddress : action?.payload?.editedAddress}
         }
-        // case 'EDIT_ADDRESS' : {
-        //     return {...state, address : action?.payload?.address, editedAddress : true}
-        // }   
-        
+
         case 'UPDATE_ADDRESS' : {
-            console.log(action?.payload)
-            return {...state, address : [...action?.payload?.address], editedAddress : false, showAddressForm : action?.payload?.showAddressForm}
+            return {...state, address : action?.payload?.address, editedAddress : false, showAddressForm : action?.payload?.showAddressForm, addressDetails : { 
+                _id : '',
+                name : '',
+                house : '',
+                city : '',
+                stateName : '',
+                country : '',
+                postalCode : '',
+                mobileNumber : '',
+                }}
         }
 
         case 'SHOW_ADDRESS_MODAL' : {
@@ -267,7 +272,6 @@ export const reducerFunction = (state, action) => {
 
 
         case "GET_ORDER_DETAILS" : {
-            console.log(action?.payload)
             return {...state, orderedProducts : [...state?.orderedProducts, action?.payload]}
         }
 

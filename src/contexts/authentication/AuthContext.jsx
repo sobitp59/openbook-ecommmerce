@@ -1,8 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
+import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from "react-router-dom";
 import { initialState, userAuthReducer } from "../../reducers/authReducer";
-
-import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -11,51 +10,33 @@ export const AuthContextProvider = ({children}) => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const getUserFullName = (e) => {
+
+    
+
+
+    const handleUserLoginData = (event) => {
+        const {name, value} = event?.target;
         dispatch({
-            type : 'SET_FULLNAME',
-            payload : e.target.value
-        })
+            type : 'USER_LOGIN',
+            payload : {
+                name : name,
+                value : value 
+            }
+        }) 
     }
     
-    const getUserEmail = (e) => {
+    const handleUserSignupData = (event) => {
+        const {name, value} = event?.target;
         dispatch({
-            type : 'SET_EMAIL',
-            payload : e.target.value
-        })    
+            type : 'USER_SIGNUP',
+            payload : {
+                name : name,
+                value : value 
+            }
+        })  
     }
 
-    const getUserLoginEmail = (e) => {
-        dispatch({
-            type : 'SET_LOGIN_EMAIL',
-            payload : e.target.value
-        })
-    }
-    
-    const getUserPassoword = (e) => {
-        dispatch({
-            type : 'SET_PASSWORD',
-            payload : e.target.value
-        })
-        
-    }
-    
-    const getUserLoginPassoword = (e) => {
-        dispatch({
-            type : 'SET_LOGIN_PASSWORD',
-            payload : e.target.value
-        })
-        
-    }
-    
-    const getUserConfirmPassword = (e) => {
-        dispatch({
-            type : 'SET_CONFIRMPASSWORD',
-            payload : e.target.value
-        })
 
-    }
- 
 
     const userRegistrationHandler = async (e, fullname, email, password, confirmpassword) => {
         e.preventDefault()
@@ -75,12 +56,22 @@ export const AuthContextProvider = ({children}) => {
     
                 if(fetchResponse.ok){
                     const data = await fetchResponse.json();
-                    console.log(data)
-                    const userSignUpData = {token : `${data?.encodedToken}`}
-                localStorage.setItem('userSignUpData', JSON.stringify(userSignUpData))
-                    dispatch({type : 'CLEAR_FIELD'})  
-                    navigate('/login')
-                    dispatch({type : 'REGISTRATION_SUCCESS'})
+                    const { encodedToken, createdUser} = data;
+                    const userSignUpData = {token : encodedToken, userInfo : createdUser}
+                    localStorage.setItem('userData', JSON.stringify(userSignUpData))
+                    
+                    dispatch({type : 'CLEAR_FIELD'});  
+                    dispatch({
+                        type : 'REGISTRATION_SUCCESS',
+                        payload : {
+                            token :  encodedToken,
+                            userInfo : createdUser,
+                            
+                        }
+                    })
+                    
+                    toast.success(`hello! ${createdUser?.fullname}, welcome to OpenBook`)
+                    navigate('/')
                 }else{
                     throw new Error('some error occured')
                 }
@@ -108,21 +99,24 @@ export const AuthContextProvider = ({children}) => {
             });
 
             if(fetchResponse.ok){
-                const data = await fetchResponse.json()
-                const userLoginData = {token : `${data?.encodedToken}`, userInfo : data?.foundUser}
-                localStorage.setItem('userLoginData', JSON.stringify(userLoginData))
+                const data = await fetchResponse.json();
+                console.log(data)
+                const {encodedToken, foundUser} = data;
+                const userLoginData = {token : encodedToken, userInfo : foundUser}
+                localStorage.setItem('userData', JSON.stringify(userLoginData))
+                toast.success(`welcome! ${foundUser?.fullname}`)
                 dispatch({type : 'CLEAR_FIELD'})  
                 dispatch({
                     type : 'LOGIN_SUCCESS',
                     payload : {
-                        userInfo : data?.foundUser,
-                        token : data?.encodedToken,
+                        userInfo : foundUser,
+                        token : encodedToken,
                     }
             })
             location?.state?.from?.pathname ? navigate(location?.state?.from?.pathname) : navigate('/')
             }else{
                 console.log('some error occured');
-                toast.error('please enter valid credentials')
+                toast.error('user not found, please enter valid credentials')
             }
             console.log(location)
         } catch (error) {
@@ -130,14 +124,14 @@ export const AuthContextProvider = ({children}) => {
         }
     }
 
-    const userLogoutHandler = () => {
-        console.log('hello')
-        localStorage.clear()
+    const userLogoutHandler = (clearCart, clearWishlist) => {
+        
+        clearCart();
+        clearWishlist();
+
+        localStorage.removeItem('userData');
         dispatch({
             type : 'USER_LOGOUT',
-            payload : {
-                isLoggedIn : false
-            }
         })
         setTimeout(() => {
             toast.error('logged out successfully')
@@ -164,15 +158,11 @@ export const AuthContextProvider = ({children}) => {
         login : state.login,
         signup : state.signup,
         user : state.user,
-        getUserFullName,
-        getUserEmail,
-        getUserPassoword,
-        getUserConfirmPassword,
+        handleUserLoginData,
+        handleUserSignupData,
         userRegistrationHandler,
         userLoginHandler,
         userLogoutHandler,
-        getUserLoginPassoword,
-        getUserLoginEmail,
         loginAsGuestHandler
  
     }
