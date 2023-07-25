@@ -95,7 +95,7 @@ const User = () => {
                 const year = dateObject.getFullYear();
                 const month = monthNames[dateObject.getMonth()];
               
-                const [{address : deliveryAddressData} = {}] = deliveryAddress ?? [];
+                // const [{address : deliveryAddress} = {}] = deliveryAddress ?? [];
 
                 return (
                   <div className='user__ordersDiv'>
@@ -103,10 +103,10 @@ const User = () => {
                   <div>
                     <p>{date} {month} {year}</p>
                     <section>
-                      <h3>{deliveryAddressData?.name}</h3>
-                      <p>{deliveryAddressData?.house}, {deliveryAddressData?.city}, {deliveryAddressData?.state} - {deliveryAddressData?.postalCode}</p>
-                      <p>{deliveryAddressData?.country}</p>
-                      <p><strong>contact : </strong>{deliveryAddressData?.mobileNumber}</p>
+                      <h3>{deliveryAddress?.name}</h3>
+                      <p>{deliveryAddress?.house}, {deliveryAddress?.city}, {deliveryAddress?.state} - {deliveryAddress?.postalCode}</p>
+                      <p>{deliveryAddress?.country}</p>
+                      <p><strong>contact : </strong>{deliveryAddress?.mobileNumber}</p>
                     </section>
                     <p><strong>delivery date : </strong> {deliveryDate}</p>
                     <p><strong>paymentID : </strong> {paymentID}</p>

@@ -107,12 +107,12 @@ const Checkout = () => {
 
 
     const handleCheckout = () => {
-        if(deliveryAddress?.length > 0){
+        if(deliveryAddress?._id){
             const razorpayInstance = new window.Razorpay(razorpayOptions);
             razorpayInstance.open();
         }else if(address?.length === 0){
             toast.error('please add an address!')
-        }else if(deliveryAddress?.length === 0){
+        }else if(!deliveryAddress?._id){
             toast.error('please select an address!')
         }        
     }
@@ -183,7 +183,7 @@ const Checkout = () => {
                 <h2>deliver to</h2>
                 <hr />
 
-                { deliveryAddress._id  && (
+                { deliveryAddress?._id  && (
                     <>
                         <h3>{deliveryAddress?.name}</h3>
                         <p>{deliveryAddress?.house} {deliveryAddress?.city}, {deliveryAddress?.stateName}  {deliveryAddress?.postalCode}</p>
