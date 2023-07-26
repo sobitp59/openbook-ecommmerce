@@ -2,6 +2,7 @@
 
 ## [Here is quick video walkthrough of the application 🎥](https://www.loom.com/share/d0820c3400e44926ad15473001543c9d?sid=e69fa87d-e25b-4ed5-90b6-a0faa9ddbf25)
 
+
 ## Install and Run Locally
 ```js
 $ git clone https://github.com/sobitp59/openbook-ecommmerce.git
@@ -16,8 +17,8 @@ $ yarn start
 - filter and sort products functionalities
 - search product functionality
 - individual product page
-- cart managment
-- wishlist managment
+- cart management
+- wishlist management
 - address management
 - order management
 - checkout page
