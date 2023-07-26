@@ -2,6 +2,7 @@
 
 
 
+
 ## Install and Run Locally
 ```js
 $ git clone https://github.com/sobitp59/openbook-ecommmerce.git
@@ -16,8 +17,8 @@ $ yarn start
 - filter and sort products functionalities
 - search product functionality
 - individual product page
-- cart managment
-- wishlist managment
+- cart management
+- wishlist management
 - address management
 - order management
 - checkout page
