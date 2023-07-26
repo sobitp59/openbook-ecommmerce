@@ -43,16 +43,5 @@ const Home = () => {
         
     )
 }
-                // <ul className='home__lists'>
-                //     { productCategories?.map((category) => {
-                //     return(
-                //             <label className='home__category' htmlFor=''>
-                //                 <input className='home__inputBox' onChange={productCategoryFilter} value={category?.categoryName} type="checkbox"  checked={filters?.categoryFilter?.includes(category?.categoryName)} />
-                //                 <h2 className='home__categoryName'>{category?.categoryName}</h2>
-                //                 <p className='home__categoryDescription'>{category?.description}</p>
-                //             </label>
-                //     )
-                //     })}                 
-                // </ul>
 
 export default Home;
