@@ -1,7 +1,6 @@
 # [OpenBook](https://openbook-ecommmerce.vercel.app/) : An E-commerce web application to purchase books.
 
-## [Here is quick video walkthrough of the application 🎥](https://www.loom.com/share/d0820c3400e44926ad15473001543c9d?sid=e69fa87d-e25b-4ed5-90b6-a0faa9ddbf25)
-
+[![Video](https://cdn.loom.com/sessions/thumbnails/d0820c3400e44926ad15473001543c9d-with-play.gif)](https://www.loom.com/embed/d0820c3400e44926ad15473001543c9d?sid=2b0bedeb-15ee-4e83-a626-820104835d5e)
 
 ## Install and Run Locally
 ```js
